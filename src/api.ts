@@ -36,7 +36,7 @@ export interface ExasolExtension {
      *
      * This method does not delete the instances first. The caller takes care of this.
      *
-     * @param installation the installation to uninstall
+     * @param installation installation to uninstall
      * @param sqlClient client for running SQL queries
      */
     uninstall: (installation: Installation, sqlClient: SqlClient) => void
