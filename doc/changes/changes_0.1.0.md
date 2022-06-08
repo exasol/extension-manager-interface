@@ -1,8 +1,11 @@
 # Extension Manager Interface 0.1.0, released 2022-??-??
 
-Code name:
+Code name: Initial Release
 
 ## Summary
+
+This is the first release of the Extension Manager Interface. 
+It was extracted from the [extension-manager repository](https://github.com/exasol/extension-manager/). 
 
 ## Features
 

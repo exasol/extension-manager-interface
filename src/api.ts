@@ -27,8 +27,13 @@ export interface ExasolExtension {
     /**
      * Find installations of this extension independent of the version.
      *
+     * This method can access the database and detect installations using the sqlClient. But if every extension does this requests will get quite slow.
+     * For that reason this method also takes exaAllScripts (the contents of the EXA_ALL_SCRIPTS table).
+     * By that in default case it does not need to run SQL queries and can just check the table which is a lot faster.
+     *
      * @param sqlClient client for running SQL queries
      * @param exaAllScripts contents of the EXA_ALL_SCRIPTS table
+     * @returns found installations
      */
     findInstallations: (sqlClient: SqlClient, exaAllScripts: ExaAllScripts) => Installation[]
     /**
@@ -50,6 +55,7 @@ export interface ExasolExtension {
      * @param installation installation
      * @param params parameter values
      * @param sqlClient client for running SQL queries
+     * @returns newly created instance
      */
     addInstance: (installation: Installation, params: ParameterValues, sqlClient: SqlClient) => Instance
     /**
@@ -57,6 +63,7 @@ export interface ExasolExtension {
      *
      * @param installation installation
      * @param sqlClient client for running SQL queries
+     * @returns found instances
      */
     findInstances: (installation: Installation, sqlClient: SqlClient) => Instance[]
     /**
@@ -65,6 +72,7 @@ export interface ExasolExtension {
      * @param installation installation
      * @param instance instance
      * @param sqlClient client for running SQL queries
+     * @returns parameter values
      */
     readInstanceParameters: (installation: Installation, instance: Instance, sqlClient: SqlClient) => ParameterValues
     /**
