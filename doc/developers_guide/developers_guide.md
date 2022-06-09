@@ -11,5 +11,5 @@ Steps:
 * Add a link to doc/changes/changelog.md
 * Update the version in package.json
 * Run `npm login` The credentials can be found in Keeper
-* Run npm deploy
+* Run `npm publish --access public`
 * Make a release on GitHub
