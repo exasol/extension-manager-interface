@@ -1,4 +1,4 @@
-# Extension Manager Interface 0.1.0, released 2022-??-??
+# Extension Manager Interface 0.1.0, released 2022-06-09
 
 Code name: Initial Release
 

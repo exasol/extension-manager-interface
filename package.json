@@ -1,4 +1,7 @@
 {
+  "name": "extension-manager-interface",
+  "version": "0.1.0",
+  "description": "Interface for extensions for the Exasol extension manager.",
   "scripts": {
     "build": "tsc --build",
     "clean": "tsc --build --clean"
