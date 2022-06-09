@@ -5,3 +5,4 @@ This is the interface definition for Exasol extensions that can be installed by 
 ## Additional Information
 
 * [Changelog](doc/changes/changelog.md)
+* [Developers Guide](doc/developers_guide/developers_guide.md)
