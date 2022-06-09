@@ -1,5 +1,5 @@
 {
-  "name": "extension-manager-interface",
+  "name": "@exasol/extension-manager-interface",
   "version": "0.1.1",
   "main": "dist/api.js",
   "types": "dist/api.d.ts",
