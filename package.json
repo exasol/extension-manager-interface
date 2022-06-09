@@ -1,7 +1,10 @@
 {
   "name": "extension-manager-interface",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "main": "dist/api.js",
+  "types": "dist/api.d.ts",
   "description": "Interface for extensions for the Exasol extension manager.",
+  "license": "MIT",
   "scripts": {
     "build": "tsc --build",
     "clean": "tsc --build --clean"
