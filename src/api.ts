@@ -45,8 +45,6 @@ export interface ExasolExtension {
      * @param sqlClient client for running SQL queries
      */
     uninstall: (installation: Installation, sqlClient: SqlClient) => void
-    /** Parameter definitions for an instance of this extension. */
-    instanceParameters: Parameter[];
     /**
      * Add an instance of this extension
      *
@@ -99,14 +97,23 @@ export interface ExaAllScriptsRow {
  * Reference to an installation of this extension.
  */
 export interface Installation {
+    /** Name of this installation. Usually this is something like the name of the adapter script that helps to find the installation via SQL.*/
     name: string
+    /** Extension version of this installation. */
     version: string
+    /**
+     * Parameter definitions for creating an instance of this installation.
+     *
+     * The parameters must be declared here per installation since they can differ between versions.
+     */
+    instanceParameters: Parameter[]
 }
 
 /**
  * Reference to an instance of this extension.
  */
 export interface Instance {
+    /** Name of the instance. Usually it's the name of the virtual schema. */
     name: string
 }
 
