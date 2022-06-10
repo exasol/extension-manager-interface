@@ -1,4 +1,4 @@
-# Extension Manager Interface 0.1.2, released 2022-06-10
+# Extension Manager Interface 0.1.2, released 2022-06-13
 
 Code name: Made parameters version dependant
 
