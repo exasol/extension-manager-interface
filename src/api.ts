@@ -170,7 +170,11 @@ interface BaseParameter {
  */
 export interface StringParameter extends BaseParameter {
     type: "string"
-    regex?: RegExp
+    regex?: "string" //we can't use RegExp here since it can't be exported to JSON and not be exported by GoJa
+    /** If this is set to true, the UI will show a multiline textarea. */
+    multiline?: boolean
+    /** If set to true, the UI will display a password field with *****. */
+    secret?: boolean
 }
 
 /**
