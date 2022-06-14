@@ -1,4 +1,4 @@
-const CURRENT_API_VERSION = "0.1.0";
+const CURRENT_API_VERSION = "0.1.4";
 
 /**
  * This class represents an extension that can be installed with the extension-manager.
