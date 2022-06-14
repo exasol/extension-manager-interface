@@ -242,8 +242,8 @@ export interface Not {
  * @param extensionToRegister extension to register
  */
 export function registerExtension(extensionToRegister: ExasolExtension): void {
-    // @ts-ignore //this is a global variable defined in the nested JS VM in the backend
-    installedExtension = {
+    // @ts-ignore // this is a global variable defined in the nested JS VM in the backend
+    global.installedExtension = {
         extension: extensionToRegister,
         apiVersion: CURRENT_API_VERSION
     };
