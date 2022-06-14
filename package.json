@@ -1,15 +1,20 @@
 {
   "name": "@exasol/extension-manager-interface",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "main": "dist/api.js",
   "types": "dist/api.d.ts",
   "description": "Interface for extensions for the Exasol extension manager.",
   "license": "MIT",
   "scripts": {
     "build": "tsc --build",
-    "clean": "tsc --build --clean"
+    "clean": "tsc --build --clean",
+    "test": "jest"
   },
   "devDependencies": {
+    "@types/jest": "^28.1.1",
+    "jest": "^28.1.1",
+    "ts-jest": "^28.0.5",
+    "ts-node": "^10.8.1",
     "typescript": "4.6.3"
   }
 }

@@ -36,4 +36,6 @@ pom.xml.versionsBackup
 vendor/
 
 dist/
-node_modules
+node_modules/
+coverage/
+.scannerwork/
