@@ -170,6 +170,7 @@ interface BaseParameter {
  */
 export interface StringParameter extends BaseParameter {
     type: "string"
+    /** Regex that must match the expected string. Provide a regex starting with ^ and ending with $ so that it matches the whole string. */
     regex?: string //we can't use RegExp here since it can't be exported to JSON and not be exported by GoJa
     /** If this is set to true, the UI will show a multiline textarea. */
     multiline?: boolean
