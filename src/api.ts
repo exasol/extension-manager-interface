@@ -1,4 +1,4 @@
-export const CURRENT_API_VERSION = "0.1.5";
+export const CURRENT_API_VERSION = "0.1.6";
 
 /**
  * This class represents an extension that can be installed with the extension-manager.
@@ -170,7 +170,7 @@ interface BaseParameter {
  */
 export interface StringParameter extends BaseParameter {
     type: "string"
-    regex?: "string" //we can't use RegExp here since it can't be exported to JSON and not be exported by GoJa
+    regex?: string //we can't use RegExp here since it can't be exported to JSON and not be exported by GoJa
     /** If this is set to true, the UI will show a multiline textarea. */
     multiline?: boolean
     /** If set to true, the UI will display a password field with *****. */
