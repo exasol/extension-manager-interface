@@ -1,3 +1,6 @@
+import { ExasolMetadata } from "./exasolSchema";
+import { Parameter } from "./parameters";
+
 export const CURRENT_API_VERSION = "0.1.7";
 
 /**
@@ -24,18 +27,20 @@ export interface ExasolExtension {
      * @param sqlClient client for running SQL queries
      */
     install: (sqlClient: SqlClient) => void
+
     /**
      * Find installations of this extension independent of the version.
      *
      * This method can access the database and detect installations using the sqlClient. But if every extension does this requests will get quite slow.
-     * For that reason this method also takes exaAllScripts (the contents of the EXA_ALL_SCRIPTS table).
-     * By that in default case it does not need to run SQL queries and can just check the table which is a lot faster.
+     * For that reason this method also takes metadata (the contents of Exasol metadata tables).
+     * By that in default case it does not need to run SQL queries and can just check the table data which is a lot faster.
      *
      * @param sqlClient client for running SQL queries
-     * @param exaAllScripts contents of the EXA_ALL_SCRIPTS table
+     * @param metadata contents of Exasol metadata table
      * @returns found installations
      */
-    findInstallations: (sqlClient: SqlClient, exaAllScripts: ExaAllScripts) => Installation[]
+    findInstallations: (sqlClient: SqlClient, metadata: ExasolMetadata) => Installation[]
+
     /**
      * Uninstall this extension. (Delete adapter scripts / udf definitions)
      *
@@ -45,6 +50,7 @@ export interface ExasolExtension {
      * @param sqlClient client for running SQL queries
      */
     uninstall: (installation: Installation, sqlClient: SqlClient) => void
+
     /**
      * Add an instance of this extension
      *
@@ -56,6 +62,7 @@ export interface ExasolExtension {
      * @returns newly created instance
      */
     addInstance: (installation: Installation, params: ParameterValues, sqlClient: SqlClient) => Instance
+
     /**
      * Find instances of this extension.
      *
@@ -64,6 +71,7 @@ export interface ExasolExtension {
      * @returns found instances
      */
     findInstances: (installation: Installation, sqlClient: SqlClient) => Instance[]
+
     /**
      * Read the parameter values of an instance.
      *
@@ -73,6 +81,7 @@ export interface ExasolExtension {
      * @returns parameter values
      */
     readInstanceParameters: (installation: Installation, instance: Instance, sqlClient: SqlClient) => ParameterValues
+
     /**
      * Delete an instance.
      *
@@ -81,16 +90,6 @@ export interface ExasolExtension {
      * @param sqlClient client for running SQL queries
      */
     deleteInstance: (installation: Installation, instance: Instance, sqlClient: SqlClient) => void
-}
-
-export interface ExaAllScripts {
-    rows: ExaAllScriptsRow[]
-}
-
-
-export interface ExaAllScriptsRow {
-    name: string
-    text: string
 }
 
 /**
@@ -135,7 +134,6 @@ export interface SqlClient {
     runQuery: (query: string) => void
 }
 
-
 /**
  * Description of a file that needs to be uploaded to BucketFS.
  */
@@ -149,93 +147,6 @@ export interface BucketFSUpload {
     bucketFsFilename: string
     /** File size in bytes */
     fileSize: number
-}
-
-/**
- * Abstract base for parameters.
- */
-interface BaseParameter {
-    id: string
-    name: string
-    type: string
-    condition?: Condition
-    default?: string
-    placeholder?: string
-    readOnly?: boolean
-    required?: boolean
-}
-
-/**
- * String parameter.
- */
-export interface StringParameter extends BaseParameter {
-    type: "string"
-    /** Regex that must match the expected string. Provide a regex starting with ^ and ending with $ so that it matches the whole string. 
-    The type must be 'string' because we can't use RegExp here since it can't be exported to JSON and not be exported by GoJa. */
-    regex?: string
-    /** If this is set to true, the UI will show a multiline textarea. */
-    multiline?: boolean
-    /** If set to true, the UI will display a password field with *****. */
-    secret?: boolean
-}
-
-/**
- * Parameter type.
- */
-export type Parameter = StringParameter | SelectParameter;
-
-/**
- * Type for a map for select options.
- * Map: value to select -> display name
- */
-export interface OptionsType {
-    [index: string]: string
-}
-
-/**
- * Parameter that allows to select a value from a list.
- */
-export interface SelectParameter extends BaseParameter {
-    options: OptionsType
-    type: "select"
-}
-
-/**
- * Condition for conditional parameters.
- */
-export type Condition = Comparison | And | Or;
-
-/**
- * Comparison operators
- */
-export enum Operators {
-    EQ, LESS, GREATER, LESS_EQUAL, GREATER_EQ
-}
-
-/**
- * Comparison of a parameter value and given value.
- */
-export interface Comparison {
-    /** parameter name */
-    parameter: string
-    /** Value to compare with */
-    value: string | number
-    operator: Operators
-}
-
-/** And predicate */
-export interface And {
-    and: Condition[]
-}
-
-/** Or predicate */
-export interface Or {
-    or: Condition[]
-}
-
-/** Not predicate */
-export interface Not {
-    not: Condition
 }
 
 /**
