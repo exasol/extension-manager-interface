@@ -1,4 +1,4 @@
-export const CURRENT_API_VERSION = "0.1.6";
+export const CURRENT_API_VERSION = "0.1.7";
 
 /**
  * This class represents an extension that can be installed with the extension-manager.
