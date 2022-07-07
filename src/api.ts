@@ -1,4 +1,4 @@
-import { ExasolMetadata } from "./exasolSchema";
+import { ExaMetadata } from "./exasolSchema";
 import { Parameter } from "./parameters";
 
 export const CURRENT_API_VERSION = "0.1.7";
@@ -39,7 +39,7 @@ export interface ExasolExtension {
      * @param metadata contents of Exasol metadata table
      * @returns found installations
      */
-    findInstallations: (sqlClient: SqlClient, metadata: ExasolMetadata) => Installation[]
+    findInstallations: (sqlClient: SqlClient, metadata: ExaMetadata) => Installation[]
 
     /**
      * Uninstall this extension. (Delete adapter scripts / udf definitions)
@@ -161,3 +161,6 @@ export function registerExtension(extensionToRegister: ExasolExtension): void {
         apiVersion: CURRENT_API_VERSION
     };
 }
+
+// Re-export interfaces
+export { ExaMetadata };

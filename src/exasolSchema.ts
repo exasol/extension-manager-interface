@@ -2,7 +2,7 @@
 /**
  * Content of Exasol metadata tables.
  */
-export interface ExasolMetadata {
+export interface ExaMetadata {
     allScripts: ExaAllScripts
     virtualSchemas: ExaAllVirtualSchemas
     virtualSchemaProperties: ExaAllVirtualSchemaProperties
