@@ -1,7 +1,8 @@
+import { Context } from "./context";
 import { ExaMetadata } from "./exasolSchema";
 import { Parameter } from "./parameters";
 
-export const CURRENT_API_VERSION = "0.1.7";
+export const CURRENT_API_VERSION = "0.1.8";
 
 /**
  * This class represents an extension that can be installed with the extension-manager.
@@ -24,9 +25,10 @@ export interface ExasolExtension {
      *
      * Installing means creating the adapter scripts / UDF definitions.
      *
-     * @param sqlClient client for running SQL queries
+     * @param context the extension manager context
+     * @param version the version to install
      */
-    install: (sqlClient: SqlClient) => void
+    install: (context: Context, version: string) => void
 
     /**
      * Find installations of this extension independent of the version.
@@ -35,61 +37,61 @@ export interface ExasolExtension {
      * For that reason this method also takes metadata (the contents of Exasol metadata tables).
      * By that in default case it does not need to run SQL queries and can just check the table data which is a lot faster.
      *
-     * @param sqlClient client for running SQL queries
+     * @param context the extension manager context
      * @param metadata contents of Exasol metadata table
      * @returns found installations
      */
-    findInstallations: (sqlClient: SqlClient, metadata: ExaMetadata) => Installation[]
+    findInstallations: (context: Context, metadata: ExaMetadata) => Installation[]
 
     /**
      * Uninstall this extension. (Delete adapter scripts / udf definitions)
      *
      * This method does not delete the instances first. The caller takes care of this.
      *
+     * @param context the extension manager context
      * @param installation installation to uninstall
-     * @param sqlClient client for running SQL queries
      */
-    uninstall: (installation: Installation, sqlClient: SqlClient) => void
+    uninstall: (context: Context, installation: Installation) => void
 
     /**
      * Add an instance of this extension
      *
      * An instance of an extension is for example a Virtual Schema.
      *
+     * @param context the extension manager context
      * @param installation installation
      * @param params parameter values
-     * @param sqlClient client for running SQL queries
      * @returns newly created instance
      */
-    addInstance: (installation: Installation, params: ParameterValues, sqlClient: SqlClient) => Instance
+    addInstance: (context: Context, installation: Installation, params: ParameterValues) => Instance
 
     /**
      * Find instances of this extension.
      *
+     * @param context the extension manager context
      * @param installation installation
-     * @param sqlClient client for running SQL queries
      * @returns found instances
      */
-    findInstances: (installation: Installation, sqlClient: SqlClient) => Instance[]
+    findInstances: (context: Context, installation: Installation) => Instance[]
 
     /**
      * Read the parameter values of an instance.
      *
+     * @param context the extension manager context
      * @param installation installation
      * @param instance instance
-     * @param sqlClient client for running SQL queries
      * @returns parameter values
      */
-    readInstanceParameters: (installation: Installation, instance: Instance, sqlClient: SqlClient) => ParameterValues
+    readInstanceParameters: (context: Context, installation: Installation, instance: Instance) => ParameterValues
 
     /**
      * Delete an instance.
      *
+     * @param context the extension manager context
      * @param installation installation
      * @param instance instance to delete
-     * @param sqlClient client for running SQL queries
      */
-    deleteInstance: (installation: Installation, instance: Instance, sqlClient: SqlClient) => void
+    deleteInstance: (context: Context, installation: Installation, instance: Instance) => void
 }
 
 /**
@@ -124,17 +126,6 @@ export interface ParameterValues {
 }
 
 /**
- * Simple SQL client.
- */
-export interface SqlClient {
-    /**
-     * Run a SQL query.
-     * @param query sql query string
-     */
-    runQuery: (query: string) => void
-}
-
-/**
  * Description of a file that needs to be uploaded to BucketFS.
  */
 export interface BucketFSUpload {
@@ -163,4 +154,4 @@ export function registerExtension(extensionToRegister: ExasolExtension): void {
 }
 
 // Re-export interfaces
-export { ExaMetadata };
+export { ExaMetadata, Context };
