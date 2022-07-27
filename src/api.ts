@@ -26,8 +26,9 @@ export interface ExasolExtension {
      * Installing means creating the adapter scripts / UDF definitions.
      *
      * @param context the extension manager context
+     * @param version the version to install
      */
-    install: (context: Context) => void
+    install: (context: Context, version: string) => void
 
     /**
      * Find installations of this extension independent of the version.
