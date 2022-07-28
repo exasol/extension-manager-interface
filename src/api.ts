@@ -2,7 +2,7 @@ import { Context } from "./context";
 import { ExaMetadata } from "./exasolSchema";
 import { Parameter } from "./parameters";
 
-export const CURRENT_API_VERSION = "0.1.8";
+export const CURRENT_API_VERSION = "0.1.9";
 
 /**
  * This class represents an extension that can be installed with the extension-manager.
@@ -59,11 +59,11 @@ export interface ExasolExtension {
      * An instance of an extension is for example a Virtual Schema.
      *
      * @param context the extension manager context
-     * @param installation installation
+     * @param version the version of the extension for which to add an instance
      * @param params parameter values
      * @returns newly created instance
      */
-    addInstance: (context: Context, installation: Installation, params: ParameterValues) => Instance
+    addInstance: (context: Context, version: string, params: ParameterValues) => Instance
 
     /**
      * Find instances of this extension.
@@ -119,10 +119,18 @@ export interface Instance {
 }
 
 /**
- * Map of parameter name -> parameter value.
+ * Contains a list of parameters.
  */
 export interface ParameterValues {
-    [index: string]: string;
+    values: ParameterValue[]
+}
+
+/**
+ * A parameter value with name and value.
+ */
+export interface ParameterValue {
+    name: string
+    value: string
 }
 
 /**
