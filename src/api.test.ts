@@ -68,19 +68,19 @@ describe("api", () => {
             installableVersions: ["v1"],
             name: "name",
             bucketFsUploads: [],
-            addInstance(_installation, _params, _sqlClient) {
+            addInstance(_context, _version, _params) {
                 return { name: "instance" }
             }, deleteInstance(_installation, _instance, _sqlClient) {
                 // empty by intention
-            }, findInstallations(_sqlClient, _exaAllScripts) {
+            }, findInstallations(_context, _exaAllScripts) {
                 return []
-            }, findInstances(_installation, _sqlClient) {
+            }, findInstances(_context, _installation) {
                 return []
-            }, install(_sqlClient) {
+            }, install(_context, _version) {
                 // empty by intention
-            }, readInstanceParameters(_installation, _instance, _sqlClient) {
-                return {}
-            }, uninstall(_installation, _sqlClient) {
+            }, readInstanceParameters(_context, _installation, _instance) {
+                return {values:[]}
+            }, uninstall(_context, _installation) {
                 // empty by intention
             },
         }
