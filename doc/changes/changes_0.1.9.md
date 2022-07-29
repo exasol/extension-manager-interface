@@ -1,4 +1,4 @@
-# Extension Manager Interface 0.1.9, released 2022-08-01
+# Extension Manager Interface 0.1.9, released 2022-07-29
 
 Code name: Update addInstance function
 
