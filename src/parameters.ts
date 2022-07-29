@@ -2,35 +2,45 @@
 /**
  * Abstract base for parameters.
  */
- interface BaseParameter {
+interface BaseParameter {
+    /** A unique identifier for the parameter */
     id: string
+    /** The name displayed to the user */
     name: string
+    /** The type of the parameter */
     type: string
+    /** Defines if a value must be specified (`true`) or if it is optional (`false`). Default: `false`. */
+    required?: boolean
+    /** An optional condition */
     condition?: Condition
     default?: string
     placeholder?: string
     readOnly?: boolean
-    required?: boolean
 }
 
 /**
- * String parameter.
+ * String parameter. Values can be any string that optionally matches the given regular expression.
  */
 export interface StringParameter extends BaseParameter {
     type: "string"
-    /** Regex that must match the expected string. Provide a regex starting with ^ and ending with $ so that it matches the whole string. 
-    The type must be 'string' because we can't use RegExp here since it can't be exported to JSON and not be exported by GoJa. */
+    /**
+     * Regular expression that must match the expected string.
+     * Provide a regex starting with `^` and ending with `$` so that it matches the whole string. 
+     * The type must be `string` because we can't use RegExp here since it can't be exported to JSON and not be exported by GoJa.
+     */
     regex?: string
-    /** If this is set to true, the UI will show a multiline textarea. */
+    /** If this is set to `true`, the UI will show a multiline textarea, default: `false`. */
     multiline?: boolean
-    /** If set to true, the UI will display a password field with *****. */
+    /** If set to `true`, the UI will display a password field with `*****`, default: `false`. */
     secret?: boolean
 }
 
 /**
- * Parameter type.
+ * Boolean parameter. Values can only be `true` or `false`.
  */
-export type Parameter = StringParameter | SelectParameter;
+export interface BooleanParameter extends BaseParameter {
+    type: "boolean"
+}
 
 /**
  * Type for a map for select options.
@@ -44,9 +54,15 @@ export interface OptionsType {
  * Parameter that allows to select a value from a list.
  */
 export interface SelectParameter extends BaseParameter {
-    options: OptionsType
     type: "select"
+    /** The available options for the parameter values. */
+    options: OptionsType
 }
+
+/**
+ * Parameter type.
+ */
+export type Parameter = StringParameter | SelectParameter | BooleanParameter;
 
 /**
  * Condition for conditional parameters.
