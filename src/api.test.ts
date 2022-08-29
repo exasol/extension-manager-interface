@@ -1,5 +1,5 @@
 import { readdir, readFile } from "fs/promises";
-import { CURRENT_API_VERSION, ExasolExtension, registerExtension } from "./api";
+import { ApiError, CURRENT_API_VERSION, ExasolExtension, registerExtension } from "./api";
 
 
 async function readPackageJson() {
@@ -79,7 +79,7 @@ describe("api", () => {
             }, install(_context, _version) {
                 // empty by intention
             }, readInstanceParameters(_context, _installation, _instance) {
-                return {values:[]}
+                return { values: [] }
             }, uninstall(_context, _installation) {
                 // empty by intention
             },
@@ -94,5 +94,20 @@ describe("api", () => {
             expect(installedExtension.apiVersion).toBe(CURRENT_API_VERSION)
             expect(installedExtension.extension).toBe(ext)
         })
+    })
+
+    describe("ApiError", () => {
+        it("can be thrown with new", () => {
+            expect(() => { throw new ApiError(400, "message") }).toThrow(Error);
+        });
+        it("contains status and message", () => {
+            try {
+                throw new ApiError(400, "message");
+            } catch (error) {
+                expect(error).toBeInstanceOf(Error);
+                expect(error.status).toBe(400)
+                expect(error.message).toBe("message")
+            }
+        });
     })
 })
