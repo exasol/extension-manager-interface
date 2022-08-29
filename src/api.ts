@@ -1,8 +1,9 @@
 import { Context } from "./context";
+import { ApiError } from "./error";
 import { ExaMetadata } from "./exasolSchema";
 import { Parameter } from "./parameters";
 
-export const CURRENT_API_VERSION = "0.1.10";
+export const CURRENT_API_VERSION = "0.1.11";
 
 /**
  * This class represents an extension that can be installed with the extension-manager.
@@ -163,3 +164,4 @@ export function registerExtension(extensionToRegister: ExasolExtension): void {
 
 // Re-export interfaces
 export { ExaMetadata, Context };
+export { ApiError };
