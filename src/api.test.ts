@@ -1,5 +1,5 @@
 import { readdir, readFile } from "fs/promises";
-import { ApiError, CURRENT_API_VERSION, ExasolExtension, registerExtension } from "./api";
+import { BadRequestError, CURRENT_API_VERSION, ExasolExtension, InternalServerError, registerExtension } from "./api";
 
 
 async function readPackageJson() {
@@ -96,16 +96,31 @@ describe("api", () => {
         })
     })
 
-    describe("ApiError", () => {
+    describe("BadRequestError", () => {
         it("can be thrown with new", () => {
-            expect(() => { throw new ApiError(400, "message") }).toThrow(Error);
+            expect(() => { throw new BadRequestError("message") }).toThrow(Error);
         });
         it("contains status and message", () => {
             try {
-                throw new ApiError(400, "message");
+                throw new BadRequestError("message");
             } catch (error) {
                 expect(error).toBeInstanceOf(Error);
                 expect(error.status).toBe(400)
+                expect(error.message).toBe("message")
+            }
+        });
+    })
+
+    describe("InternalServerError", () => {
+        it("can be thrown with new", () => {
+            expect(() => { throw new InternalServerError("message") }).toThrow(Error);
+        });
+        it("contains message but no status", () => {
+            try {
+                throw new InternalServerError("message");
+            } catch (error) {
+                expect(error).toBeInstanceOf(Error);
+                expect(error.status).toBeUndefined()
                 expect(error.message).toBe("message")
             }
         });
