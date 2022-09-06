@@ -40,7 +40,7 @@ function byMajorMinorPatch(a: VersionNumber, b: VersionNumber): number {
 async function getChangelogVersions(): Promise<VersionNumber[]> {
     const files = await readdir("doc/changes")
     return files.map(name => name.match(/^changes_(\d+)\.(\d+)\.(\d+)\.md$/))
-        .filter(match => match != null)
+        .filter(match => match !== null)
         .map(match => new VersionNumber(match))
 }
 
@@ -103,7 +103,7 @@ describe("api", () => {
         it("contains status and message", () => {
             try {
                 throw new BadRequestError("message");
-            } catch (error) {
+            } catch (error: any) {
                 expect(error).toBeInstanceOf(Error);
                 expect(error.status).toBe(400)
                 expect(error.message).toBe("message")
@@ -118,7 +118,7 @@ describe("api", () => {
         it("contains message but no status", () => {
             try {
                 throw new InternalServerError("message");
-            } catch (error) {
+            } catch (error: any) {
                 expect(error).toBeInstanceOf(Error);
                 expect(error.status).toBeUndefined()
                 expect(error.message).toBe("message")
