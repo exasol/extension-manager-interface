@@ -1,5 +1,5 @@
 import { readdir, readFile } from "fs/promises";
-import { ApiError, CURRENT_API_VERSION, ExasolExtension, registerExtension } from "./api";
+import { BadRequestError, CURRENT_API_VERSION, ExasolExtension, InternalServerError, registerExtension } from "./api";
 
 
 async function readPackageJson() {
@@ -40,7 +40,7 @@ function byMajorMinorPatch(a: VersionNumber, b: VersionNumber): number {
 async function getChangelogVersions(): Promise<VersionNumber[]> {
     const files = await readdir("doc/changes")
     return files.map(name => name.match(/^changes_(\d+)\.(\d+)\.(\d+)\.md$/))
-        .filter(match => match != null)
+        .filter(match => match !== null)
         .map(match => new VersionNumber(match))
 }
 
@@ -96,16 +96,31 @@ describe("api", () => {
         })
     })
 
-    describe("ApiError", () => {
+    describe("BadRequestError", () => {
         it("can be thrown with new", () => {
-            expect(() => { throw new ApiError(400, "message") }).toThrow(Error);
+            expect(() => { throw new BadRequestError("message") }).toThrow(Error);
         });
         it("contains status and message", () => {
             try {
-                throw new ApiError(400, "message");
-            } catch (error) {
+                throw new BadRequestError("message");
+            } catch (error: any) {
                 expect(error).toBeInstanceOf(Error);
                 expect(error.status).toBe(400)
+                expect(error.message).toBe("message")
+            }
+        });
+    })
+
+    describe("InternalServerError", () => {
+        it("can be thrown with new", () => {
+            expect(() => { throw new InternalServerError("message") }).toThrow(Error);
+        });
+        it("contains message but no status", () => {
+            try {
+                throw new InternalServerError("message");
+            } catch (error: any) {
+                expect(error).toBeInstanceOf(Error);
+                expect(error.status).toBeUndefined()
                 expect(error.message).toBe("message")
             }
         });
