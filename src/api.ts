@@ -3,7 +3,7 @@ import { BadRequestError, InternalServerError } from "./error";
 import { ExaMetadata } from "./exasolSchema";
 import { Parameter } from "./parameters";
 
-export const CURRENT_API_VERSION = "0.1.12";
+export const CURRENT_API_VERSION = "0.1.13";
 
 /**
  * This class represents an extension that can be installed with the extension-manager.
@@ -45,12 +45,13 @@ export interface ExasolExtension {
     findInstallations: (context: Context, metadata: ExaMetadata) => Installation[]
 
     /**
-     * Uninstall this extension. (Delete adapter scripts / udf definitions)
+     * Uninstall this extension, deleting adapter scripts, UDF definitions etc.
      *
-     * This method does not delete the instances first. The caller takes care of this.
+     * This method does not delete the instances first. The caller must take care of this.
      *
      * @param context the extension manager context
      * @param installation installation to uninstall
+     * @throws {@link BadRequestError} if there are still instances of this extension.
      */
     uninstall: (context: Context, installation: Installation) => void
 
@@ -63,43 +64,42 @@ export interface ExasolExtension {
      * @param version the version of the extension for which to add an instance
      * @param params parameter values
      * @returns newly created instance
+     * @throws {@link BadRequestError} if an unsupported version was specified.
      */
     addInstance: (context: Context, version: string, params: ParameterValues) => Instance
 
     /**
-     * Find instances of this extension.
+     * Find all instances of this extension.
      *
      * @param context the extension manager context
-     * @param installation installation
+     * @param version version of this extension for which to find instances
      * @returns found instances
      */
-    findInstances: (context: Context, installation: Installation) => Instance[]
+    findInstances: (context: Context, version: string) => Instance[]
 
     /**
      * Read the parameter values of an instance.
      *
      * @param context the extension manager context
-     * @param installation installation
-     * @param instance instance
+     * @param instanceId the ID of the instance to delete, see {@link Instance#id} and {@link findInstances}.
      * @returns parameter values
      */
-    readInstanceParameters: (context: Context, installation: Installation, instance: Instance) => ParameterValues
+    readInstanceParameters: (context: Context, instanceId: string) => ParameterValues
 
     /**
      * Delete an instance.
      *
      * @param context the extension manager context
-     * @param installation installation
-     * @param instance instance to delete
+     * @param instanceId the ID of the instance to delete, see {@link Instance#id} and {@link findInstances}.
      */
-    deleteInstance: (context: Context, installation: Installation, instance: Instance) => void
+    deleteInstance: (context: Context, instanceId: string) => void
 }
 
 /**
  * Reference to an installation of this extension.
  */
 export interface Installation {
-    /** Name of this installation. Usually this is something like the name of the adapter script that helps to find the installation via SQL.*/
+    /** Name of this installation. Usually this is something like the name of the adapter script that helps to find the installation via SQL. */
     name: string
     /** Extension version of this installation. */
     version: string
@@ -115,7 +115,9 @@ export interface Installation {
  * Reference to an instance of this extension.
  */
 export interface Instance {
-    /** Name of the instance. Usually it's the name of the virtual schema. */
+    /** ID of the instance. This is intended as an internal ID that is not displayed to the user. */
+    id: string
+    /** Name of the instance. Usually it's the name of the virtual schema. This is intended for displaying to the user. */
     name: string
 }
 
@@ -165,3 +167,4 @@ export function registerExtension(extensionToRegister: ExasolExtension): void {
 // Re-export interfaces
 export { ExaMetadata, Context };
 export { BadRequestError, InternalServerError };
+
