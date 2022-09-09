@@ -74,7 +74,7 @@ describe("api", () => {
                 // empty by intention
             }, findInstallations(_context, _exaAllScripts) {
                 return []
-            }, findInstances(_context, _installation) {
+            }, findInstances(_context, _version) {
                 return []
             }, install(_context, _version) {
                 // empty by intention
