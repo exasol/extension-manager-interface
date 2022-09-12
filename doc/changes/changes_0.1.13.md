@@ -7,12 +7,12 @@ Code name: Refactor finding and deleting an instance
 This release contains the following changes:
 
 * SqlClient
-    * Method `runQuery` renamed to `execute`
+    * Renamed Method `runQuery` to `execute`
     * Added method `query` which returns the result of a `SELECT` query
 * Extension:
-    * Method `deleteInstance` removes parameters `installation: Installation, instance: Instance` and adds `instanceId: string`
-    * Method `readInstanceParameters` removes parameters `installation: Installation, instance: Instance` and adds `instanceId: string`
-    * Method `findInstances` removes parameter `installation: Installation` and adds `version: string`
+    * Method `deleteInstance`: removed parameters `installation: Installation, instance: Instance` and added `instanceId: string`
+    * Method `readInstanceParameters`: removed parameters `installation: Installation, instance: Instance` and added `instanceId: string`
+    * Method `findInstances`: removed parameter `installation: Installation` and added `version: string`
 * Interface `Instance`
     * Added field `id: string`
 * Interface `ExaMetadata`:
