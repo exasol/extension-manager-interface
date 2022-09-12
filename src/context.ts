@@ -1,3 +1,4 @@
+import { SqlClient } from "./sqlClient"
 
 /**
  * This interface represents the context of the extension manager with useful information for the extensions.
@@ -29,13 +30,3 @@ export interface BucketFs {
     resolvePath: (fileName: string) => string
 }
 
-/**
- * Simple SQL client.
- */
-export interface SqlClient {
-    /**
-     * Run a SQL query.
-     * @param query sql query string
-     */
-    runQuery: (query: string) => void
-}
