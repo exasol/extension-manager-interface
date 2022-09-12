@@ -3,7 +3,7 @@ import { BadRequestError, InternalServerError } from "./error";
 import { ExaMetadata } from "./exasolSchema";
 import { Parameter } from "./parameters";
 
-export const CURRENT_API_VERSION = "0.1.13";
+export const CURRENT_API_VERSION = "0.1.14";
 
 /**
  * This class represents an extension that can be installed with the extension-manager.
@@ -50,10 +50,10 @@ export interface ExasolExtension {
      * This method does not delete the instances first. The caller must take care of this.
      *
      * @param context the extension manager context
-     * @param installation installation to uninstall
+     * @param version the version to uninstall
      * @throws {@link BadRequestError} if there are still instances of this extension.
      */
-    uninstall: (context: Context, installation: Installation) => void
+    uninstall: (context: Context, version: string) => void
 
     /**
      * Add an instance of this extension
