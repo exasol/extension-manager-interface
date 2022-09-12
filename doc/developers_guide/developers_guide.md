@@ -4,6 +4,25 @@
 
 Currently we release this project by hand. In the future it should be done by release-droid (see [#3](https://github.com/exasol/extension-manager-interface/issues/3)).
 
+### Running Unit Tests
+
+```shell
+npm install
+npm test
+```
+
+To run tests continuously each time a file is changed on disk (useful during development), start the following command:
+
+```shell
+npm run test-watch
+```
+
+## Linting
+
+```sh
+npm run lint
+```
+
 ### Steps
 
 1. Write a changelog file `doc/changes/changes_<version>.md`

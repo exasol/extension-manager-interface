@@ -1,3 +1,4 @@
+/* eslint @typescript-eslint/no-explicit-any: "off" -- Need to support generic values for query arguments and row values */
 /**
  * Simple SQL client.
  */

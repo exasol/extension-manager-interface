@@ -157,6 +157,7 @@ export interface BucketFSUpload {
  * @param extensionToRegister extension to register
  */
 export function registerExtension(extensionToRegister: ExasolExtension): void {
+    /* eslint @typescript-eslint/ban-ts-comment: "off" -- @ts-ignore is required to allow a global variable */
     // @ts-ignore // this is a global variable defined in the nested JS VM in the backend
     global.installedExtension = {
         extension: extensionToRegister,
