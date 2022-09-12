@@ -1,10 +1,6 @@
 # Developers Guide
 
-## Releasing
-
-Currently we release this project by hand. In the future it should be done by release-droid (see [#3](https://github.com/exasol/extension-manager-interface/issues/3)).
-
-### Running Unit Tests
+## Running Unit Tests
 
 ```shell
 npm install
@@ -22,6 +18,10 @@ npm run test-watch
 ```sh
 npm run lint
 ```
+
+## Releasing
+
+Currently we release this project by hand. In the future it should be done by release-droid (see [#3](https://github.com/exasol/extension-manager-interface/issues/3)).
 
 ### Steps
 
