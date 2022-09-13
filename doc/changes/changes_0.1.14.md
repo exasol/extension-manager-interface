@@ -1,4 +1,4 @@
-# Extension Manager Interface 0.1.14, released 2022-09-??
+# Extension Manager Interface 0.1.14, released 2022-09-13
 
 Code name: Uninstall extension
 
