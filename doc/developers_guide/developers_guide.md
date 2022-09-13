@@ -21,7 +21,7 @@ npm run lint
 
 ## Releasing
 
-Currently we release this project by hand. In the future it should be done by release-droid (see [#3](https://github.com/exasol/extension-manager-interface/issues/3)).
+Currently releases for this project need to be done manually. Release-droid can be used after implementation of [RD issue #3](https://github.com/exasol/extension-manager-interface/issues/3)).
 
 ### Steps
 
