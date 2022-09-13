@@ -57,5 +57,7 @@ export interface ExaVirtualSchemaProperties {
  * A single row of the SYS.EXA_ALL_VIRTUAL_SCHEMA_PROPERTIES table.
  */
 export interface ExaVirtualSchemaPropertiesRow {
-
+    schemaName: string
+    propertyName: string
+    propertyValue: string
 }
