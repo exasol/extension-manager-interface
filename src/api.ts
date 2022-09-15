@@ -18,7 +18,7 @@ export interface ExasolExtension {
     bucketFsUploads?: BucketFSUpload[];
 
     /** List of versions that this installer can install. */
-    installableVersions: string[]
+    installableVersions: ExtensionVersion[]
 
     /**
      * Install this extension.
@@ -103,6 +103,19 @@ export interface ExasolExtension {
      */
     deleteInstance: (context: Context, extensionVersion: string, instanceId: string) => void
 }
+
+/**
+ * Defines a version that this extension supports.
+ */
+export interface ExtensionVersion {
+    /** Name of the version, e.g. "1.2.3" */
+    name: string
+    /** Indicates if this is the latest version */
+    latest: boolean
+    /** Indicates if this version is deprecated */
+    deprecated: boolean
+}
+
 
 /**
  * Reference to an installation of this extension.

@@ -11,7 +11,8 @@ This release contains the following changes:
 * Rename function `readInstanceParameters()` to `readInstanceParameterValues()`
 * Add parameter `extensionVersion` to function `deleteInstance()`
 * Update type of the `options` field of `SelectParameter` from a map to a list of objects
+* The `installableVersions` now is a list of `ExtensionVersion` objects instead of strings
 
 ## Features
 
-* #34: Added request for getting parameters of an extension
+* #34: Added request for getting parameters of an extension, mark versions as deprecated/latest

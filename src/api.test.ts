@@ -65,7 +65,7 @@ describe("api", () => {
     function createDummyExtension(): ExasolExtension {
         return {
             description: "description",
-            installableVersions: ["v1"],
+            installableVersions: [{ name: "1.2.3", latest: true, deprecated: false }],
             name: "name",
             bucketFsUploads: [],
             addInstance(_context, _version, _params) {
