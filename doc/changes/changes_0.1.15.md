@@ -8,6 +8,9 @@ This release contains the following changes:
 
 * Remove the `instanceParameters` field from the `Installation` interface
 * Add function `getInstanceParameters()` function
+* Rename function `readInstanceParameters()` to `readInstanceParameterValues()`
+* Add parameter `extensionVersion` to function `deleteInstance()`
+* Update type of the `options` field of `SelectParameter` from a map to a list of objects
 
 ## Features
 

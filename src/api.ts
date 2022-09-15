@@ -1,5 +1,4 @@
 import { Context } from "./context";
-import { BadRequestError, InternalServerError } from "./error";
 import { ExaMetadata } from "./exasolSchema";
 import { Parameter } from "./parameters";
 
@@ -78,21 +77,31 @@ export interface ExasolExtension {
     findInstances: (context: Context, version: string) => Instance[]
 
     /**
+     * Get the parameter definitions for creating an instance of this version.
+     * 
+     * @param context the extension manager context
+     * @param version version of this extension for which to get the parameters
+     * @returns the parameter definitions
+     */
+    getInstanceParameters: (context: Context, version: string) => Parameter[]
+
+    /**
      * Read the parameter values of an instance.
      *
      * @param context the extension manager context
      * @param instanceId the ID of the instance to delete, see {@link Instance#id} and {@link findInstances}.
      * @returns parameter values
      */
-    readInstanceParameters: (context: Context, instanceId: string) => ParameterValues
+    readInstanceParameterValues: (context: Context, instanceId: string) => ParameterValues
 
     /**
      * Delete an instance.
      *
      * @param context the extension manager context
+     * @param extensionVersion version of this extension for which to delete the instance
      * @param instanceId the ID of the instance to delete, see {@link Instance#id} and {@link findInstances}.
      */
-    deleteInstance: (context: Context, instanceId: string) => void
+    deleteInstance: (context: Context, extensionVersion: string, instanceId: string) => void
 }
 
 /**
@@ -103,12 +112,6 @@ export interface Installation {
     name: string
     /** Extension version of this installation. */
     version: string
-    /**
-     * Parameter definitions for creating an instance of this installation.
-     *
-     * The parameters must be declared here per installation since they can differ between versions.
-     */
-    instanceParameters: Parameter[]
 }
 
 /**
@@ -167,8 +170,8 @@ export function registerExtension(extensionToRegister: ExasolExtension): void {
 
 // Re-export interfaces
 export * from "./context";
+export * from "./error";
 export * from "./exasolSchema";
+export * from "./parameters";
 export * from "./sqlClient";
-export { ExaMetadata };
-export { BadRequestError, InternalServerError };
 
