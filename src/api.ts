@@ -3,7 +3,7 @@ import { BadRequestError, InternalServerError } from "./error";
 import { ExaMetadata } from "./exasolSchema";
 import { Parameter } from "./parameters";
 
-export const CURRENT_API_VERSION = "0.1.14";
+export const CURRENT_API_VERSION = "0.1.15";
 
 /**
  * This class represents an extension that can be installed with the extension-manager.
