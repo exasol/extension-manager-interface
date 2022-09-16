@@ -32,7 +32,7 @@ export class BadRequestError extends ApiError {
 }
 
 /**
- * Represents an "not found" error that is propagated to the user.
+ * Represents a "not found" error that is propagated to the user.
  */
  export class NotFoundError extends ApiError {
 
