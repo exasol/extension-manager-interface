@@ -1,6 +1,11 @@
 
 /**
- * Abstract base for parameters.
+ * The definition of a parameter.
+ */
+ export type Parameter = StringParameter | SelectParameter | BooleanParameter;
+ 
+/**
+ * Abstract base interface with common fields for parameter definitions.
  */
 interface BaseParameter {
     /** A unique identifier for the parameter */
@@ -19,7 +24,7 @@ interface BaseParameter {
 }
 
 /**
- * String parameter. Values can be any string that optionally matches the given regular expression.
+ * The definition of a string parameter. Values can be any string that optionally matches the given regular expression.
  */
 export interface StringParameter extends BaseParameter {
     type: "string"
@@ -36,33 +41,30 @@ export interface StringParameter extends BaseParameter {
 }
 
 /**
- * Boolean parameter. Values can only be `true` or `false`.
+ * The definition of a boolean parameter. Values can only be `true` or `false`.
  */
 export interface BooleanParameter extends BaseParameter {
     type: "boolean"
 }
 
 /**
- * Type for a map for select options.
- * Map: value to select -> display name
- */
-export interface OptionsType {
-    [index: string]: string
-}
-
-/**
- * Parameter that allows to select a value from a list.
+ * The definition of a "select" parameter that allows to select a value from a list.
  */
 export interface SelectParameter extends BaseParameter {
     type: "select"
     /** The available options for the parameter values. */
-    options: OptionsType
+    options: SelectOption[]
 }
 
 /**
- * Parameter type.
+ * An option for a {@link SelectParameter}.
  */
-export type Parameter = StringParameter | SelectParameter | BooleanParameter;
+export interface SelectOption {
+    /** The internal ID of this option */
+    id: string
+    /** The name of this options to be displayed to the user */
+    name: string
+}
 
 /**
  * Condition for conditional parameters.

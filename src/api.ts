@@ -1,9 +1,8 @@
 import { Context } from "./context";
-import { BadRequestError, InternalServerError } from "./error";
 import { ExaMetadata } from "./exasolSchema";
 import { Parameter } from "./parameters";
 
-export const CURRENT_API_VERSION = "0.1.14";
+export const CURRENT_API_VERSION = "0.1.15";
 
 /**
  * This class represents an extension that can be installed with the extension-manager.
@@ -19,7 +18,7 @@ export interface ExasolExtension {
     bucketFsUploads?: BucketFSUpload[];
 
     /** List of versions that this installer can install. */
-    installableVersions: string[]
+    installableVersions: ExtensionVersion[]
 
     /**
      * Install this extension.
@@ -78,22 +77,46 @@ export interface ExasolExtension {
     findInstances: (context: Context, version: string) => Instance[]
 
     /**
+     * Get the parameter definitions for creating an instance of this version.
+     * 
+     * @param context the extension manager context
+     * @param version version of this extension for which to get the parameters
+     * @returns the parameter definitions
+     */
+    getInstanceParameters: (context: Context, version: string) => Parameter[]
+
+    /**
      * Read the parameter values of an instance.
      *
      * @param context the extension manager context
+     * @param extensionVersion version of this extension for which to read the instance parameter values
      * @param instanceId the ID of the instance to delete, see {@link Instance#id} and {@link findInstances}.
      * @returns parameter values
      */
-    readInstanceParameters: (context: Context, instanceId: string) => ParameterValues
+    readInstanceParameterValues: (context: Context, extensionVersion: string, instanceId: string) => ParameterValues
 
     /**
      * Delete an instance.
      *
      * @param context the extension manager context
+     * @param extensionVersion version of this extension for which to delete the instance
      * @param instanceId the ID of the instance to delete, see {@link Instance#id} and {@link findInstances}.
      */
-    deleteInstance: (context: Context, instanceId: string) => void
+    deleteInstance: (context: Context, extensionVersion: string, instanceId: string) => void
 }
+
+/**
+ * Defines a version that this extension supports.
+ */
+export interface ExtensionVersion {
+    /** Name of the version, e.g. "1.2.3" */
+    name: string
+    /** Indicates if this is the latest version */
+    latest: boolean
+    /** Indicates if this version is deprecated */
+    deprecated: boolean
+}
+
 
 /**
  * Reference to an installation of this extension.
@@ -103,12 +126,6 @@ export interface Installation {
     name: string
     /** Extension version of this installation. */
     version: string
-    /**
-     * Parameter definitions for creating an instance of this installation.
-     *
-     * The parameters must be declared here per installation since they can differ between versions.
-     */
-    instanceParameters: Parameter[]
 }
 
 /**
@@ -167,8 +184,8 @@ export function registerExtension(extensionToRegister: ExasolExtension): void {
 
 // Re-export interfaces
 export * from "./context";
+export * from "./error";
 export * from "./exasolSchema";
+export * from "./parameters";
 export * from "./sqlClient";
-export { ExaMetadata };
-export { BadRequestError, InternalServerError };
 

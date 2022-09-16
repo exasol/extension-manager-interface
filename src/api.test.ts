@@ -1,5 +1,5 @@
 import { readdir, readFile } from "fs/promises";
-import { BadRequestError, CURRENT_API_VERSION, ExasolExtension, InternalServerError, registerExtension } from "./api";
+import { BadRequestError, CURRENT_API_VERSION, ExasolExtension, InternalServerError, NotFoundError, registerExtension } from "./api";
 
 
 async function readPackageJson() {
@@ -65,22 +65,31 @@ describe("api", () => {
     function createDummyExtension(): ExasolExtension {
         return {
             description: "description",
-            installableVersions: ["v1"],
+            installableVersions: [{ name: "1.2.3", latest: true, deprecated: false }],
             name: "name",
             bucketFsUploads: [],
             addInstance(_context, _version, _params) {
                 return { id: "instanceId", name: "instance" }
-            }, deleteInstance(_context, _instanceId) {
+            },
+            deleteInstance(_context, _instanceId) {
                 // empty by intention
-            }, findInstallations(_context, _exaAllScripts) {
+            },
+            findInstallations(_context, _exaAllScripts) {
                 return []
-            }, findInstances(_context, _version) {
+            },
+            findInstances(_context, _version) {
                 return []
-            }, install(_context, _version) {
+            },
+            install(_context, _version) {
                 // empty by intention
-            }, readInstanceParameters(_context, _version) {
+            },
+            getInstanceParameters(_context, _version) {
+                return []
+            },
+            readInstanceParameterValues(_context, _version, _instanceId) {
                 return { values: [] }
-            }, uninstall(_context, _installation) {
+            },
+            uninstall(_context, _installation) {
                 // empty by intention
             },
         }
@@ -106,6 +115,21 @@ describe("api", () => {
             } catch (error: any) {
                 expect(error).toBeInstanceOf(Error);
                 expect(error.status).toBe(400)
+                expect(error.message).toBe("message")
+            }
+        });
+    })
+
+    describe("NotFoundError", () => {
+        it("can be thrown with new", () => {
+            expect(() => { throw new NotFoundError("message") }).toThrow(Error);
+        });
+        it("contains status and message", () => {
+            try {
+                throw new NotFoundError("message");
+            } catch (error: any) {
+                expect(error).toBeInstanceOf(Error);
+                expect(error.status).toBe(404)
                 expect(error.message).toBe("message")
             }
         });
