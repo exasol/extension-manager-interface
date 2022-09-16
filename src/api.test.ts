@@ -1,5 +1,5 @@
 import { readdir, readFile } from "fs/promises";
-import { BadRequestError, CURRENT_API_VERSION, ExasolExtension, InternalServerError, registerExtension } from "./api";
+import { BadRequestError, CURRENT_API_VERSION, ExasolExtension, InternalServerError, NotFoundError, registerExtension } from "./api";
 
 
 async function readPackageJson() {
@@ -115,6 +115,21 @@ describe("api", () => {
             } catch (error: any) {
                 expect(error).toBeInstanceOf(Error);
                 expect(error.status).toBe(400)
+                expect(error.message).toBe("message")
+            }
+        });
+    })
+
+    describe("NotFoundError", () => {
+        it("can be thrown with new", () => {
+            expect(() => { throw new NotFoundError("message") }).toThrow(Error);
+        });
+        it("contains status and message", () => {
+            try {
+                throw new NotFoundError("message");
+            } catch (error: any) {
+                expect(error).toBeInstanceOf(Error);
+                expect(error.status).toBe(404)
                 expect(error.message).toBe("message")
             }
         });

@@ -13,6 +13,7 @@ This release contains the following changes:
 * Add parameter `extensionVersion` to function `deleteInstance()`
 * Update type of the `options` field of `SelectParameter` from a map to a list of objects
 * The `installableVersions` now is a list of `ExtensionVersion` objects instead of strings
+* Added error `NotFoundError` with status 404
 
 ## Features
 

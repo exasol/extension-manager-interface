@@ -18,7 +18,7 @@ class ApiError extends Error {
 }
 
 /**
- * Represents an error that is propagated to the user.
+ * Represents an general error that is propagated to the user.
  */
 export class BadRequestError extends ApiError {
 
@@ -28,6 +28,20 @@ export class BadRequestError extends ApiError {
      */
     constructor(message: string) {
         super(400, message)
+    }
+}
+
+/**
+ * Represents an "not found" error that is propagated to the user.
+ */
+ export class NotFoundError extends ApiError {
+
+    /**
+     * Creates a new NotFoundError instance.
+     * @param message the error message.
+     */
+    constructor(message: string) {
+        super(404, message)
     }
 }
 
