@@ -1,4 +1,4 @@
-# Extension Manager Interface 0.1.15, released 2022-09-15
+# Extension Manager Interface 0.1.15, released 2022-09-16
 
 Code name: Get parameters
 
