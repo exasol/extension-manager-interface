@@ -86,7 +86,7 @@ describe("api", () => {
             getInstanceParameters(_context, _version) {
                 return []
             },
-            readInstanceParameterValues(_context, _version) {
+            readInstanceParameterValues(_context, _version, _instanceId) {
                 return { values: [] }
             },
             uninstall(_context, _installation) {

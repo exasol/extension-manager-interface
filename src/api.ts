@@ -89,10 +89,11 @@ export interface ExasolExtension {
      * Read the parameter values of an instance.
      *
      * @param context the extension manager context
+     * @param extensionVersion version of this extension for which to read the instance parameter values
      * @param instanceId the ID of the instance to delete, see {@link Instance#id} and {@link findInstances}.
      * @returns parameter values
      */
-    readInstanceParameterValues: (context: Context, instanceId: string) => ParameterValues
+    readInstanceParameterValues: (context: Context, extensionVersion: string, instanceId: string) => ParameterValues
 
     /**
      * Delete an instance.
