@@ -1,4 +1,4 @@
-# Extension Manager Interface 0.1.16, released 2023-04-03
+# Extension Manager Interface 0.1.16, released 2023-04-04
 
 Code name: Upgrade dependencies on top of 0.1.15
 
