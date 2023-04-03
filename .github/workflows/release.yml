@@ -2,12 +2,11 @@ name: Release
 on:
   release:
     types: [released]
-  workflow_dispatch:
 
 jobs:
   release:
     name: Build and release
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -21,6 +20,6 @@ jobs:
       - run: npm run build
       - run: npm pack
       - name: Publish package on NPM 📦
-        run: echo npm publish --access public
+        run: npm publish --access public
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
