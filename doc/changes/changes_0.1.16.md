@@ -6,9 +6,13 @@ Code name: Upgrade dependencies on top of 0.1.15
 
 This release fixes CVE-2022-46175 in build time dependency `json5` and adds project-keeper.
 
-## Features
+## Bugfixes
 
 * #38: Upgraded dependencies & added project-keeper
+
+## Refactoring
+
+* #3: Automated release process
 
 ## Dependency Updates
 
