@@ -2,7 +2,7 @@ import { Context } from "./context";
 import { ExaMetadata } from "./exasolSchema";
 import { Parameter } from "./parameters";
 
-export const CURRENT_API_VERSION = "0.1.15";
+export const CURRENT_API_VERSION = "0.1.16";
 
 /**
  * This class represents an extension that can be installed with the extension-manager.
