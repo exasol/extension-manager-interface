@@ -9,6 +9,7 @@ This release adds a field for a category to the extension. This allows extension
 ## Features
 
 * #42: Added category field
+
 ## Dependency Updates
 
 ### Development Dependency Updates
