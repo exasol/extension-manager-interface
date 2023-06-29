@@ -1,4 +1,4 @@
-# Developers Guide
+# Developer Guide
 
 ## Running Unit Tests
 
