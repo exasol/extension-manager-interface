@@ -2,18 +2,18 @@ import { Context } from "./context";
 import { ExaMetadata } from "./exasolSchema";
 import { Parameter } from "./parameters";
 
-export const CURRENT_API_VERSION = "0.1.16";
+export const CURRENT_API_VERSION = "0.2.0";
 
 /**
- * This class represents an extension that can be installed with the extension-manager.
- *
- * Wondering why we picked TypeScript as an interface? Check the design.md / Extension API
+ * This class represents an extension that can be installed and managed with the extension-manager.
  */
 export interface ExasolExtension {
     /** Name of the extension */
     name: string;
     /** Description of the extension */
     description: string;
+    /** Extension category, e.g. "driver" or "virtual schema" */
+    category: string;
     /** Files that this extension requires in BucketFS. */
     bucketFsUploads?: BucketFSUpload[];
 
