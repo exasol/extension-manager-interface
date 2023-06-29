@@ -12,6 +12,8 @@ export interface ExasolExtension {
     name: string;
     /** Description of the extension */
     description: string;
+    /** Extension category, e.g. "driver" or "virtual schema" */
+    category: string;
     /** Files that this extension requires in BucketFS. */
     bucketFsUploads?: BucketFSUpload[];
 

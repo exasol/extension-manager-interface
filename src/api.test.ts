@@ -64,9 +64,10 @@ describe("api", () => {
 
     function createDummyExtension(): ExasolExtension {
         return {
-            description: "description",
-            installableVersions: [{ name: "1.2.3", latest: true, deprecated: false }],
             name: "name",
+            description: "description",
+            category: "category",
+            installableVersions: [{ name: "1.2.3", latest: true, deprecated: false }],
             bucketFsUploads: [],
             addInstance(_context, _version, _params) {
                 return { id: "instanceId", name: "instance" }
@@ -95,13 +96,26 @@ describe("api", () => {
         }
     }
 
+    function getRegisteredExtension(): any {
+        return (global as any).installedExtension
+    }
+
     describe("registerExtension()", () => {
         it("registers an extension", () => {
             const ext = createDummyExtension()
             registerExtension(ext)
-            const installedExtension: any = (global as any).installedExtension
+            const installedExtension: any = getRegisteredExtension()
             expect(installedExtension.apiVersion).toBe(CURRENT_API_VERSION)
             expect(installedExtension.extension).toBe(ext)
+        })
+    })
+
+    describe("extension properties", () => {
+        it("category", () => {
+            const ext = createDummyExtension()
+            registerExtension(ext)
+            const installedExtension: any = getRegisteredExtension()
+            expect(installedExtension.extension.category).toBe("category")
         })
     })
 
