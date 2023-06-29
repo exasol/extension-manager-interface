@@ -39,7 +39,8 @@ function byMajorMinorPatch(a: VersionNumber, b: VersionNumber): number {
 
 async function getChangelogVersions(): Promise<VersionNumber[]> {
     const files = await readdir("doc/changes")
-    return files.map(name => name.match(/^changes_(\d+)\.(\d+)\.(\d+)\.md$/))
+    const changesFilePattern = RegExp(/^changes_(\d+)\.(\d+)\.(\d+)\.md$/);
+    return files.map(name => changesFilePattern.exec(name))
         .filter(match => match !== null)
         .map(match => new VersionNumber(match))
 }
