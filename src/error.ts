@@ -18,7 +18,7 @@ class ApiError extends Error {
 }
 
 /**
- * Represents an general error that is propagated to the user.
+ * Represents a general error that is propagated to the user.
  */
 export class BadRequestError extends ApiError {
 
@@ -34,7 +34,7 @@ export class BadRequestError extends ApiError {
 /**
  * Represents a "not found" error that is propagated to the user.
  */
- export class NotFoundError extends ApiError {
+export class NotFoundError extends ApiError {
 
     /**
      * Creates a new NotFoundError instance.
@@ -46,7 +46,7 @@ export class BadRequestError extends ApiError {
 }
 
 /**
- * Represents an internal server error that is not propagated to the user but only logged.
+ * Represents an internal server error that is **not** propagated to the user but only logged.
  */
 export class InternalServerError extends Error {
 
