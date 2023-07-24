@@ -58,9 +58,10 @@ export interface ExasolExtension {
      * Upgrade all instances of this extension to the latest version.
      * 
      * @param context the extension manager context
+     * @returns information about the successful upgrade
      * @throws {@link BadRequestError} if upgrading the this extension is not supported or if the latest version is already installed.
      */
-    upgrade: (context: Context) => void
+    upgrade: (context: Context) => UpgradeResult
 
     /**
      * Add an instance of this extension
@@ -144,6 +145,16 @@ export interface Instance {
     id: string
     /** Name of the instance. Usually it's the name of the virtual schema. This is intended for displaying to the user. */
     name: string
+}
+
+/**
+ * Information about the successful upgrade of this extension.
+ */
+export interface UpgradeResult {
+    /** Version that was installed before the upgrade. */
+    previousVersion: string
+    /** New version that is installed after the upgrade. */
+    newVersion: string
 }
 
 /**

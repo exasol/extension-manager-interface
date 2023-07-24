@@ -96,7 +96,7 @@ describe("api", () => {
                 // empty by intention
             },
             upgrade(context) {
-                // empty by intention
+                return { previousVersion: "0.1.0", newVersion: "0.2.0" }
             },
         }
     }
