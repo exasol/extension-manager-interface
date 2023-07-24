@@ -55,6 +55,14 @@ export interface ExasolExtension {
     uninstall: (context: Context, version: string) => void
 
     /**
+     * Upgrade all instances of this extension to the latest version.
+     * 
+     * @param context the extension manager context
+     * @throws {@link BadRequestError} if upgrading the this extension is not supported or if the latest version is already installed.
+     */
+    upgrade: (context: Context) => void
+
+    /**
      * Add an instance of this extension
      *
      * An instance of an extension is for example a Virtual Schema.
