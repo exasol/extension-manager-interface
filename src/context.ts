@@ -1,3 +1,4 @@
+import { ExaScriptsRow } from "./exasolSchema"
 import { SqlClient } from "./sqlClient"
 
 /**
@@ -18,6 +19,11 @@ export interface Context {
      * An object providing BucketFS related methods.
      */
     bucketFs: BucketFs
+
+    /**
+     * An object giving access to Exasol metadata tables.
+     */
+    metadata: ExaMetadataService
 }
 
 export interface BucketFs {
@@ -26,7 +32,21 @@ export interface BucketFs {
      * 
      * @param fileName the filename to resolve
      * @returns the file's absolute path in BucketFS
+     * @throws an error if no file with this name exists
      */
     resolvePath: (fileName: string) => string
 }
 
+/**
+ * An interface that allows retrieving data from Exasol metadata tables.
+ */
+export interface ExaMetadataService {
+
+    /**
+     * Read an entry from the `SYS.EXA_ALL_SCRIPTS` table.
+     * @param schema the schema containing the script
+     * @param name the name of the script
+     * @returns the table row
+     */
+    getScriptByName(schema: string, name: string): ExaScriptsRow
+}

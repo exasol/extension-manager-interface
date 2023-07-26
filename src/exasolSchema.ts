@@ -9,14 +9,14 @@ export interface ExaMetadata {
 }
 
 /**
- * The content of the SYS.EXA_ALL_SCRIPTS table.
+ * The content of the `SYS.EXA_ALL_SCRIPTS` table.
  */
 export interface ExaScripts {
     rows: ExaScriptsRow[]
 }
 
 /**
- * A single row of the SYS.EXA_ALL_SCRIPTS table.
+ * A single row of the `SYS.EXA_ALL_SCRIPTS` table.
  */
 export interface ExaScriptsRow {
     schema: string
@@ -29,14 +29,14 @@ export interface ExaScriptsRow {
 }
 
 /**
- * The content of the SYS.EXA_ALL_VIRTUAL_SCHEMAS table.
+ * The content of the `SYS.EXA_ALL_VIRTUAL_SCHEMAS` table.
  */
 export interface ExaVirtualSchemas {
     rows: ExaVirtualSchemasRow[]
 }
 
 /**
- * A single row of the SYS.EXA_ALL_VIRTUAL_SCHEMAS table.
+ * A single row of the `SYS.EXA_ALL_VIRTUAL_SCHEMAS` table.
  */
 export interface ExaVirtualSchemasRow {
     name: string
@@ -47,14 +47,14 @@ export interface ExaVirtualSchemasRow {
 }
 
 /**
- * The content of the SYS.EXA_ALL_VIRTUAL_SCHEMA_PROPERTIES table.
+ * The content of the `SYS.EXA_ALL_VIRTUAL_SCHEMA_PROPERTIES` table.
  */
 export interface ExaVirtualSchemaProperties {
     rows: ExaVirtualSchemaPropertiesRow[]
 }
 
 /**
- * A single row of the SYS.EXA_ALL_VIRTUAL_SCHEMA_PROPERTIES table.
+ * A single row of the `SYS.EXA_ALL_VIRTUAL_SCHEMA_PROPERTIES` table.
  */
 export interface ExaVirtualSchemaPropertiesRow {
     schemaName: string
