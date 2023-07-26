@@ -47,6 +47,7 @@ export interface ExaMetadataService {
      * This finds only scripts in the extension schema.
      * @param scriptName the name of the script
      * @returns the table row
+     * @throws an error if no script with the given name exists
      */
     getScriptByName(scriptName: string): ExaScriptsRow
 }
