@@ -6,7 +6,7 @@ Code name: Upgrade extensions
 
 This release allows extensions to upgrade installations to the latest version by implementing the `upgrade()` function.
 
-The release also allows reading the table using `context.metadata.getScriptByName('schema', 'name')`.
+The release also allows extensions to read from the `SYS.EXA_ALL_SCRIPTS` table using `context.metadata.getScriptByName('name')`.
 
 ## Features
 

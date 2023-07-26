@@ -41,12 +41,12 @@ export interface BucketFs {
  * An interface that allows retrieving data from Exasol metadata tables.
  */
 export interface ExaMetadataService {
-
     /**
      * Read an entry from the `SYS.EXA_ALL_SCRIPTS` table.
-     * @param schema the schema containing the script
-     * @param name the name of the script
+     * 
+     * This finds only scripts in the extension schema.
+     * @param scriptName the name of the script
      * @returns the table row
      */
-    getScriptByName(schema: string, name: string): ExaScriptsRow
+    getScriptByName(scriptName: string): ExaScriptsRow
 }
