@@ -59,11 +59,4 @@ export class NotModified extends ApiError {
  * Represents an internal server error that is **not** propagated to the user but only logged (status code 500).
  */
 export class InternalServerError extends Error {
-    /**
-     * Creates a new InternalServerError instance.
-     * @param message the error message.
-     */
-    constructor(message: string) {
-        super(message)
-    }
 }
