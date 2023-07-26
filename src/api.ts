@@ -1,4 +1,7 @@
 import { Context } from "./context";
+// Imports required for JSDoc comments
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { BadRequestError, NotFoundError, NotModified } from "./error";
 import { ExaMetadata } from "./exasolSchema";
 import { Parameter } from "./parameters";
 
@@ -50,7 +53,7 @@ export interface ExasolExtension {
      *
      * @param context the extension manager context
      * @param version the version to uninstall
-     * @throws {@link BadRequestError} if there are still instances of this extension.
+     * @throws a {@link BadRequestError} if there are still instances of this extension.
      */
     uninstall: (context: Context, version: string) => void
 
@@ -59,7 +62,8 @@ export interface ExasolExtension {
      * 
      * @param context the extension manager context
      * @returns information about the successful upgrade
-     * @throws {@link BadRequestError} if upgrading the this extension is not supported or if the latest version is already installed.
+     * @throws a {@link NotFoundError} if the extension is not yet installed
+     * @throws a {@link NotModified} if the extension is already installed in the latest version
      */
     upgrade: (context: Context) => UpgradeResult
 
@@ -72,7 +76,7 @@ export interface ExasolExtension {
      * @param version the version of the extension for which to add an instance
      * @param params parameter values
      * @returns newly created instance
-     * @throws {@link BadRequestError} if an unsupported version was specified.
+     * @throws a {@link BadRequestError} if an unsupported version was specified.
      */
     addInstance: (context: Context, version: string, params: ParameterValues) => Instance
 
