@@ -21,4 +21,4 @@ The release also allows extensions to read from the `SYS.EXA_ALL_SCRIPTS` table 
 * Updated `ts-jest:^29.1.0` to `^29.1.1`
 * Updated `@types/jest:^29.5.2` to `^29.5.3`
 * Updated `@typescript-eslint/eslint-plugin:^5.60.1` to `^6.2.0`
-* Updated `jest:^29.5.0` to `^29.6.1`
+* Updated `jest:^29.5.0` to `^29.6.2`
