@@ -1,5 +1,5 @@
 import { readdir, readFile } from "fs/promises";
-import { BadRequestError, CURRENT_API_VERSION, ExasolExtension, InternalServerError, NotFoundError, registerExtension } from "./api";
+import { BadRequestError, CURRENT_API_VERSION, ExasolExtension, InternalServerError, NotFoundError, NotModifiedError, PreconditionFailedError, registerExtension } from "./api";
 
 
 async function readPackageJson() {
@@ -151,6 +151,36 @@ describe("api", () => {
                     expect(error).toBeInstanceOf(Error);
                     expect(error.status).toBe(404)
                     expect(error.message).toBe("message")
+                }
+            });
+        })
+
+        describe("PreconditionFailedError", () => {
+            it("can be thrown with new", () => {
+                expect(() => { throw new PreconditionFailedError("message") }).toThrow(Error);
+            });
+            it("contains status and message", () => {
+                try {
+                    throw new PreconditionFailedError("message");
+                } catch (error: any) {
+                    expect(error).toBeInstanceOf(Error);
+                    expect(error.status).toBe(412)
+                    expect(error.message).toBe("message")
+                }
+            });
+        })
+
+        describe("NotModifiedError", () => {
+            it("can be thrown with new", () => {
+                expect(() => { throw new NotModifiedError() }).toThrow(Error);
+            });
+            it("contains status and message", () => {
+                try {
+                    throw new NotModifiedError();
+                } catch (error: any) {
+                    expect(error).toBeInstanceOf(Error);
+                    expect(error.status).toBe(304)
+                    expect(error.message).toBe("")
                 }
             });
         })

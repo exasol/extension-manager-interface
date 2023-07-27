@@ -1,7 +1,7 @@
 import { Context } from "./context";
 // Imports required for JSDoc comments
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { BadRequestError, NotFoundError, NotModified } from "./error";
+import { BadRequestError, NotFoundError, PreconditionFailedError } from "./error";
 import { ExaMetadata } from "./exasolSchema";
 import { Parameter } from "./parameters";
 
@@ -63,7 +63,7 @@ export interface ExasolExtension {
      * @param context the extension manager context
      * @returns information about the successful upgrade
      * @throws a {@link NotFoundError} if the extension is not yet installed
-     * @throws a {@link NotModified} if the extension is already installed in the latest version
+     * @throws a {@link PreconditionFailedError} if the extension is already installed in the latest version or if there is another issue with the installation
      */
     upgrade: (context: Context) => UpgradeResult
 

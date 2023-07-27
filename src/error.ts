@@ -43,15 +43,27 @@ export class NotFoundError extends ApiError {
 }
 
 /**
- * Represents a "not modified" error that is propagated to the user (status code 304).
+ * Represents a "precondition failed" error that is propagated to the user (status code 412).
  */
-export class NotModified extends ApiError {
+export class PreconditionFailedError extends ApiError {
     /**
-     * Creates a new NotModified instance.
+     * Creates a new PreconditionFailedError instance.
      * @param message the error message.
      */
     constructor(message: string) {
-        super(304, message)
+        super(412, message)
+    }
+}
+
+/**
+ * Represents a "not modified" error that is propagated to the user (status code 304).
+ */
+export class NotModifiedError extends ApiError {
+    /**
+     * Creates a new NotModified instance. This error does not support an error message.
+     */
+    constructor() {
+        super(304, undefined)
     }
 }
 
