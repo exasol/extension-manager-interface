@@ -1,8 +1,11 @@
 import { Context } from "./context";
+// Imports required for JSDoc comments
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { BadRequestError, NotFoundError, PreconditionFailedError } from "./error";
 import { ExaMetadata } from "./exasolSchema";
 import { Parameter } from "./parameters";
 
-export const CURRENT_API_VERSION = "0.2.0";
+export const CURRENT_API_VERSION = "0.3.0";
 
 /**
  * This class represents an extension that can be installed and managed with the extension-manager.
@@ -50,9 +53,19 @@ export interface ExasolExtension {
      *
      * @param context the extension manager context
      * @param version the version to uninstall
-     * @throws {@link BadRequestError} if there are still instances of this extension.
+     * @throws a {@link BadRequestError} if there are still instances of this extension.
      */
     uninstall: (context: Context, version: string) => void
+
+    /**
+     * Upgrade all instances of this extension to the latest version.
+     * 
+     * @param context the extension manager context
+     * @returns information about the successful upgrade
+     * @throws a {@link NotFoundError} if the extension is not yet installed
+     * @throws a {@link PreconditionFailedError} if the extension is already installed in the latest version or if there is another issue with the installation
+     */
+    upgrade: (context: Context) => UpgradeResult
 
     /**
      * Add an instance of this extension
@@ -63,7 +76,7 @@ export interface ExasolExtension {
      * @param version the version of the extension for which to add an instance
      * @param params parameter values
      * @returns newly created instance
-     * @throws {@link BadRequestError} if an unsupported version was specified.
+     * @throws a {@link BadRequestError} if an unsupported version was specified.
      */
     addInstance: (context: Context, version: string, params: ParameterValues) => Instance
 
@@ -136,6 +149,16 @@ export interface Instance {
     id: string
     /** Name of the instance. Usually it's the name of the virtual schema. This is intended for displaying to the user. */
     name: string
+}
+
+/**
+ * Information about the successful upgrade of this extension.
+ */
+export interface UpgradeResult {
+    /** Version that was installed before the upgrade. */
+    previousVersion: string
+    /** New version that is installed after the upgrade. */
+    newVersion: string
 }
 
 /**

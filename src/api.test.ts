@@ -1,5 +1,5 @@
 import { readdir, readFile } from "fs/promises";
-import { BadRequestError, CURRENT_API_VERSION, ExasolExtension, InternalServerError, NotFoundError, registerExtension } from "./api";
+import { BadRequestError, CURRENT_API_VERSION, ExasolExtension, InternalServerError, NotFoundError, PreconditionFailedError, registerExtension } from "./api";
 
 
 async function readPackageJson() {
@@ -95,6 +95,9 @@ describe("api", () => {
             uninstall(_context, _installation) {
                 // empty by intention
             },
+            upgrade(context) {
+                return { previousVersion: "0.1.0", newVersion: "0.2.0" }
+            },
         }
     }
 
@@ -121,48 +124,65 @@ describe("api", () => {
         })
     })
 
-    describe("BadRequestError", () => {
-        it("can be thrown with new", () => {
-            expect(() => { throw new BadRequestError("message") }).toThrow(Error);
-        });
-        it("contains status and message", () => {
-            try {
-                throw new BadRequestError("message");
-            } catch (error: any) {
-                expect(error).toBeInstanceOf(Error);
-                expect(error.status).toBe(400)
-                expect(error.message).toBe("message")
-            }
-        });
-    })
+    describe("errors", () => {
+        describe("BadRequestError", () => {
+            it("can be thrown with new", () => {
+                expect(() => { throw new BadRequestError("message") }).toThrow(Error);
+            });
+            it("contains status and message", () => {
+                try {
+                    throw new BadRequestError("message");
+                } catch (error: any) {
+                    expect(error).toBeInstanceOf(Error);
+                    expect(error.status).toBe(400)
+                    expect(error.message).toBe("message")
+                }
+            });
+        })
 
-    describe("NotFoundError", () => {
-        it("can be thrown with new", () => {
-            expect(() => { throw new NotFoundError("message") }).toThrow(Error);
-        });
-        it("contains status and message", () => {
-            try {
-                throw new NotFoundError("message");
-            } catch (error: any) {
-                expect(error).toBeInstanceOf(Error);
-                expect(error.status).toBe(404)
-                expect(error.message).toBe("message")
-            }
-        });
-    })
+        describe("NotFoundError", () => {
+            it("can be thrown with new", () => {
+                expect(() => { throw new NotFoundError("message") }).toThrow(Error);
+            });
+            it("contains status and message", () => {
+                try {
+                    throw new NotFoundError("message");
+                } catch (error: any) {
+                    expect(error).toBeInstanceOf(Error);
+                    expect(error.status).toBe(404)
+                    expect(error.message).toBe("message")
+                }
+            });
+        })
 
-    describe("InternalServerError", () => {
-        it("can be thrown with new", () => {
-            expect(() => { throw new InternalServerError("message") }).toThrow(Error);
-        });
-        it("contains message but no status", () => {
-            try {
-                throw new InternalServerError("message");
-            } catch (error: any) {
-                expect(error).toBeInstanceOf(Error);
-                expect(error.status).toBeUndefined()
-                expect(error.message).toBe("message")
-            }
+        describe("PreconditionFailedError", () => {
+            it("can be thrown with new", () => {
+                expect(() => { throw new PreconditionFailedError("message") }).toThrow(Error);
+            });
+            it("contains status and message", () => {
+                try {
+                    throw new PreconditionFailedError("message");
+                } catch (error: any) {
+                    expect(error).toBeInstanceOf(Error);
+                    expect(error.status).toBe(412)
+                    expect(error.message).toBe("message")
+                }
+            });
+        })
+
+        describe("InternalServerError", () => {
+            it("can be thrown with new", () => {
+                expect(() => { throw new InternalServerError("message") }).toThrow(Error);
+            });
+            it("contains message but no status", () => {
+                try {
+                    throw new InternalServerError("message");
+                } catch (error: any) {
+                    expect(error).toBeInstanceOf(Error);
+                    expect(error.status).toBeUndefined()
+                    expect(error.message).toBe("message")
+                }
+            });
         });
     })
 })

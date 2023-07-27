@@ -4,7 +4,6 @@
  */
 class ApiError extends Error {
     readonly status: number;
-
     /**
      * Creates a new ApiError instance.
      * @param status the HTTP status code to use in the response.
@@ -18,10 +17,9 @@ class ApiError extends Error {
 }
 
 /**
- * Represents an general error that is propagated to the user.
+ * Represents a general error that is propagated to the user (status code 400).
  */
 export class BadRequestError extends ApiError {
-
     /**
      * Creates a new BadRequestError instance.
      * @param message the error message.
@@ -32,10 +30,9 @@ export class BadRequestError extends ApiError {
 }
 
 /**
- * Represents a "not found" error that is propagated to the user.
+ * Represents a "not found" error that is propagated to the user (status code 404).
  */
- export class NotFoundError extends ApiError {
-
+export class NotFoundError extends ApiError {
     /**
      * Creates a new NotFoundError instance.
      * @param message the error message.
@@ -46,15 +43,20 @@ export class BadRequestError extends ApiError {
 }
 
 /**
- * Represents an internal server error that is not propagated to the user but only logged.
+ * Represents a "precondition failed" error that is propagated to the user (status code 412).
  */
-export class InternalServerError extends Error {
-
+export class PreconditionFailedError extends ApiError {
     /**
-     * Creates a new InternalServerError instance.
+     * Creates a new PreconditionFailedError instance.
      * @param message the error message.
      */
     constructor(message: string) {
-        super(message)
+        super(412, message)
     }
+}
+
+/**
+ * Represents an internal server error. The extension manager will log the error and send an HTTP response with status code 500 but replacing the specific error message with a static generic message.
+ */
+export class InternalServerError extends Error {
 }
