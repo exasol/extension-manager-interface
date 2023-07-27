@@ -1,4 +1,4 @@
-# Extension Manager Interface 0.3.0, released 2023-??-??
+# Extension Manager Interface 0.3.0, released 2023-07-27
 
 Code name: Upgrade extensions
 
