@@ -1,5 +1,5 @@
 import { readdir, readFile } from "fs/promises";
-import { BadRequestError, CURRENT_API_VERSION, ExasolExtension, InternalServerError, NotFoundError, NotModifiedError, PreconditionFailedError, registerExtension } from "./api";
+import { BadRequestError, CURRENT_API_VERSION, ExasolExtension, InternalServerError, NotFoundError, PreconditionFailedError, registerExtension } from "./api";
 
 
 async function readPackageJson() {
