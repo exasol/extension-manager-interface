@@ -170,21 +170,6 @@ describe("api", () => {
             });
         })
 
-        describe("NotModifiedError", () => {
-            it("can be thrown with new", () => {
-                expect(() => { throw new NotModifiedError() }).toThrow(Error);
-            });
-            it("contains status and message", () => {
-                try {
-                    throw new NotModifiedError();
-                } catch (error: any) {
-                    expect(error).toBeInstanceOf(Error);
-                    expect(error.status).toBe(304)
-                    expect(error.message).toBe("")
-                }
-            });
-        })
-
         describe("InternalServerError", () => {
             it("can be thrown with new", () => {
                 expect(() => { throw new InternalServerError("message") }).toThrow(Error);

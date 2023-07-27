@@ -56,19 +56,7 @@ export class PreconditionFailedError extends ApiError {
 }
 
 /**
- * Represents a "not modified" error that is propagated to the user (status code 304).
- */
-export class NotModifiedError extends ApiError {
-    /**
-     * Creates a new NotModified instance. This error does not support an error message.
-     */
-    constructor() {
-        super(304, undefined)
-    }
-}
-
-/**
- * Represents an internal server error that is **not** propagated to the user but only logged (status code 500).
+ * Represents an internal server error. The extension manager will log the error and send an HTTP response with status code 500 but replacing the specific error message with a static generic message.
  */
 export class InternalServerError extends Error {
 }
