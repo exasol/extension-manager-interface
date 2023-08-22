@@ -4,13 +4,12 @@
     "noEmitOnError": true,
     "removeComments": false,
     "sourceMap": true,
-    "target": "es5",
+    "target": "ES2015",
     "outDir": "dist/",
+    "moduleResolution": "NodeNext",
     "declaration": true,
     "strict": true,
     "strictNullChecks": false
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }
