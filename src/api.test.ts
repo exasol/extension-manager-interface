@@ -95,7 +95,7 @@ describe("api", () => {
             uninstall(_context, _installation) {
                 // empty by intention
             },
-            upgrade(context) {
+            upgrade(_context) {
                 return { previousVersion: "0.1.0", newVersion: "0.2.0" }
             },
         }
