@@ -8,7 +8,7 @@
     "scripts": {
         "build": "tsc --build",
         "clean": "tsc --build --clean",
-        "test": "jest",
+        "test": "jest --silent",
         "test-watch": "jest --watch",
         "lint": "eslint --report-unused-disable-directives --exit-on-fatal-error ./src/"
     },

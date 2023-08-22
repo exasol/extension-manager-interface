@@ -50,7 +50,7 @@ function findRequiredScripts(expectedScripts: ScriptDefinition[], allScripts: Ma
 /**
  * Verify that all scripts have the same version.
  * @param scripts installed scripts
- * @returns a failure {@link Result} if not all scripts have the same version, else a successful {@link Result} with the common version.
+ * @returns a {@link FailureResult} if not all scripts have the same version, else a {@link SuccessResult} with the common version.
  */
 export function validateVersions(scripts: InstalledScripts): Result<string> {
     if (scripts.size === 0) {

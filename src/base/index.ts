@@ -1,5 +1,7 @@
 import { Context } from "vm";
 import { BucketFSUpload, ExaMetadata, ExasolExtension, ParameterValues, registerExtension } from "../api";
+import { VersionExtractor } from "./adapterScript";
+import { findInstallations } from "./findInstallations";
 
 /** Definition of an Exasol `SCRIPT` with all information required for creating it in the database. */
 export interface ScriptDefinition {
@@ -16,6 +18,7 @@ export interface BaseExtension {
     version: string
     bucketFsUploads: BucketFSUpload[]
     scripts: ScriptDefinition[]
+    scriptVersionExtractor: VersionExtractor
 }
 
 /**
@@ -27,15 +30,15 @@ export function registerBaseExtension(extensionToRegister: BaseExtension): void 
     registerExtension(createExtension(extensionToRegister));
 }
 
-function createExtension(extension: BaseExtension): ExasolExtension {
+export function createExtension(baseExtension: BaseExtension): ExasolExtension {
     return {
-        name: extension.name,
-        description: extension.description,
-        category: extension.category,
-        installableVersions: [{ name: extension.version, latest: true, deprecated: false }],
-        bucketFsUploads: extension.bucketFsUploads,
+        name: baseExtension.name,
+        description: baseExtension.description,
+        category: baseExtension.category,
+        installableVersions: [{ name: baseExtension.version, latest: true, deprecated: false }],
+        bucketFsUploads: baseExtension.bucketFsUploads,
         findInstallations(context: Context, metadata: ExaMetadata) {
-            return []
+            return findInstallations(metadata.allScripts.rows, baseExtension)
         },
         install(context: Context, version: string): void {
             // empty by intention

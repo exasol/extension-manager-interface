@@ -14,9 +14,15 @@ function def({ name, type = "SET", args = "args", scriptClass = "script class" }
     return { name, type, args, scriptClass };
 }
 
+function scriptWithVersion(name: string, version: string): AdapterScript {
+    return new AdapterScript(script({ name, text: version }), mockVersionExtractor)
+}
+function scriptWithoutVersion(name: string, versionFailureMessage: string): AdapterScript {
+    return new AdapterScript(script({ name }), failingVersionExtractor(versionFailureMessage))
+}
+
 const mockVersionExtractor: VersionExtractor = (adapterScriptText: string) => successResult(adapterScriptText);
 const failingVersionExtractor: (failureMessage: string) => VersionExtractor = (failureMessage: string) => (adapterScriptText: string) => failureResult(failureMessage);
-
 
 describe("validateScripts", () => {
     describe("validateInstalledScripts()", () => {
@@ -53,12 +59,7 @@ describe("validateScripts", () => {
 
         describe("validateVersions()", () => {
             const version = "1.2.3"
-            function scriptWithVersion(name: string, version: string): AdapterScript {
-                return new AdapterScript(script({ name, text: version }), mockVersionExtractor)
-            }
-            function scriptWithoutVersion(name: string, versionFailureMessage: string): AdapterScript {
-                return new AdapterScript(script({ name }), failingVersionExtractor(versionFailureMessage))
-            }
+
             function installedScripts(scripts: AdapterScript[]): InstalledScripts {
                 const installedScripts = new Map()
                 scripts.forEach(script => installedScripts.set(script.name, script))
