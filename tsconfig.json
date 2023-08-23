@@ -4,13 +4,12 @@
     "noEmitOnError": true,
     "removeComments": false,
     "sourceMap": true,
-    "target": "ES2015",
-    "outDir": "dist/",
+    "target": "ES6",
     "moduleResolution": "NodeNext",
-    "esModuleInterop": true,
+    "outDir": "dist/",
     "declaration": true,
     "strict": true,
     "strictNullChecks": false
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "jest.config.ts"]
 }

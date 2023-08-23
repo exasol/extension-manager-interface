@@ -13,7 +13,7 @@
         "lint": "eslint --report-unused-disable-directives --exit-on-fatal-error ./src/"
     },
     "devDependencies": {
-        "@types/jest": "^29.5.3",
+        "@jest/globals": "^29.6.3",
         "@typescript-eslint/eslint-plugin": "^6.4.0",
         "@typescript-eslint/parser": "^6.4.0",
         "eslint": "^8.47.0",
