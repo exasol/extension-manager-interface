@@ -1,9 +1,9 @@
-import { Context } from "vm";
-import { BucketFSUpload, ExaMetadata, ExasolExtension, ParameterValues, registerExtension } from "../api";
+import { Context, ExaMetadata, ExasolExtension, ParameterValues, registerExtension } from "../api";
 import { VersionExtractor } from "./adapterScript";
 import { findInstallations } from "./findInstallations";
+import { installExtension } from "./install";
 
-/** Definition of an Exasol `SCRIPT` with all information required for creating it in the database. */
+/** Definition of a Java based Exasol `SCRIPT` with all information required for creating it in the database. */
 export interface ScriptDefinition {
     name: string
     type: "SET" | "SCALAR"
@@ -11,12 +11,15 @@ export interface ScriptDefinition {
     scriptClass: string
 }
 
-export interface BaseExtension {
+export interface JavaBaseExtension {
     name: string
     description: string
     category: string
     version: string
-    bucketFsUploads: BucketFSUpload[]
+    file: {
+        name: string
+        size: number
+    }
     scripts: ScriptDefinition[]
     scriptVersionExtractor: VersionExtractor
 }
@@ -26,22 +29,29 @@ export interface BaseExtension {
  *
  * @param extensionToRegister extension to register
  */
-export function registerBaseExtension(extensionToRegister: BaseExtension): void {
+export function registerBaseExtension(extensionToRegister: JavaBaseExtension): void {
     registerExtension(createExtension(extensionToRegister));
 }
 
-export function createExtension(baseExtension: BaseExtension): ExasolExtension {
+export function createExtension(baseExtension: JavaBaseExtension): ExasolExtension {
     return {
         name: baseExtension.name,
         description: baseExtension.description,
         category: baseExtension.category,
         installableVersions: [{ name: baseExtension.version, latest: true, deprecated: false }],
-        bucketFsUploads: baseExtension.bucketFsUploads,
+        bucketFsUploads: [{
+            bucketFsFilename: baseExtension.file.name,
+            fileSize: baseExtension.file.size,
+            name: baseExtension.file.name,
+            downloadUrl: "(none)",
+            licenseUrl: "(none)",
+            licenseAgreementRequired: false
+        }],
         findInstallations(context: Context, metadata: ExaMetadata) {
             return findInstallations(metadata.allScripts.rows, baseExtension)
         },
         install(context: Context, version: string): void {
-            // empty by intention
+            installExtension(context, baseExtension, version)
         },
         uninstall(context: Context, version: string) {
             // empty by intention

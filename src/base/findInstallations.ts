@@ -1,8 +1,8 @@
-import { BaseExtension } from ".";
+import { JavaBaseExtension } from ".";
 import { ExaScriptsRow, Installation, PreconditionFailedError } from "../api";
 import { validateInstalledScripts, validateVersions } from "./validateScripts";
 
-export function findInstallations(scripts: ExaScriptsRow[], baseExtension: BaseExtension): Installation[] {
+export function findInstallations(scripts: ExaScriptsRow[], baseExtension: JavaBaseExtension): Installation[] {
     const result = validateInstalledScripts(scripts, baseExtension.scripts, baseExtension.scriptVersionExtractor)
     if (result.type !== "success") {
         console.warn(result.message)

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as jestMock from "jest-mock";
-import { BaseExtension } from ".";
+import { JavaBaseExtension } from ".";
 import { Context } from "../context";
 import { ExaScriptsRow } from "../exasolSchema";
 import { QueryResult, SqlClient } from "../sqlClient";
@@ -51,13 +51,16 @@ export function createMockContext(): ContextMock {
     }
 }
 
-export function emptyBaseExtension(): BaseExtension {
+export function emptyBaseExtension(): JavaBaseExtension {
     return {
         name: "testing-base-extension",
         version: "v0",
         category: "test-category",
         description: "Testing base extension",
-        bucketFsUploads: [],
+        file: {
+            name: "test-ext.jar",
+            size: 12345
+        },
         scripts: [],
         scriptVersionExtractor: () => successResult("dummy version"),
     }
