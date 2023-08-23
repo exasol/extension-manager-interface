@@ -1,8 +1,9 @@
-import { Context, ExaMetadata, ExasolExtension, ParameterValues, registerExtension } from "../api";
+import { Context, ExaMetadata, ExasolExtension, Instance, NotFoundError, Parameter, ParameterValues, registerExtension } from "../api";
 import { VersionExtractor } from "./adapterScript";
 import { findInstallations } from "./findInstallations";
 import { installExtension } from "./install";
 import { uninstall } from "./uninstall";
+import { upgrade } from "./upgrade";
 
 /** Definition of a Java based Exasol `SCRIPT` with all information required for creating it in the database. */
 export interface ScriptDefinition {
@@ -57,23 +58,23 @@ export function createExtension(baseExtension: JavaBaseExtension): ExasolExtensi
         uninstall(context: Context, version: string) {
             uninstall(context, baseExtension, version)
         },
-        findInstances(context: Context, version: string) {
-            return []
-        },
-        getInstanceParameters(context: Context, version: string) {
-            return []
-        },
-        readInstanceParameterValues(context: Context, version: string, instanceId: string) {
-            return { values: [] }
-        },
         upgrade(context: Context) {
-            return { previousVersion: "0.1.0", newVersion: "0.2.0" }
+            return upgrade(context, baseExtension)
         },
-        addInstance(context: Context, version: string, params: ParameterValues) {
-            return { id: "instanceId", name: "instance" }
+        findInstances(context: Context, version: string): Instance[] {
+            throw new NotFoundError("Finding instances not supported")
         },
-        deleteInstance(context: Context, instanceId: string) {
-            // empty by intention
+        addInstance(context: Context, version: string, params: ParameterValues): Instance {
+            throw new NotFoundError("Creating instances not supported")
         },
+        deleteInstance(context: Context, version: string, instanceId: string): void {
+            throw new NotFoundError("Deleting instances not supported")
+        },
+        getInstanceParameters(context: Context, version: string): Parameter[] {
+            throw new NotFoundError("Creating instances not supported")
+        },
+        readInstanceParameterValues(_context: Context, _version: string, _instanceId: string): ParameterValues {
+            throw new NotFoundError("Reading instance parameter values not supported")
+        }
     }
 }
