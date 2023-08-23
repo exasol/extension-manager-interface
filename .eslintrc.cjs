@@ -7,4 +7,12 @@ module.exports = {
     },
     plugins: ['@typescript-eslint'],
     extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:@typescript-eslint/recommended-requiring-type-checking'],
+    rules: {
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+                "argsIgnorePattern": "^_",
+            }
+        ]
+    },
 };

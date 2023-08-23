@@ -67,6 +67,6 @@ describe("upgrade", () => {
         expect(executeCalls[0][0]).toBe(`CREATE OR REPLACE JAVA SET SCRIPT "ext-schema"."SCRIPT_1"(...) EMITS (args) AS
     %scriptclass com.example.Script;
     %jar /bucketfs/test-ext.jar;`)
-        expect(executeCalls[1][0]).toBe(`COMMENT ON SCRIPT \"ext-schema\".\"SCRIPT_1\" IS 'Created by Extension Manager for test-ext v1'`)
+        expect(executeCalls[1][0]).toBe(`COMMENT ON SCRIPT "ext-schema"."SCRIPT_1" IS 'Created by Extension Manager for test-ext v1'`)
     })
 })

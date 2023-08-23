@@ -15,7 +15,6 @@ function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
 }
 
 export function upgrade(context: Context, extension: JavaBaseExtension): UpgradeResult {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const scriptList = Object.entries(extension.scripts).map(([_key, value]) => value.name)
         .map(scriptName => context.metadata.getScriptByName(scriptName))
         .filter(notEmpty);

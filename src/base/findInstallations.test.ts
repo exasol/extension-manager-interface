@@ -9,7 +9,7 @@ import { failureResult, successResult } from './common';
 import { createMockContext, emptyBaseExtension } from './test-utils';
 
 const mockVersionExtractor: VersionExtractor = (adapterScriptText: string) => successResult(adapterScriptText);
-const failingVersionExtractor: (failureMessage: string) => VersionExtractor = (failureMessage: string) => (adapterScriptText: string) => failureResult(failureMessage);
+const failingVersionExtractor: (failureMessage: string) => VersionExtractor = (failureMessage: string) => (_adapterScriptText: string) => failureResult(failureMessage);
 
 function script({ schema = "schema", name = "name", inputType, resultType = "EMITS", type = "UDF", text = "", comment }: Partial<ExaScriptsRow>): ExaScriptsRow {
     return { schema, name, inputType, resultType, type, text, comment }

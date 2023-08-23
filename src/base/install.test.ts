@@ -35,7 +35,7 @@ describe("install", () => {
         expect(executeCalls[0][0]).toBe(`CREATE OR REPLACE JAVA SET SCRIPT "ext-schema"."SCRIPT_1"(...) EMITS (SCRIPT_ARGS) AS
     %scriptclass com.example.Script;
     %jar /bucketfs/test-ext.jar;`)
-        expect(executeCalls[1][0]).toBe(`COMMENT ON SCRIPT \"ext-schema\".\"SCRIPT_1\" IS 'Created by Extension Manager for test-ext v1'`)
+        expect(executeCalls[1][0]).toBe(`COMMENT ON SCRIPT "ext-schema"."SCRIPT_1" IS 'Created by Extension Manager for test-ext v1'`)
     })
 
     it("two scripts", () => {
@@ -51,8 +51,8 @@ describe("install", () => {
         expect(executeCalls[1][0]).toBe(`CREATE OR REPLACE JAVA SCALAR SCRIPT "ext-schema"."SCRIPT_2"(...) EMITS (...) AS
     %scriptclass com.example.Script2;
     %jar /bucketfs/test-ext.jar;`)
-        expect(executeCalls[2][0]).toBe(`COMMENT ON SCRIPT \"ext-schema\".\"SCRIPT_1\" IS 'Created by Extension Manager for test-ext v1'`)
-        expect(executeCalls[3][0]).toBe(`COMMENT ON SCRIPT \"ext-schema\".\"SCRIPT_2\" IS 'Created by Extension Manager for test-ext v1'`)
+        expect(executeCalls[2][0]).toBe(`COMMENT ON SCRIPT "ext-schema"."SCRIPT_1" IS 'Created by Extension Manager for test-ext v1'`)
+        expect(executeCalls[3][0]).toBe(`COMMENT ON SCRIPT "ext-schema"."SCRIPT_2" IS 'Created by Extension Manager for test-ext v1'`)
     })
 
     it("fails for wrong version", () => {

@@ -61,16 +61,16 @@ export function createExtension(baseExtension: JavaBaseExtension): ExasolExtensi
         upgrade(context: Context) {
             return upgrade(context, baseExtension)
         },
-        findInstances(context: Context, version: string): Instance[] {
+        findInstances(_context: Context, _version: string): Instance[] {
             throw new NotFoundError("Finding instances not supported")
         },
-        addInstance(context: Context, version: string, params: ParameterValues): Instance {
+        addInstance(_context: Context, _version: string, _params: ParameterValues): Instance {
             throw new NotFoundError("Creating instances not supported")
         },
-        deleteInstance(context: Context, version: string, instanceId: string): void {
+        deleteInstance(_context: Context, _version: string, _instanceId: string): void {
             throw new NotFoundError("Deleting instances not supported")
         },
-        getInstanceParameters(context: Context, version: string): Parameter[] {
+        getInstanceParameters(_context: Context, _version: string): Parameter[] {
             throw new NotFoundError("Creating instances not supported")
         },
         readInstanceParameterValues(_context: Context, _version: string, _instanceId: string): ParameterValues {

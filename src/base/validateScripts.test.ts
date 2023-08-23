@@ -22,7 +22,7 @@ function scriptWithoutVersion(name: string, versionFailureMessage: string): Adap
 }
 
 const mockVersionExtractor: VersionExtractor = (adapterScriptText: string) => successResult(adapterScriptText);
-const failingVersionExtractor: (failureMessage: string) => VersionExtractor = (failureMessage: string) => (adapterScriptText: string) => failureResult(failureMessage);
+const failingVersionExtractor: (failureMessage: string) => VersionExtractor = (failureMessage: string) => (_adapterScriptText: string) => failureResult(failureMessage);
 
 describe("validateScripts", () => {
     describe("validateInstalledScripts()", () => {
@@ -58,10 +58,9 @@ describe("validateScripts", () => {
 
 
         describe("validateVersions()", () => {
-            const version = "1.2.3"
 
             function installedScripts(scripts: AdapterScript[]): InstalledScripts {
-                const installedScripts = new Map()
+                const installedScripts = new Map<string, AdapterScript>()
                 scripts.forEach(script => installedScripts.set(script.name, script))
                 return installedScripts
             }
