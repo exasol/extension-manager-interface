@@ -2,6 +2,7 @@ import { Context, ExaMetadata, ExasolExtension, ParameterValues, registerExtensi
 import { VersionExtractor } from "./adapterScript";
 import { findInstallations } from "./findInstallations";
 import { installExtension } from "./install";
+import { uninstall } from "./uninstall";
 
 /** Definition of a Java based Exasol `SCRIPT` with all information required for creating it in the database. */
 export interface ScriptDefinition {
@@ -54,7 +55,7 @@ export function createExtension(baseExtension: JavaBaseExtension): ExasolExtensi
             installExtension(context, baseExtension, version)
         },
         uninstall(context: Context, version: string) {
-            // empty by intention
+            uninstall(context, baseExtension, version)
         },
         findInstances(context: Context, version: string) {
             return []
