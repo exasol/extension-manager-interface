@@ -48,8 +48,13 @@ async function getChangelogVersions(): Promise<VersionNumber[]> {
     // Match file names like "changes_0.1.16.md"
     const changesFilePattern = /^changes_(\d+)\.(\d+)\.(\d+)\.md$/
     return files.map(name => changesFilePattern.exec(name))
-        .filter(match => match !== null)
-        .map(match => new VersionNumber(match))
+        .filter(match => match !== null && match !== undefined)
+        .map(match => {
+            if (!match) {
+                throw new Error(`No match found`)
+            }
+            return new VersionNumber(match);
+        })
 }
 
 async function getLatestChangelogVersion() {

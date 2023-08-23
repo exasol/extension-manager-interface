@@ -1,3 +1,4 @@
+import { InternalServerError } from "../error";
 import { ExaScriptsRow } from "../exasolSchema";
 import { AdapterScript } from "./adapterScript";
 import { Result, failureResult, successResult } from "./common";
@@ -37,12 +38,15 @@ export function validateInstalledScripts(scriptRows: ExaScriptsRow[], expectedSc
     return successResult(findRequiredScripts(expectedScripts, allScripts))
 }
 
-
 function findRequiredScripts(expectedScripts: ScriptDefinition[], allScripts: Map<string, AdapterScript>) {
     const selectedScripts = new Map();
     expectedScripts.forEach(definition => {
         const script = allScripts.get(definition.name);
-        selectedScripts.set(script.name, script);
+        if (script) {
+            selectedScripts.set(script.name, script);
+        } else {
+            throw new InternalServerError(`Script ${definition.name} not found in scripts`)
+        }
     });
     return selectedScripts;
 }

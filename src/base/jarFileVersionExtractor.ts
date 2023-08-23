@@ -17,12 +17,12 @@ const adapterScriptFileNamePattern = /.*%jar\s+[\w-/]+\/([^/]+.jar)\s*;.*/
 function extractVersion(jarNameVersionPattern: RegExp, adapterScriptText: string): Result<string> {
     const jarNameMatch = adapterScriptFileNamePattern.exec(adapterScriptText)
     if (!jarNameMatch) {
-        return failureResult(`Could not find jar filename in adapter script "${adapterScriptText}"`)
+        return failureResult(`Could not find jar filename in adapter script '${adapterScriptText}'`)
     }
     const jarFileName = jarNameMatch[1];
     const versionMatch = jarNameVersionPattern.exec(jarFileName)
     if (!versionMatch) {
-        return failureResult(`Could not find version in jar file name "${jarFileName}"`)
+        return failureResult(`Could not find version in jar file name '${jarFileName}'`)
     }
     return successResult(versionMatch[1])
 }

@@ -1,6 +1,6 @@
 
 import { describe, expect, it } from '@jest/globals';
-import { ScriptDefinition, VersionExtractor, createExtension } from '.';
+import { ScriptDefinition, VersionExtractor, convertBaseExtension } from '.';
 import { Installation } from '../api';
 import { PreconditionFailedError } from '../error';
 import { ExaMetadata, ExaScriptsRow } from '../exasolSchema';
@@ -13,7 +13,7 @@ const failingVersionExtractor: (failureMessage: string) => VersionExtractor = (f
 function script({ schema = "schema", name = "name", inputType, resultType = "EMITS", type = "UDF", text = "", comment }: Partial<ExaScriptsRow>): ExaScriptsRow {
     return { schema, name, inputType, resultType, type, text, comment }
 }
-function def({ name, type = "SET", args = "args", scriptClass = "script class" }: Partial<ScriptDefinition>): ScriptDefinition {
+function def({ name = "name", type = "SET", args = "args", scriptClass = "script class" }: Partial<ScriptDefinition>): ScriptDefinition {
     return { name, type, args, scriptClass };
 }
 
@@ -27,7 +27,7 @@ function findInstallations(allScripts: ExaScriptsRow[], scriptDefinitions: Scrip
     baseExtension.scriptVersionExtractor = versionExtractor
     baseExtension.scripts = scriptDefinitions
     baseExtension.name = "testing-extension"
-    const installations = createExtension(baseExtension).findInstallations(createMockContext(), metadata)
+    const installations = convertBaseExtension(baseExtension).findInstallations(createMockContext(), metadata)
     expect(installations).toBeDefined()
     return installations
 }

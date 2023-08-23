@@ -1,10 +1,10 @@
 
 import { beforeEach, describe, expect, it } from '@jest/globals';
 import { PreconditionFailedError } from '../error';
-import { ScriptDefinition, createExtension } from './index';
+import { ScriptDefinition, convertBaseExtension } from './index';
 import { ContextMock, createMockContext, emptyBaseExtension } from './test-utils';
 
-function def({ name, type = "SET", args = "args", scriptClass = "script class" }: Partial<ScriptDefinition>): ScriptDefinition {
+function def({ name = "name", type = "SET", args = "args", scriptClass = "script class" }: Partial<ScriptDefinition>): ScriptDefinition {
     return { name, type, args, scriptClass };
 }
 
@@ -21,7 +21,7 @@ describe("uninstall", () => {
         baseExtension.name = "test-ext"
         baseExtension.version = "v1"
         baseExtension.scripts = scripts || []
-        createExtension(baseExtension).uninstall(context, versionToUninstall);
+        convertBaseExtension(baseExtension).uninstall(context, versionToUninstall);
     }
 
     function simulateSchemaExists() {

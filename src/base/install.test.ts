@@ -1,10 +1,10 @@
 
 import { describe, expect, it } from '@jest/globals';
 import { PreconditionFailedError } from '../error';
-import { ScriptDefinition, createExtension } from './index';
+import { ScriptDefinition, convertBaseExtension } from './index';
 import { ContextMock, createMockContext, emptyBaseExtension } from './test-utils';
 
-function def({ name, type = "SET", args = "args", scriptClass = "script class" }: Partial<ScriptDefinition>): ScriptDefinition {
+function def({ name = "name", type = "SET", args = "args", scriptClass = "script class" }: Partial<ScriptDefinition>): ScriptDefinition {
     return { name, type, args, scriptClass };
 }
 
@@ -18,7 +18,7 @@ describe("install", () => {
         baseExtension.version = "v1"
         baseExtension.scripts = scripts || []
         context = createMockContext();
-        createExtension(baseExtension).install(context, versionToInstall);
+        convertBaseExtension(baseExtension).install(context, versionToInstall);
     }
 
     it("no scripts", () => {

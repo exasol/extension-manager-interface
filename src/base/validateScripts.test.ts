@@ -10,8 +10,8 @@ function script({ schema = "schema", name = "name", inputType, resultType = "EMI
     return { schema, name, inputType, resultType, type, text, comment }
 }
 
-function def({ name, type = "SET", args = "args", scriptClass = "script class" }: Partial<ScriptDefinition>): ScriptDefinition {
-    return { name, type, args, scriptClass };
+function def({ name = "name", type = "SET", args = "args", scriptClass = "script class" }: Partial<ScriptDefinition>): ScriptDefinition {
+    return { name: name, type, args, scriptClass };
 }
 
 function scriptWithVersion(name: string, version: string): AdapterScript {

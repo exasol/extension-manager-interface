@@ -3,10 +3,10 @@ import { beforeEach, describe, expect, it } from '@jest/globals';
 import { PreconditionFailedError } from '../error';
 import { ExaScriptsRow } from '../exasolSchema';
 import { successResult } from './common';
-import { ScriptDefinition, VersionExtractor, createExtension } from './index';
+import { ScriptDefinition, VersionExtractor, convertBaseExtension } from './index';
 import { ContextMock, createMockContext, emptyBaseExtension } from './test-utils';
 
-function def({ name, type = "SET", args = "args", scriptClass = "script class" }: Partial<ScriptDefinition>): ScriptDefinition {
+function def({ name = "name", type = "SET", args = "args", scriptClass = "script class" }: Partial<ScriptDefinition>): ScriptDefinition {
     return { name, type, args, scriptClass };
 }
 
@@ -31,7 +31,7 @@ describe("upgrade", () => {
         baseExtension.version = "v1"
         baseExtension.scripts = scripts || []
         baseExtension.scriptVersionExtractor = mockVersionExtractor
-        return createExtension(baseExtension).upgrade(context);
+        return convertBaseExtension(baseExtension).upgrade(context);
     }
 
     it("no script", () => {
