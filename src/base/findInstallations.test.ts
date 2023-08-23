@@ -1,5 +1,5 @@
 
-import { describe, it } from '@jest/globals';
+import { describe, expect, it } from '@jest/globals';
 import { ScriptDefinition, createExtension } from '.';
 import { Installation } from '../api';
 import { PreconditionFailedError } from '../error';

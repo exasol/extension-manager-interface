@@ -1,5 +1,5 @@
 
-import { describe, expect, it } from '@jest/globals';
+import { beforeEach, describe, expect, it } from '@jest/globals';
 import { PreconditionFailedError } from '../error';
 import { ScriptDefinition, createExtension } from './index';
 import { ContextMock, createMockContext, emptyBaseExtension } from './test-utils';

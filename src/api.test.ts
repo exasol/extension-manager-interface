@@ -1,3 +1,4 @@
+import { describe, expect, it } from "@jest/globals";
 import { readdir, readFile } from "fs/promises";
 import { BadRequestError, CURRENT_API_VERSION, ExasolExtension, InternalServerError, NotFoundError, PreconditionFailedError, registerExtension } from "./api";
 
