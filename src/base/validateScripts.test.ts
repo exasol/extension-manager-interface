@@ -1,9 +1,9 @@
 
 import { describe, expect, it } from '@jest/globals';
 import { ExaScriptsRow } from '../exasolSchema';
-import { AdapterScript, VersionExtractor } from './adapterScript';
+import { AdapterScript } from './adapterScript';
 import { failureResult, successResult } from './common';
-import { ScriptDefinition } from './index';
+import { ScriptDefinition, VersionExtractor } from './index';
 import { InstalledScripts, validateInstalledScripts, validateVersions } from './validateScripts';
 
 function script({ schema = "schema", name = "name", inputType, resultType = "EMITS", type = "UDF", text = "", comment }: Partial<ExaScriptsRow>): ExaScriptsRow {

@@ -2,9 +2,8 @@
 import { beforeEach, describe, expect, it } from '@jest/globals';
 import { PreconditionFailedError } from '../error';
 import { ExaScriptsRow } from '../exasolSchema';
-import { VersionExtractor } from './adapterScript';
 import { successResult } from './common';
-import { ScriptDefinition, createExtension } from './index';
+import { ScriptDefinition, VersionExtractor, createExtension } from './index';
 import { ContextMock, createMockContext, emptyBaseExtension } from './test-utils';
 
 function def({ name, type = "SET", args = "args", scriptClass = "script class" }: Partial<ScriptDefinition>): ScriptDefinition {

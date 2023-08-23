@@ -1,10 +1,9 @@
 
 import { describe, expect, it } from '@jest/globals';
-import { ScriptDefinition, createExtension } from '.';
+import { ScriptDefinition, VersionExtractor, createExtension } from '.';
 import { Installation } from '../api';
 import { PreconditionFailedError } from '../error';
 import { ExaMetadata, ExaScriptsRow } from '../exasolSchema';
-import { VersionExtractor } from './adapterScript';
 import { failureResult, successResult } from './common';
 import { createMockContext, emptyBaseExtension } from './test-utils';
 

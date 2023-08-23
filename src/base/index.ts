@@ -1,5 +1,5 @@
 import { Context, ExaMetadata, ExasolExtension, Instance, NotFoundError, Parameter, ParameterValues, registerExtension } from "../api";
-import { VersionExtractor } from "./adapterScript";
+import { Result } from "./common";
 import { findInstallations } from "./findInstallations";
 import { installExtension } from "./install";
 import { uninstall } from "./uninstall";
@@ -25,6 +25,8 @@ export interface JavaBaseExtension {
     scripts: ScriptDefinition[]
     scriptVersionExtractor: VersionExtractor
 }
+
+export type VersionExtractor = (adapterScriptText: string) => Result<string>
 
 /**
  * This method registers an extension at the GO JS runtime.
@@ -78,3 +80,5 @@ export function createExtension(baseExtension: JavaBaseExtension): ExasolExtensi
         }
     }
 }
+
+export { jarFileVersionExtractor } from './jarFileVersionExtractor';

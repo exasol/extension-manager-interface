@@ -1,7 +1,7 @@
 import { ExaScriptsRow } from "../exasolSchema";
-import { AdapterScript, VersionExtractor } from "./adapterScript";
+import { AdapterScript } from "./adapterScript";
 import { Result, failureResult, successResult } from "./common";
-import { ScriptDefinition } from "./index";
+import { ScriptDefinition, VersionExtractor } from "./index";
 
 
 export type InstalledScripts = Map<string, AdapterScript>
