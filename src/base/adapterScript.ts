@@ -2,25 +2,25 @@ import { VersionExtractor } from "."
 import { ExaScriptsRow } from "../api"
 
 export class AdapterScript {
-    #script: ExaScriptsRow
-    #versionExtractor: VersionExtractor
+    script: ExaScriptsRow
+    versionExtractor: VersionExtractor
     constructor(script: ExaScriptsRow, versionExtractor: VersionExtractor) {
-        this.#script = script
-        this.#versionExtractor = versionExtractor
+        this.script = script
+        this.versionExtractor = versionExtractor
     }
     getVersion() {
-        return this.#versionExtractor(this.#script.text)
+        return this.versionExtractor(this.script.text)
     }
     get name() {
-        return this.#script.name
+        return this.script.name
     }
     get qualifiedName() {
-        return `${this.#script.schema}.${this.#script.name}`
+        return `${this.script.schema}.${this.script.name}`
     }
     get schema() {
-        return this.#script.schema
+        return this.script.schema
     }
     get text() {
-        return this.#script.text
+        return this.script.text
     }
 }
