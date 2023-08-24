@@ -1,10 +1,10 @@
-# Extension Manager Interface 0.3.1, released 2023-??-??
+# Extension Manager Interface 0.3.1, released 2023-08-24
 
-Code name: Simplify Extensions
+Code name: Simplify Java Extensions
 
 ## Summary
 
-This release adds a module that simplifies writing extensions and avoids code duplication.
+This release adds a module that simplifies writing Java-based extensions and avoids code duplication.
 
 ## Features
 
