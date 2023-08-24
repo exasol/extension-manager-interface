@@ -4,13 +4,11 @@
     "noEmitOnError": true,
     "removeComments": false,
     "sourceMap": true,
-    "target": "es5",
+    "target": "ES5",
     "outDir": "dist/",
     "declaration": true,
     "strict": true,
     "strictNullChecks": false
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }

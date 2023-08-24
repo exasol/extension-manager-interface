@@ -1,15 +1,21 @@
-import { readdir, readFile } from "fs/promises";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { describe, expect, it } from "@jest/globals";
+import { readFile, readdir } from "fs/promises";
 import { BadRequestError, CURRENT_API_VERSION, ExasolExtension, InternalServerError, NotFoundError, PreconditionFailedError, registerExtension } from "./api";
 
 
-async function readPackageJson() {
+async function readPackageJson(): Promise<any> {
     const fileContentBuffer = await readFile("package.json")
     const fileContent = fileContentBuffer.toString("utf8")
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return JSON.parse(fileContent);
 }
 
-async function readPackageJsonVersion() {
+async function readPackageJsonVersion(): Promise<string> {
     const packageJson = await readPackageJson()
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return packageJson.version
 }
 
@@ -42,8 +48,13 @@ async function getChangelogVersions(): Promise<VersionNumber[]> {
     // Match file names like "changes_0.1.16.md"
     const changesFilePattern = /^changes_(\d+)\.(\d+)\.(\d+)\.md$/
     return files.map(name => changesFilePattern.exec(name))
-        .filter(match => match !== null)
-        .map(match => new VersionNumber(match))
+        .filter(match => match !== null && match !== undefined)
+        .map(match => {
+            if (!match) {
+                throw new Error(`No match found`)
+            }
+            return new VersionNumber(match);
+        })
 }
 
 async function getLatestChangelogVersion() {
@@ -95,7 +106,7 @@ describe("api", () => {
             uninstall(_context, _installation) {
                 // empty by intention
             },
-            upgrade(context) {
+            upgrade(_context) {
                 return { previousVersion: "0.1.0", newVersion: "0.2.0" }
             },
         }
