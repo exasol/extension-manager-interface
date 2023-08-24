@@ -2,8 +2,8 @@ import { VersionExtractor } from "."
 import { ExaScriptsRow } from "../api"
 
 export class AdapterScript {
-    script: ExaScriptsRow
-    versionExtractor: VersionExtractor
+    private script: ExaScriptsRow
+    private versionExtractor: VersionExtractor
     constructor(script: ExaScriptsRow, versionExtractor: VersionExtractor) {
         this.script = script
         this.versionExtractor = versionExtractor
