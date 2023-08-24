@@ -12,5 +12,5 @@
     "strict": true,
     "strictNullChecks": false
   },
-  "include": ["src/**/*", "jest.config.ts"]
+  "include": ["src/**/*"]
 }
