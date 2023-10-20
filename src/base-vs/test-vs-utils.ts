@@ -14,5 +14,6 @@ export function emptyBaseVsExtension(): JavaVirtualSchemaBaseExtension {
         scripts: [],
         scriptVersionExtractor: () => successResult("dummy version"),
         instanceParameters: [],
+        virtualSchemaAdapterScript: "vs-adapter-script-name"
     }
 }
