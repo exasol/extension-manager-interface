@@ -13,7 +13,7 @@ export function emptyBaseVsExtension(): JavaVirtualSchemaBaseExtension {
         },
         scripts: [],
         scriptVersionExtractor: () => successResult("dummy version"),
-        instanceParameters: [],
+        instanceParameterDefinitions: [],
         virtualSchemaAdapterScript: "vs-adapter-script-name"
     }
 }

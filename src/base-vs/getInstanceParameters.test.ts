@@ -9,7 +9,7 @@ import { emptyBaseVsExtension } from './test-vs-utils';
 function getInstanceParameters(version: string): Parameter[] {
     const baseExtension = emptyBaseVsExtension()
     baseExtension.name = "testing-extension"
-    baseExtension.instanceParameters = [{ id: "param1", name: "Param Name", type: "string" }]
+    baseExtension.instanceParameterDefinitions = [{ id: "param1", name: "Param Name", type: "string" }]
     const installations = convertVirtualSchemaBaseExtension(baseExtension).getInstanceParameters(createMockContext(), version)
     expect(installations).toBeDefined()
     return installations

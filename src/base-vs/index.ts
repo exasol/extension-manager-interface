@@ -1,9 +1,10 @@
-import { Context, ExasolExtension, Instance, NotFoundError, Parameter } from "../api";
+import { Context, ExasolExtension, Instance, NotFoundError, Parameter, ParameterValues } from "../api";
 import { JavaBaseExtension, convertBaseExtension } from "../base";
+import { addInstance } from "./addInstance";
 import { findInstances } from "./findInstances";
 
 export interface JavaVirtualSchemaBaseExtension extends JavaBaseExtension {
-    instanceParameters: Parameter[]
+    instanceParameterDefinitions: Parameter[]
     virtualSchemaAdapterScript: string
 }
 
@@ -17,10 +18,16 @@ export function convertVirtualSchemaBaseExtension(baseExtension: JavaVirtualSche
             if (baseExtension.version !== extensionVersion) {
                 throw new NotFoundError(`Version '${extensionVersion}' not supported, can only use '${baseExtension.version}'.`)
             }
-            return baseExtension.instanceParameters
+            return baseExtension.instanceParameterDefinitions
         },
         findInstances(context: Context, _version: string): Instance[] {
             return findInstances(context, baseExtension.virtualSchemaAdapterScript);
         },
+        addInstance(context: Context, versionToInstall: string, paramValues: ParameterValues): Instance {
+            if (baseExtension.version !== versionToInstall) {
+                throw new Error(`Version '${versionToInstall}' not supported, can only use ${baseExtension.version}.`)
+            }
+            return addInstance(context, instanceParameterDefinitions, paramValues)
+        }
     }
 }
