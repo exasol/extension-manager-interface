@@ -9,11 +9,11 @@ import { emptyBaseVsExtension } from './test-vs-utils';
 function getInstanceParameters(version: string): Parameter[] {
     const baseExtension = emptyBaseVsExtension()
     baseExtension.name = "testing-extension"
-    baseExtension.instanceParameterDefinitions = [{ id: "param1", name: "Param Name", type: "string" }]
     const installations = convertVirtualSchemaBaseExtension(baseExtension).getInstanceParameters(createMockContext(), version)
     expect(installations).toBeDefined()
     return installations
 }
+
 
 describe("getInstanceParameters", () => {
     it("fails for unsupported version", () => {
@@ -22,6 +22,20 @@ describe("getInstanceParameters", () => {
     })
     it("succeeds for supported version", () => {
         expect(getInstanceParameters("v0"))
-            .toStrictEqual([{ id: "param1", name: "Param Name", type: "string" }])
+            .toStrictEqual([
+                {
+                    description: "Name for the new virtual schema",
+                    id: "base-vs.virtual-schema-name",
+                    name: "Virtual Schema name",
+                    placeholder: "MY_VIRTUAL_SCHEMA",
+                    regex: "[a-zA-Z_]+",
+                    required: true,
+                    type: "string",
+                },
+                { id: "vs-required", name: "n1", required: true, type: "string" },
+                { id: "vs-optional", name: "n2", required: false, type: "string" },
+                { id: "conn-required", name: "n1", required: true, type: "string" },
+                { id: "conn-optional", name: "n2", required: false, type: "string" },
+            ])
     })
 })

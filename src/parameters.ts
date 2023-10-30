@@ -2,8 +2,8 @@
 /**
  * The definition of a parameter.
  */
- export type Parameter = StringParameter | SelectParameter | BooleanParameter;
- 
+export type Parameter = StringParameter | SelectParameter | BooleanParameter;
+
 /**
  * Abstract base interface with common fields for parameter definitions.
  */
@@ -12,6 +12,8 @@ interface BaseParameter {
     id: string
     /** The name displayed to the user */
     name: string
+    /** Detailed description displayed to the user e.g. in a tooltip */
+    description?: string
     /** The type of the parameter */
     type: string
     /** Defines if a value must be specified (`true`) or if it is optional (`false`). Default: `false`. */
@@ -19,6 +21,7 @@ interface BaseParameter {
     /** An optional condition */
     condition?: Condition
     default?: string
+    /** Short hint that describes the expected value of the input field */
     placeholder?: string
     readOnly?: boolean
 }
