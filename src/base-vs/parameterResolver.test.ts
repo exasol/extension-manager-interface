@@ -27,14 +27,14 @@ describe("ParameterResolver", () => {
     })
 
     describe("resolveOptional()", () => {
-        it("fails for required parameter", () => {
-            expect(() => testee().resolveOptional({ id: "p1", name: "n1", type: "string", required: true })).toThrow("Parameter p1 is required but not defined")
-        })
         describe("supported parameter types", () => {
             const tests: { name: string, param: Parameter }[] = [
-                { name: "string", param: { id: "p1", name: "n1", type: "string", required: false } },
-                { name: "select", param: { id: "p1", name: "n1", type: "select", options: [], required: false } },
-                { name: "boolean", param: { id: "p1", name: "n1", type: "boolean", required: false } },
+                { name: "optional string", param: { id: "p1", name: "n1", type: "string", required: false } },
+                { name: "optional select", param: { id: "p1", name: "n1", type: "select", options: [], required: false } },
+                { name: "optional boolean", param: { id: "p1", name: "n1", type: "boolean", required: false } },
+                { name: "required string", param: { id: "p1", name: "n1", type: "string", required: true } },
+                { name: "required select", param: { id: "p1", name: "n1", type: "select", options: [], required: true } },
+                { name: "required boolean", param: { id: "p1", name: "n1", type: "boolean", required: true } },
             ]
             tests.forEach(test => describe(test.name, () => {
                 it("returns undefined for empty parameter values", () => {

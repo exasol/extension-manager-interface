@@ -19,9 +19,6 @@ function buildValuesMap(values: ParameterValues): Map<string, string> {
 export function createParameterResolver(paramValues: ParameterValues): ParameterResolver {
     const values = buildValuesMap(paramValues)
     function resolveOptional(paramDef: Parameter): string | undefined {
-        if (paramDef.required && !values.has(paramDef.id)) {
-            throw new Error(`Parameter ${paramDef.id} is required but not defined`)
-        }
         return values.get(paramDef.id);
     }
 
