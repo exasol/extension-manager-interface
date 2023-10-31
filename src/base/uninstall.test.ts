@@ -84,6 +84,6 @@ describe("uninstall", () => {
 
     it("fails for wrong version", () => {
         expect(() => { uninstall("wrongVersion") })
-            .toThrowError(new PreconditionFailedError(`Uninstalling version 'wrongVersion' not supported, try 'v1'.`))
+            .toThrowError(new PreconditionFailedError(`Version 'wrongVersion' not supported, can only use 'v1'.`))
     })
 })

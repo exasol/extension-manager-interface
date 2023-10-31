@@ -3,12 +3,8 @@ import { Context } from "../context";
 import { BadRequestError } from "../error";
 
 
-export function installExtension(context: Context, extension: JavaBaseExtension, versionToInstall: string): void {
-    if (extension.version !== versionToInstall) {
-        throw new BadRequestError(`Installing version '${versionToInstall}' not supported, try '${extension.version}'.`);
-    }
+export function installExtension(context: Context, extension: JavaBaseExtension): void {
     const jarPath = context.bucketFs.resolvePath(extension.file.name);
-
     function qualifiedName(script: ScriptDefinition) {
         return `"${context.extensionSchemaName}"."${script.name}"`
     }

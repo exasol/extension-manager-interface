@@ -81,6 +81,6 @@ describe("install", () => {
 
     it("fails for wrong version", () => {
         expect(() => { install("wrongVersion") })
-            .toThrowError(new PreconditionFailedError(`Installing version 'wrongVersion' not supported, try 'v1'.`))
+            .toThrowError(new PreconditionFailedError(`Version 'wrongVersion' not supported, can only use 'v1'.`))
     })
 })

@@ -1,6 +1,7 @@
 import { Context, ExasolExtension, Instance, NotFoundError, Parameter, ParameterValues } from "../api";
 import { JavaBaseExtension, convertBaseExtension } from "../base";
 import { addInstance } from "./addInstance";
+import { deleteInstance } from "./deleteInstance";
 import { findInstances } from "./findInstances";
 import { getInstanceParameters } from "./getInstanceParameters";
 import { ParameterResolver, createParameterResolver } from "./parameterResolver";
@@ -38,24 +39,31 @@ export interface VirtualSchemaBuilder {
 
 export function convertVirtualSchemaBaseExtension(baseExtension: JavaVirtualSchemaBaseExtension): ExasolExtension {
     const extension = convertBaseExtension(baseExtension)
+
+    function verifyVersion(version: string) {
+        if (baseExtension.version !== version) {
+            throw new NotFoundError(`Version '${version}' not supported, can only use '${baseExtension.version}'.`)
+        }
+    }
+
     return {
         ...extension,
         getInstanceParameters(context: Context, extensionVersion: string): Parameter[] {
-            if (baseExtension.version !== extensionVersion) {
-                throw new NotFoundError(`Version '${extensionVersion}' not supported, can only use '${baseExtension.version}'.`)
-            }
+            verifyVersion(extensionVersion)
             return getInstanceParameters(baseExtension)
         },
         findInstances(context: Context, _version: string): Instance[] {
             return findInstances(context, baseExtension.virtualSchemaAdapterScript);
         },
         addInstance(context: Context, versionToInstall: string, paramValues: ParameterValues): Instance {
-            if (baseExtension.version !== versionToInstall) {
-                throw new Error(`Version '${versionToInstall}' not supported, can only use ${baseExtension.version}.`)
-            }
+            verifyVersion(versionToInstall)
             const parameterResolver = createParameterResolver(paramValues)
             return addInstance(context, baseExtension, parameterResolver)
-        }
+        },
+        deleteInstance(context: Context, extensionVersion: string, instanceId: string) {
+            verifyVersion(extensionVersion)
+            deleteInstance(context, baseExtension, instanceId)
+        },
     }
 }
 

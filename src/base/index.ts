@@ -57,6 +57,12 @@ export type VersionExtractor = (adapterScriptText: string) => Result<string>
 export { jarFileVersionExtractor } from './jarFileVersionExtractor';
 
 export function convertBaseExtension(baseExtension: JavaBaseExtension): ExasolExtension {
+    function verifyVersion(version: string) {
+        if (baseExtension.version !== version) {
+            throw new NotFoundError(`Version '${version}' not supported, can only use '${baseExtension.version}'.`)
+        }
+    }
+
     return {
         name: baseExtension.name,
         description: baseExtension.description,
@@ -74,10 +80,12 @@ export function convertBaseExtension(baseExtension: JavaBaseExtension): ExasolEx
             return findInstallations(metadata.allScripts.rows, baseExtension)
         },
         install(context: Context, version: string): void {
-            installExtension(context, baseExtension, version)
+            verifyVersion(version)
+            installExtension(context, baseExtension)
         },
         uninstall(context: Context, version: string) {
-            uninstall(context, baseExtension, version)
+            verifyVersion(version)
+            uninstall(context, baseExtension)
         },
         upgrade(context: Context) {
             return upgrade(context, baseExtension)
