@@ -1,7 +1,5 @@
 import { JavaBaseExtension, ScriptDefinition } from ".";
 import { Context } from "../context";
-import { BadRequestError } from "../error";
-
 
 export function installExtension(context: Context, extension: JavaBaseExtension): void {
     const jarPath = context.bucketFs.resolvePath(extension.file.name);

@@ -1,7 +1,5 @@
 import { JavaBaseExtension, ScriptDefinition } from ".";
 import { Context } from "../context";
-import { NotFoundError } from "../error";
-
 
 export function uninstall(context: Context, extension: JavaBaseExtension): void {
     function extensionSchemaExists(): boolean {
