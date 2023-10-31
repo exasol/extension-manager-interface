@@ -22,9 +22,13 @@ function buildVirtualSchemaStatement(baseExtension: JavaVirtualSchemaBaseExtensi
     const def = baseExtension.builder.buildVirtualSchema(parameterResolver, connectionName);
     const adapter = `"${context.extensionSchemaName}"."${def.adapterName}"`;
     let stmt = `CREATE VIRTUAL SCHEMA "${virtualSchemaName}" USING ${adapter}`;
-    for (const property of def.properties) {
-        stmt += ` ${property.property} = '${escapeSingleQuotes(property.value)}'`;
+    if (def.properties.length > 0) {
+        stmt += " WITH"
+        for (const property of def.properties) {
+            stmt += `\n    ${property.property} = '${escapeSingleQuotes(property.value)}'`;
+        }
     }
+    console.log(`Creating virtual schema with statement ${stmt}`)
     return stmt;
 }
 
