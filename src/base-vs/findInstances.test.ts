@@ -29,7 +29,7 @@ describe("findInstances", () => {
     })
     it("executes expected query", () => {
         findInstances([["vs1"], ["vs2"]])
-        const expectedQuery = "SELECT SCHEMA_NAME FROM SYS.EXA_ALL_VIRTUAL_SCHEMAS WHERE ADAPTER_SCRIPT_SCHEMA = ? AND ADAPTER_SCRIPT_NAME = ?  ORDER BY SCHEMA_NAME";
+        const expectedQuery = "SELECT SCHEMA_NAME FROM SYS.EXA_ALL_VIRTUAL_SCHEMAS WHERE ADAPTER_SCRIPT_SCHEMA = ? AND ADAPTER_SCRIPT_NAME = ? ORDER BY SCHEMA_NAME";
         expect(context.mocks.sqlQuery.mock.calls).toStrictEqual([[expectedQuery, "ext-schema", "vs-adapter-script-name"]])
     })
 })

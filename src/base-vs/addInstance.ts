@@ -25,7 +25,7 @@ function buildVirtualSchemaStatement(baseExtension: JavaVirtualSchemaBaseExtensi
     if (def.properties.length > 0) {
         stmt += " WITH"
         for (const property of def.properties) {
-            stmt += `\n    ${property.property} = '${escapeSingleQuotes(property.value)}'`;
+            stmt += ` ${property.property} = '${escapeSingleQuotes(property.value)}'`;
         }
     }
     console.log(`Creating virtual schema with statement ${stmt}`)
