@@ -1,11 +1,15 @@
 
 import { beforeEach, describe, expect, it } from '@jest/globals';
 import { PreconditionFailedError } from '../error';
-import { ScalarSetScriptDefinition, ScriptDefinition, convertBaseExtension } from './index';
+import { AdapterScriptDefinition, ScalarSetScriptDefinition, ScriptDefinition, convertBaseExtension } from './index';
 import { ContextMock, createMockContext, emptyBaseExtension } from './test-utils';
 
 function def({ name = "name", type = "SET", parameters = "param", emitParameters = "emitParam", scriptClass = "script class" }: Partial<ScalarSetScriptDefinition>): ScriptDefinition {
     return { name, type, parameters, emitParameters, scriptClass };
+}
+
+function adapterDef({ name = "name", scriptClass = "script class" }: Partial<AdapterScriptDefinition>): ScriptDefinition {
+    return { name, type: 'ADAPTER', scriptClass };
 }
 
 describe("uninstall", () => {
@@ -53,12 +57,20 @@ describe("uninstall", () => {
         expect(executeCalls.length).toBe(0)
     })
 
-    it("executes expected statements for single script", () => {
-        simulateSchemaExists()
-        uninstall("v1", [def({ name: "SCRIPT1" })])
-        const calls = context.mocks.sqlExecute.mock.calls
-        expect(calls.length).toEqual(1)
-        expect(calls[0]).toEqual([`DROP SCRIPT "ext-schema"."SCRIPT1"`])
+    describe("executes expected statements", () => {
+        const tests: { name: string, script: ScriptDefinition, expectedDropStatement: string }[] = [
+            { name: "set script", script: def({ name: "SCRIPT1", type: "SET" }), expectedDropStatement: `DROP SCRIPT "ext-schema"."SCRIPT1"` },
+            { name: "scalar script", script: def({ name: "SCRIPT1", type: "SCALAR" }), expectedDropStatement: `DROP SCRIPT "ext-schema"."SCRIPT1"` },
+            { name: "adapter script", script: adapterDef({ name: "SCRIPT1" }), expectedDropStatement: `DROP ADAPTER SCRIPT "ext-schema"."SCRIPT1"` },
+        ]
+
+        tests.forEach(test => it(test.name, () => {
+            simulateSchemaExists()
+            uninstall("v1", [test.script])
+            const calls = context.mocks.sqlExecute.mock.calls
+            expect(calls.length).toEqual(1)
+            expect(calls[0]).toEqual([test.expectedDropStatement])
+        }))
     })
 
     it("executes expected statements for two scripts", () => {

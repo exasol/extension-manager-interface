@@ -17,9 +17,17 @@ export function uninstall(context: Context, extension: JavaBaseExtension, versio
         return `"${context.extensionSchemaName}"."${script.name}"`
     }
 
+    function getDropScriptStatement(script: ScriptDefinition): string {
+        if (script.type === "ADAPTER") {
+            return `DROP ADAPTER SCRIPT ${qualifiedName(script)}`
+        } else {
+            return `DROP SCRIPT ${qualifiedName(script)}`
+        }
+    }
+
     if (extensionSchemaExists()) { // Drop commands fail when schema does not exist.
         extension.scripts.forEach(script =>
-            context.sqlClient.execute(`DROP SCRIPT ${qualifiedName(script)}`)
+            context.sqlClient.execute(getDropScriptStatement(script))
         );
     }
 }
