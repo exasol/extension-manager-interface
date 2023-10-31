@@ -81,9 +81,9 @@ export function createJsonConnectionDefinition(parameters: Parameter[]): Connect
 export function createUserPasswordConnectionDefinition(addressParam: Parameter, userParam: Parameter, passwordParam: Parameter): ConnectionParameterDefinition {
     function builder(parameterResolver: ParameterResolver): ConnectionDefinition {
         return {
-            connectionTo: parameterResolver.resolve(addressParam),
-            user: parameterResolver.resolve(userParam),
-            identifiedBy: parameterResolver.resolve(passwordParam)
+            connectionTo: addressParam ? parameterResolver.resolveOptional(addressParam) : undefined,
+            user: userParam ? parameterResolver.resolveOptional(userParam) : undefined,
+            identifiedBy: passwordParam ? parameterResolver.resolveOptional(passwordParam) : undefined
         }
     }
     return { parameters: [addressParam, userParam, passwordParam], builder }

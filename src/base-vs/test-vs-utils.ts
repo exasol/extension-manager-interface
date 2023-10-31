@@ -1,4 +1,5 @@
 import { JavaVirtualSchemaBaseExtension, createJsonConnectionDefinition, createVirtualSchemaBuilder } from ".";
+import { ParameterValue } from "../api";
 import { successResult } from "../base/common";
 
 export function emptyBaseVsExtension(): JavaVirtualSchemaBaseExtension {
@@ -25,4 +26,12 @@ export function emptyBaseVsExtension(): JavaVirtualSchemaBaseExtension {
                 { id: "conn-optional", name: "n2", type: "string", required: false }])
         })
     }
+}
+
+export function param(name: string, value: string): ParameterValue {
+    return { name, value }
+}
+
+export function vsNameParam(vsName: string): ParameterValue {
+    return param("base-vs.virtual-schema-name", vsName)
 }

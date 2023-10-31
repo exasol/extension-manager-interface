@@ -5,7 +5,6 @@ import { convertSchemaNameToInstanceId, escapeSingleQuotes, getConnectionName } 
 import { ParameterResolver } from "./parameterResolver";
 import { PARAM_VIRTUAL_SCHEMA_NAME } from "./parameters";
 
-
 export function addInstance(context: Context, baseExtension: JavaVirtualSchemaBaseExtension, parameterResolver: ParameterResolver): Instance {
     const virtualSchemaName = parameterResolver.resolve(PARAM_VIRTUAL_SCHEMA_NAME)
     const connectionName = getConnectionName(virtualSchemaName)
@@ -28,7 +27,6 @@ function buildVirtualSchemaStatement(baseExtension: JavaVirtualSchemaBaseExtensi
             stmt += ` ${property.property} = '${escapeSingleQuotes(property.value)}'`;
         }
     }
-    console.log(`Creating virtual schema with statement ${stmt}`)
     return stmt;
 }
 

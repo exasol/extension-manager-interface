@@ -52,6 +52,12 @@ describe("ParameterResolver", () => {
                 it("returns value for multiple parameter", () => {
                     expect(testee(param("wrong-name", "value"), param(test.param.id, "value")).resolveOptional(test.param)).toEqual("value")
                 })
+                it("returns undefined for missing default", () => {
+                    expect(testee().resolveOptional({ ...test.param, default: undefined })).toBeUndefined()
+                })
+                it("returns undefined for missing default", () => {
+                    expect(testee().resolveOptional({ default: "def", ...test.param })).toEqual("def")
+                })
             }))
         })
     })
@@ -59,6 +65,9 @@ describe("ParameterResolver", () => {
     describe("resolve()", () => {
         it("fails for optional parameter", () => {
             expect(() => testee().resolve({ id: "p1", name: "n1", type: "string", required: false })).toThrow("Parameter p1 is optional. Use method 'resolveOptional()' to resolve it.")
+        })
+        it("fails for optional parameter with default", () => {
+            expect(() => testee().resolve({ id: "p1", name: "n1", type: "string", required: false, default: "def" })).toThrow("Parameter p1 is optional. Use method 'resolveOptional()' to resolve it.")
         })
         describe("supported parameter types", () => {
             const tests: { name: string, param: Parameter }[] = [
