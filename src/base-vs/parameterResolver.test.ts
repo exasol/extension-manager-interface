@@ -30,13 +30,11 @@ describe("ParameterResolver", () => {
         it("fails for required parameter", () => {
             expect(() => testee().resolveOptional({ id: "p1", name: "n1", type: "string", required: true })).toThrow("Parameter p1 is required but not defined")
         })
-        it("fails for unsupported parameter type boolean", () => {
-            expect(() => testee().resolveOptional({ id: "p1", name: "n1", type: "boolean" })).toThrow("Parameter type boolean for parameter p1 not supported")
-        })
         describe("supported parameter types", () => {
             const tests: { name: string, param: Parameter }[] = [
                 { name: "string", param: { id: "p1", name: "n1", type: "string", required: false } },
                 { name: "select", param: { id: "p1", name: "n1", type: "select", options: [], required: false } },
+                { name: "boolean", param: { id: "p1", name: "n1", type: "boolean", required: false } },
             ]
             tests.forEach(test => describe(test.name, () => {
                 it("returns undefined for empty parameter values", () => {
@@ -62,13 +60,11 @@ describe("ParameterResolver", () => {
         it("fails for optional parameter", () => {
             expect(() => testee().resolve({ id: "p1", name: "n1", type: "string", required: false })).toThrow("Parameter p1 is optional. Use method 'resolveOptional()' to resolve it.")
         })
-        it("fails for unsupported parameter type boolean", () => {
-            expect(() => testee().resolve({ id: "p1", name: "n1", type: "boolean" })).toThrow("Parameter type boolean for parameter p1 not supported")
-        })
         describe("supported parameter types", () => {
             const tests: { name: string, param: Parameter }[] = [
                 { name: "string", param: { id: "p1", name: "n1", type: "string", required: true } },
                 { name: "select", param: { id: "p1", name: "n1", type: "select", options: [], required: true } },
+                { name: "boolean", param: { id: "p1", name: "n1", type: "boolean", required: true } },
             ]
             tests.forEach(test => describe(test.name, () => {
                 it("fails for empty parameter values", () => {

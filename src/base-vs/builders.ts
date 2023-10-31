@@ -17,7 +17,10 @@ export interface Config {
     virtualSchemaParameters: Parameter[]
     /** Name of the Virtual Schema's connection property, e.g. "CONNECTION_NAME" */
     connectionNameProperty: string
-    /** Connection definition */
+    /**
+     * Connection definition. Create a connection definition with one of the functions
+     * {@link createJsonConnectionDefinition} or {@link createUserPasswordConnectionDefinition}
+     */
     connectionDefinition: ConnectionParameterDefinition
 }
 
@@ -46,6 +49,11 @@ export function createVirtualSchemaBuilder({ adapterName, virtualSchemaParameter
     }
 }
 
+/**
+ * Creates the definition for a connection that contains all configuration formatted as JSON in the IDENTIFIED BY clause.
+ * @param parameters parameter definitions
+ * @returns connection definition
+ */
 export function createJsonConnectionDefinition(parameters: Parameter[]): ConnectionParameterDefinition {
     function builder(parameterResolver: ParameterResolver): ConnectionDefinition {
         /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -63,6 +71,13 @@ export function createJsonConnectionDefinition(parameters: Parameter[]): Connect
     return { parameters, builder }
 }
 
+/**
+ * Creates the definition for a connection that contains TO, USER and IDENTIFIED BY clauses.
+ * @param addressParam parameter definition for the TO clause
+ * @param userParam  parameter definition for the USER clause
+ * @param passwordParam  parameter definition for the IDENTIFIED BY clause
+ * @returns connection definition
+ */
 export function createUserPasswordConnectionDefinition(addressParam: Parameter, userParam: Parameter, passwordParam: Parameter): ConnectionParameterDefinition {
     function builder(parameterResolver: ParameterResolver): ConnectionDefinition {
         return {

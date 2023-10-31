@@ -12,7 +12,7 @@ export function emptyBaseVsExtension(): JavaVirtualSchemaBaseExtension {
             name: "test-ext.jar",
             size: 12345
         },
-        scripts: [{ name: adapterName, type: "SCALAR", args: "...", scriptClass: "com.exasol.TestingAdapter" }],
+        scripts: [{ name: adapterName, type: "SCALAR", parameters: "...", emitParameters: "...", scriptClass: "com.exasol.TestingAdapter" }],
         scriptVersionExtractor: () => successResult("dummy version"),
         virtualSchemaAdapterScript: "vs-adapter-script-name",
         builder: createVirtualSchemaBuilder({

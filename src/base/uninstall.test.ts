@@ -1,11 +1,11 @@
 
 import { beforeEach, describe, expect, it } from '@jest/globals';
 import { PreconditionFailedError } from '../error';
-import { ScriptDefinition, convertBaseExtension } from './index';
+import { ScalarSetScriptDefinition, ScriptDefinition, convertBaseExtension } from './index';
 import { ContextMock, createMockContext, emptyBaseExtension } from './test-utils';
 
-function def({ name = "name", type = "SET", args = "args", scriptClass = "script class" }: Partial<ScriptDefinition>): ScriptDefinition {
-    return { name, type, args, scriptClass };
+function def({ name = "name", type = "SET", parameters = "param", emitParameters = "emitParam", scriptClass = "script class" }: Partial<ScalarSetScriptDefinition>): ScriptDefinition {
+    return { name, type, parameters, emitParameters, scriptClass };
 }
 
 describe("uninstall", () => {

@@ -4,9 +4,6 @@ import { PreconditionFailedError } from '../error';
 import { ScriptDefinition, convertBaseExtension } from './index';
 import { ContextMock, createMockContext, emptyBaseExtension } from './test-utils';
 
-function def({ name = "name", type = "SET", args = "args", scriptClass = "script class" }: Partial<ScriptDefinition>): ScriptDefinition {
-    return { name, type, args, scriptClass };
-}
 
 describe("install", () => {
 
@@ -27,25 +24,52 @@ describe("install", () => {
         expect(executeCalls.length).toBe(0)
     })
 
-    it("single script", () => {
-        install("v1", [def({ name: "SCRIPT_1", type: "SET", args: "SCRIPT_ARGS", scriptClass: "com.example.Script" })])
+    it("creates comment", () => {
+        install("v1", [{ name: "SCRIPT_1", type: "SET", parameters: "param", emitParameters: "emitParam", scriptClass: "com.example.Script" }])
+        const executeCalls = context.mocks.sqlExecute.mock.calls
+        expect(executeCalls.length).toBe(2)
+        expect(executeCalls[1][0]).toBe(`COMMENT ON SCRIPT "ext-schema"."SCRIPT_1" IS 'Created by Extension Manager for test-ext v1'`)
+    })
+
+    it("creates a set script", () => {
+        install("v1", [{ name: "SCRIPT_1", type: "SET", parameters: "param", emitParameters: "emitParam", scriptClass: "com.example.Script" }])
         const executeCalls = context.mocks.sqlExecute.mock.calls
         expect(executeCalls.length).toBe(2)
 
-        expect(executeCalls[0][0]).toBe(`CREATE OR REPLACE JAVA SET SCRIPT "ext-schema"."SCRIPT_1"(...) EMITS (SCRIPT_ARGS) AS
+        expect(executeCalls[0][0]).toBe(`CREATE OR REPLACE JAVA SET SCRIPT "ext-schema"."SCRIPT_1"(param) EMITS (emitParam) AS
     %scriptclass com.example.Script;
     %jar /bucketfs/test-ext.jar;`)
-        expect(executeCalls[1][0]).toBe(`COMMENT ON SCRIPT "ext-schema"."SCRIPT_1" IS 'Created by Extension Manager for test-ext v1'`)
+    })
+
+    it("creates a scalar script", () => {
+        install("v1", [{ name: "SCRIPT_1", type: "SCALAR", parameters: "...", emitParameters: "emitArgs", scriptClass: "com.example.Script" }])
+        const executeCalls = context.mocks.sqlExecute.mock.calls
+        expect(executeCalls.length).toBe(2)
+
+        expect(executeCalls[0][0]).toBe(`CREATE OR REPLACE JAVA SCALAR SCRIPT "ext-schema"."SCRIPT_1"(...) EMITS (emitArgs) AS
+    %scriptclass com.example.Script;
+    %jar /bucketfs/test-ext.jar;`)
+    })
+
+
+    it("creates an adapter script", () => {
+        install("v1", [{ name: "SCRIPT_1", type: "ADAPTER", scriptClass: "com.example.Script" }])
+        const executeCalls = context.mocks.sqlExecute.mock.calls
+        expect(executeCalls.length).toBe(2)
+
+        expect(executeCalls[0][0]).toBe(`CREATE OR REPLACE JAVA ADAPTER SCRIPT "ext-schema"."SCRIPT_1" AS
+    %scriptclass com.example.Script;
+    %jar /bucketfs/test-ext.jar;`)
     })
 
     it("two scripts", () => {
         install("v1", [
-            def({ name: "SCRIPT_1", type: "SET", args: "SCRIPT_ARGS", scriptClass: "com.example.Script1" }),
-            def({ name: "SCRIPT_2", type: "SCALAR", args: "...", scriptClass: "com.example.Script2" })])
+            { name: "SCRIPT_1", type: "SET", parameters: "param", emitParameters: "emitParam", scriptClass: "com.example.Script1" },
+            { name: "SCRIPT_2", type: "SCALAR", parameters: "...", emitParameters: "...", scriptClass: "com.example.Script2" }])
         const executeCalls = context.mocks.sqlExecute.mock.calls
         expect(executeCalls.length).toBe(4)
 
-        expect(executeCalls[0][0]).toBe(`CREATE OR REPLACE JAVA SET SCRIPT "ext-schema"."SCRIPT_1"(...) EMITS (SCRIPT_ARGS) AS
+        expect(executeCalls[0][0]).toBe(`CREATE OR REPLACE JAVA SET SCRIPT "ext-schema"."SCRIPT_1"(param) EMITS (emitParam) AS
     %scriptclass com.example.Script1;
     %jar /bucketfs/test-ext.jar;`)
         expect(executeCalls[1][0]).toBe(`CREATE OR REPLACE JAVA SCALAR SCRIPT "ext-schema"."SCRIPT_2"(...) EMITS (...) AS

@@ -3,15 +3,15 @@ import { describe, expect, it } from '@jest/globals';
 import { ExaScriptsRow } from '../exasolSchema';
 import { AdapterScript } from './adapterScript';
 import { failureResult, successResult } from './common';
-import { ScriptDefinition, VersionExtractor } from './index';
+import { ScalarSetScriptDefinition, ScriptDefinition, VersionExtractor } from './index';
 import { InstalledScripts, validateInstalledScripts, validateVersions } from './validateScripts';
 
 function script({ schema = "schema", name = "name", inputType, resultType = "EMITS", type = "UDF", text = "", comment }: Partial<ExaScriptsRow>): ExaScriptsRow {
     return { schema, name, inputType, resultType, type, text, comment }
 }
 
-function def({ name = "name", type = "SET", args = "args", scriptClass = "script class" }: Partial<ScriptDefinition>): ScriptDefinition {
-    return { name: name, type, args, scriptClass };
+function def({ name = "name", type = "SET", parameters = "param", emitParameters = "emitParam", scriptClass = "script class" }: Partial<ScalarSetScriptDefinition>): ScriptDefinition {
+    return { name, type, parameters, emitParameters, scriptClass };
 }
 
 function scriptWithVersion(name: string, version: string): AdapterScript {

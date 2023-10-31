@@ -5,8 +5,13 @@ import { findInstances } from "./findInstances";
 import { getInstanceParameters } from "./getInstanceParameters";
 import { ParameterResolver, createParameterResolver } from "./parameterResolver";
 
+/**
+ * Simplified version of an {@link ExasolExtension} specifically for Java based virtual schemas.
+ */
 export interface JavaVirtualSchemaBaseExtension extends JavaBaseExtension {
+    /** Unqualified name of the virtual schema adapter script, e.g. "S3_FILES_ADAPTER" */
     virtualSchemaAdapterScript: string,
+    /** A builder for virtual schemas. Use function {@link createVirtualSchemaBuilder()} to create it. */
     builder: VirtualSchemaBuilder,
 }
 
@@ -53,6 +58,5 @@ export function convertVirtualSchemaBaseExtension(baseExtension: JavaVirtualSche
         }
     }
 }
-
 
 export * from './builders';

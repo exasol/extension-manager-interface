@@ -9,7 +9,7 @@
         "build": "tsc --build",
         "clean": "tsc --build --clean",
         "test": "jest --silent",
-        "test-watch": "jest --watch",
+        "test-watch": "jest --watch --silent",
         "lint": "eslint --report-unused-disable-directives --exit-on-fatal-error ./src/"
     },
     "devDependencies": {

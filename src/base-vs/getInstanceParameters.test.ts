@@ -14,7 +14,6 @@ function getInstanceParameters(version: string): Parameter[] {
     return installations
 }
 
-
 describe("getInstanceParameters", () => {
     it("fails for unsupported version", () => {
         expect(() => getInstanceParameters("wrong version"))

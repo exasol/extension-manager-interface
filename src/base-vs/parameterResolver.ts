@@ -19,9 +19,6 @@ function buildValuesMap(values: ParameterValues): Map<string, string> {
 export function createParameterResolver(paramValues: ParameterValues): ParameterResolver {
     const values = buildValuesMap(paramValues)
     function resolveOptional(paramDef: Parameter): string | undefined {
-        if (paramDef.type !== "string" && paramDef.type !== "select") {
-            throw new Error(`Parameter type ${paramDef.type} for parameter ${paramDef.id} not supported`)
-        }
         if (paramDef.required && !values.has(paramDef.id)) {
             throw new Error(`Parameter ${paramDef.id} is required but not defined`)
         }
@@ -29,9 +26,6 @@ export function createParameterResolver(paramValues: ParameterValues): Parameter
     }
 
     function resolve(paramDef: Parameter): string {
-        if (paramDef.type !== "string" && paramDef.type !== "select") {
-            throw new Error(`Parameter type ${paramDef.type} for parameter ${paramDef.id} not supported`)
-        }
         if (!paramDef.required) {
             throw new Error(`Parameter ${paramDef.id} is optional. Use method 'resolveOptional()' to resolve it.`)
         }
