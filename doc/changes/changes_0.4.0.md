@@ -1,10 +1,10 @@
-# Extension Manager Interface 0.4.0, released 2023-??-??
+# Extension Manager Interface 0.4.0, released 2023-11-02
 
 Code name: Simplify Virtual Schema Extensions
 
 ## Summary
 
-This release simplifies creating extension definitions for Java-based virtual schemas. To use it, simply create your `ExasolExtension` by calling `convertVirtualSchemaBaseExtension(baseExtension: JavaVirtualSchemaBaseExtension)`. This works similar to `convertBaseExtension(baseExtension: JavaBaseExtension)` for Java-based script extensions. No need to implement all extension methods yourself, just configure required `SCRIPT`s, `CONNECTION` parameters and `VIRTUAL SCHEMA` properties.
+This release simplifies creating extension definitions for Java-based virtual schemas. To use it, simply create your `ExasolExtension` by calling `convertVirtualSchemaBaseExtension(baseExtension: JavaVirtualSchemaBaseExtension)`. This works similar to `convertBaseExtension(baseExtension: JavaBaseExtension)` for Java-based script extensions. No need to implement all extension methods yourself, just configure required `SCRIPT`s, `CONNECTION` parameters and `VIRTUAL SCHEMA` properties. See the the S3 Virtual Schema [extension](https://github.com/exasol/s3-document-files-virtual-schema/blob/main/extension/src/extension.ts) updated in [#139](https://github.com/exasol/s3-document-files-virtual-schema/pull/139) as an example.
 
 ## Features
 
