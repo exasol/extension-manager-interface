@@ -7,13 +7,13 @@ import { emptyBaseVsExtension, param, vsNameParam } from './test-vs-utils';
 
 let context: ContextMock = undefined
 const adapterName = "ADAPTER_SCRIPT"
-function addInstance(paramValues: ParameterValue[], version: string = "v0", virtualSchemaParameterDefs: Parameter[] = [], connectionParameterDefs: Parameter[] = []): Instance {
+function addInstance(paramValues: ParameterValue[], version: string, virtualSchemaParameterDefs: Parameter[], connectionParameterDefs: Parameter[]): Instance {
     return addInstanceWithConnectionDef(paramValues, version, virtualSchemaParameterDefs, createJsonConnectionDefinition(connectionParameterDefs))
 }
-function addInstanceWithUserPasswordConnection(paramValues: ParameterValue[], version: string = "v0", virtualSchemaParameterDefs: Parameter[] = [], addressParam: Parameter = undefined, userParam: Parameter = undefined, passwordParam: Parameter = undefined): Instance {
+function addInstanceWithUserPasswordConnection(paramValues: ParameterValue[], version: string, virtualSchemaParameterDefs: Parameter[], addressParam: Parameter = undefined, userParam: Parameter = undefined, passwordParam: Parameter = undefined): Instance {
     return addInstanceWithConnectionDef(paramValues, version, virtualSchemaParameterDefs, createUserPasswordConnectionDefinition(addressParam, userParam, passwordParam))
 }
-function addInstanceWithConnectionDef(paramValues: ParameterValue[], version: string = "v0", virtualSchemaParameterDefs: Parameter[] = [], connectionDefinition: ConnectionParameterDefinition): Instance {
+function addInstanceWithConnectionDef(paramValues: ParameterValue[], version: string, virtualSchemaParameterDefs: Parameter[], connectionDefinition: ConnectionParameterDefinition): Instance {
     const baseExtension = emptyBaseVsExtension()
     baseExtension.name = "testing-extension"
     baseExtension.builder = createVirtualSchemaBuilder({
@@ -46,13 +46,13 @@ function getCreateVirtualSchemaStatement(): string {
 
 describe("addInstance()", () => {
     it("fails for wrong version", () => {
-        expect(() => addInstance([], "wrongVersion")).toThrow("Version 'wrongVersion' not supported, can only use 'v0'.")
+        expect(() => addInstance([], "wrongVersion", [], [])).toThrow("Version 'wrongVersion' not supported, can only use 'v0'.")
     })
     it("returns new instance", () => {
-        expect(addInstance([vsNameParam("vs1")])).toStrictEqual({ id: "vs1", name: "vs1" })
+        expect(addInstance([vsNameParam("vs1")], "v0", [], [])).toStrictEqual({ id: "vs1", name: "vs1" })
     })
     it("executes statements", () => {
-        addInstance([vsNameParam("vs1")])
+        addInstance([vsNameParam("vs1")], "v0", [], [])
         expect(getStatement(0)).toBe(`CREATE OR REPLACE CONNECTION "vs1_CONNECTION" TO '' IDENTIFIED BY '{}'`)
         expect(getStatement(1)).toBe(`CREATE VIRTUAL SCHEMA "vs1" USING "ext-schema"."ADAPTER_SCRIPT" WITH CONNECTION_NAME = 'vs1_CONNECTION'`)
         expect(getStatement(2)).toBe(`COMMENT ON CONNECTION "vs1_CONNECTION" IS 'Created by Extension Manager for testing-extension vv0 vs1'`)
@@ -101,7 +101,6 @@ describe("addInstance()", () => {
 
         describe("with user & password", () => {
             interface Test { name: string, connAddr?: Parameter, connUser?: Parameter, connPassword?: Parameter, params: ParameterValue[], expected: string }
-
 
             function testValue(testName: string, type: "addr" | "user" | "password", paramValue: string, expected: string): Test {
                 const params = []
