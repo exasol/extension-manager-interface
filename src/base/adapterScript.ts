@@ -14,13 +14,4 @@ export class AdapterScript {
     get name() {
         return this.script.name
     }
-    get qualifiedName() {
-        return `${this.script.schema}.${this.script.name}`
-    }
-    get schema() {
-        return this.script.schema
-    }
-    get text() {
-        return this.script.text
-    }
 }
