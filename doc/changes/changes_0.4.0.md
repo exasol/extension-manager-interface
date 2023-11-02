@@ -1,4 +1,4 @@
-# Extension Manager Interface 0.4.0, released 2023-11-02
+# Extension Manager Interface 0.4.0, released 2023-11-03
 
 Code name: Simplify Virtual Schema Extensions
 
