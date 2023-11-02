@@ -101,26 +101,37 @@ describe("addInstance()", () => {
 
         describe("with user & password", () => {
             interface Test { name: string, connAddr?: Parameter, connUser?: Parameter, connPassword?: Parameter, params: ParameterValue[], expected: string }
-            function addressValue(testName: string, paramValue: string, expectedAddress: string): Test {
+
+
+            function testValue(testName: string, type: "addr" | "user" | "password", paramValue: string, expected: string): Test {
                 const params = []
                 if (paramValue) {
                     params.push(param("p1", paramValue))
                 }
-                return { name: testName, connAddr: { id: "p1", type: "string", name: "P1" }, params, expected: expectedAddress }
+                const paramTemplate: Parameter = { id: "p1", type: "string", name: "P1" }
+                let connectionParam = undefined
+                switch (type) {
+                    case "addr":
+                        connectionParam = { connAddr: paramTemplate };
+                        break
+                    case "user":
+                        connectionParam = { connUser: paramTemplate };
+                        break
+                    case "password":
+                        connectionParam = { connPassword: paramTemplate };
+                        break
+                }
+                return { name: testName, ...connectionParam, params, expected: expected }
+            }
+
+            function addressValue(testName: string, paramValue: string, expectedAddress: string): Test {
+                return testValue(testName, "addr", paramValue, expectedAddress)
             }
             function userValue(testName: string, paramValue: string, expectedUser: string): Test {
-                const params = []
-                if (paramValue) {
-                    params.push(param("p1", paramValue))
-                }
-                return { name: testName, connUser: { id: "p1", type: "string", name: "P1" }, params, expected: `TO ''${expectedUser}` }
+                return testValue(testName, "user", paramValue, `TO ''${expectedUser}`)
             }
             function passwordValue(testName: string, paramValue: string, expectedPassword: string): Test {
-                const params = []
-                if (paramValue) {
-                    params.push(param("p1", paramValue))
-                }
-                return { name: testName, connPassword: { id: "p1", type: "string", name: "P1" }, params, expected: `TO ''${expectedPassword}` }
+                return testValue(testName, "password", paramValue, `TO ''${expectedPassword}`)
             }
 
             const tests: Test[] = [
