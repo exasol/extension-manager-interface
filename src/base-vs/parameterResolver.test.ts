@@ -52,11 +52,11 @@ describe("ParameterResolver", () => {
                 it("returns value for multiple parameter", () => {
                     expect(testee(param("wrong-name", "value"), param(test.param.id, "value")).resolveOptional(test.param)).toEqual("value")
                 })
-                it("returns undefined for missing default", () => {
+                it("returns undefined for missing parameter without default value", () => {
                     expect(testee().resolveOptional({ ...test.param, default: undefined })).toBeUndefined()
                 })
-                it("returns undefined for missing default", () => {
-                    expect(testee().resolveOptional({ default: "def", ...test.param })).toEqual("def")
+                it("returns undefined for missing parameter with default value", () => {
+                    expect(testee().resolveOptional({ default: "def", ...test.param })).toBeUndefined()
                 })
             }))
         })

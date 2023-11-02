@@ -83,7 +83,7 @@ describe("addInstance()", () => {
             const tests: { name: string, connParamDefs: Parameter[], params: ParameterValue[], expected: string }[] = [
                 { name: "no param", connParamDefs: [], params: [], expected: `{}` },
                 { name: "ignores unknown params", connParamDefs: [], params: [param("unknown", "val")], expected: `{}` },
-                { name: "param with default value", connParamDefs: [{ id: "p1", name: "P1", type: "string", default: "def" }], params: [], expected: `{"p1":"def"}` },
+                { name: "missing param with default value ignored", connParamDefs: [{ id: "p1", name: "P1", type: "string", default: "def" }], params: [], expected: `{}` },
                 { name: "optional string param", connParamDefs: [{ id: "p1", name: "P1", type: "string", required: false }], params: [param("p1", "v1")], expected: `{"p1":"v1"}` },
                 { name: "required string param", connParamDefs: [{ id: "p1", name: "P1", type: "string", required: true }], params: [param("p1", "v1")], expected: `{"p1":"v1"}` },
                 { name: "escapes single quotes", connParamDefs: [{ id: "p1", name: "P1", type: "string" }], params: [param("p1", "v'1")], expected: `{"p1":"v''1"}` },

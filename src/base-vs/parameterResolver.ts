@@ -19,11 +19,7 @@ function buildValuesMap(values: ParameterValues): Map<string, string> {
 export function createParameterResolver(paramValues: ParameterValues): ParameterResolver {
     const values = buildValuesMap(paramValues)
     function resolveOptional(paramDef: Parameter): string | undefined {
-        const value = values.get(paramDef.id);
-        if (!value) {
-            return paramDef.default
-        }
-        return value;
+        return values.get(paramDef.id);
     }
 
     function resolve(paramDef: Parameter): string {
