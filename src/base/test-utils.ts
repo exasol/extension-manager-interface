@@ -33,7 +33,7 @@ export function createMockContext(): ContextMock {
         sqlClient,
         bucketFs: {
             resolvePath(fileName: string) {
-                return "/bucketfs/" + fileName;
+                return `/bucketfs/${fileName}`
             },
         },
         metadata: {
