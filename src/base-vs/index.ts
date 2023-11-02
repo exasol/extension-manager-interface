@@ -52,7 +52,8 @@ export function convertVirtualSchemaBaseExtension(baseExtension: JavaVirtualSche
             verifyVersion(extensionVersion)
             return getInstanceParameters(baseExtension)
         },
-        findInstances(context: Context, _version: string): Instance[] {
+        findInstances(context: Context, version: string): Instance[] {
+            verifyVersion(version)
             return findInstances(context, baseExtension.virtualSchemaAdapterScript);
         },
         addInstance(context: Context, versionToInstall: string, paramValues: ParameterValues): Instance {
