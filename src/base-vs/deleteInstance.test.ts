@@ -10,7 +10,7 @@ function deleteInstance(version: string, instanceId: string): void {
     const baseExtension = emptyBaseVsExtension()
     baseExtension.name = "testing-extension"
     baseExtension.builder = createVirtualSchemaBuilder({
-        adapterName: "adapterName", connectionNameProperty: "CONNECTION_NAME",
+        connectionNameProperty: "CONNECTION_NAME",
         virtualSchemaParameters: [],
         connectionDefinition: createJsonConnectionDefinition([])
     })

@@ -11,8 +11,6 @@ export interface ConnectionParameterDefinition {
 }
 
 export interface Config {
-    /** Name of the adapter script, e.g. "S3_FILES_ADAPTER" */
-    adapterName: string
     /** Parameter definitions used as properties for the VIRTUAL SCHEMA */
     virtualSchemaParameters: Parameter[]
     /** Name of the Virtual Schema's connection property, e.g. "CONNECTION_NAME" */
@@ -24,8 +22,7 @@ export interface Config {
     connectionDefinition: ConnectionParameterDefinition
 }
 
-export function createVirtualSchemaBuilder({ adapterName, virtualSchemaParameters, connectionNameProperty, connectionDefinition }: Config): VirtualSchemaBuilder {
-
+export function createVirtualSchemaBuilder({ virtualSchemaParameters, connectionNameProperty, connectionDefinition }: Config): VirtualSchemaBuilder {
     function convertVirtualSchemaParameters(connectionName: string, parameterResolver: ParameterResolver) {
         const result: VirtualSchemaProperty[] = []
         result.push({ property: connectionNameProperty, value: connectionName })
@@ -44,7 +41,7 @@ export function createVirtualSchemaBuilder({ adapterName, virtualSchemaParameter
         },
         buildConnection: connectionDefinition.builder,
         buildVirtualSchema(parameterResolver: ParameterResolver, connectionName: string) {
-            return { adapterName, properties: convertVirtualSchemaParameters(connectionName, parameterResolver) }
+            return { properties: convertVirtualSchemaParameters(connectionName, parameterResolver) }
         },
     }
 }

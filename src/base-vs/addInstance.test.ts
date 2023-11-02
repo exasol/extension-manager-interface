@@ -6,7 +6,7 @@ import { ContextMock, createMockContext } from '../base/test-utils';
 import { emptyBaseVsExtension, param, vsNameParam } from './test-vs-utils';
 
 let context: ContextMock = undefined
-const adapterName = "ADAPTER_SCRIPT"
+
 function addInstance(paramValues: ParameterValue[], version: string, virtualSchemaParameterDefs: Parameter[], connectionParameterDefs: Parameter[]): Instance {
     return addInstanceWithConnectionDef(paramValues, version, virtualSchemaParameterDefs, createJsonConnectionDefinition(connectionParameterDefs))
 }
@@ -17,7 +17,7 @@ function addInstanceWithConnectionDef(paramValues: ParameterValue[], version: st
     const baseExtension = emptyBaseVsExtension()
     baseExtension.name = "testing-extension"
     baseExtension.builder = createVirtualSchemaBuilder({
-        adapterName, connectionNameProperty: "CONNECTION_NAME",
+        connectionNameProperty: "CONNECTION_NAME",
         virtualSchemaParameters: virtualSchemaParameterDefs,
         connectionDefinition
     })
@@ -54,7 +54,7 @@ describe("addInstance()", () => {
     it("executes statements", () => {
         addInstance([vsNameParam("vs1")], "v0", [], [])
         expect(getStatement(0)).toBe(`CREATE OR REPLACE CONNECTION "vs1_CONNECTION" TO '' IDENTIFIED BY '{}'`)
-        expect(getStatement(1)).toBe(`CREATE VIRTUAL SCHEMA "vs1" USING "ext-schema"."ADAPTER_SCRIPT" WITH CONNECTION_NAME = 'vs1_CONNECTION'`)
+        expect(getStatement(1)).toBe(`CREATE VIRTUAL SCHEMA "vs1" USING "ext-schema"."vs-adapter-script-name" WITH CONNECTION_NAME = 'vs1_CONNECTION'`)
         expect(getStatement(2)).toBe(`COMMENT ON CONNECTION "vs1_CONNECTION" IS 'Created by Extension Manager for testing-extension vv0 vs1'`)
         expect(getStatement(3)).toBe(`COMMENT ON SCHEMA "vs1" IS 'Created by Extension Manager for testing-extension vv0 vs1'`)
     })
@@ -73,7 +73,7 @@ describe("addInstance()", () => {
         ]
         tests.forEach(test => it(test.name, () => {
             addInstance([vsNameParam("vs1"), ...test.params], "v0", test.vsParamDefs, [])
-            expect(getCreateVirtualSchemaStatement()).toBe(`CREATE VIRTUAL SCHEMA "vs1" USING "ext-schema"."ADAPTER_SCRIPT" `
+            expect(getCreateVirtualSchemaStatement()).toBe(`CREATE VIRTUAL SCHEMA "vs1" USING "ext-schema"."vs-adapter-script-name" `
                 + `WITH CONNECTION_NAME = 'vs1_CONNECTION'${test.expected}`)
         }))
     })

@@ -3,7 +3,7 @@ import { ParameterValue } from "../api";
 import { successResult } from "../base/common";
 
 export function emptyBaseVsExtension(): JavaVirtualSchemaBaseExtension {
-    const adapterName = "TESTING_ADAPTER"
+    const adapterName = "vs-adapter-script-name"
     return {
         name: "testing-base-extension",
         version: "v0",
@@ -15,9 +15,9 @@ export function emptyBaseVsExtension(): JavaVirtualSchemaBaseExtension {
         },
         scripts: [{ name: adapterName, type: "SCALAR", parameters: "...", emitParameters: "...", scriptClass: "com.exasol.TestingAdapter" }],
         scriptVersionExtractor: () => successResult("dummy version"),
-        virtualSchemaAdapterScript: "vs-adapter-script-name",
+        virtualSchemaAdapterScript: adapterName,
         builder: createVirtualSchemaBuilder({
-            adapterName, connectionNameProperty: "CONNECTION_NAME",
+            connectionNameProperty: "CONNECTION_NAME",
             virtualSchemaParameters: [
                 { id: "vs-required", name: "n1", type: "string", required: true },
                 { id: "vs-optional", name: "n2", type: "string", required: false }],

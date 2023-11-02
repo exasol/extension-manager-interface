@@ -26,8 +26,8 @@ export interface VirtualSchemaProperty {
     property: string
     value: string
 }
+
 export interface VirtualSchemaDefinition {
-    adapterName: string
     properties: VirtualSchemaProperty[]
 }
 

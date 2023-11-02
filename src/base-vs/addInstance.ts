@@ -19,7 +19,7 @@ export function addInstance(context: Context, baseExtension: JavaVirtualSchemaBa
 
 function buildVirtualSchemaStatement(baseExtension: JavaVirtualSchemaBaseExtension, parameterResolver: ParameterResolver, connectionName: string, context: Context, virtualSchemaName: string) {
     const def = baseExtension.builder.buildVirtualSchema(parameterResolver, connectionName);
-    const adapter = `"${context.extensionSchemaName}"."${def.adapterName}"`;
+    const adapter = `"${context.extensionSchemaName}"."${baseExtension.virtualSchemaAdapterScript}"`;
     let stmt = `CREATE VIRTUAL SCHEMA "${virtualSchemaName}" USING ${adapter}`;
     if (def.properties.length > 0) {
         stmt += " WITH"
