@@ -1,19 +1,24 @@
 import { ConnectionDefinition, VirtualSchemaBuilder, VirtualSchemaProperty } from ".";
 import { Parameter } from "../parameters";
-import { ParameterResolver } from "./parameterResolver";
+import { ParameterAccessor } from "./parameterAccessor";
 
-
+/**
+ * Definition of `CONNECTION` parameters.
+ * @see {@link createUserPasswordConnectionDefinition}
+ * @see {@link createJsonConnectionDefinition}
+ */
 export interface ConnectionParameterDefinition {
-    /** Parameter definitions used in the CONNECTION */
+    /** Parameter definitions used in the `CONNECTION` */
     parameters: Parameter[]
-    /** Factory function for a connection definition */
-    builder: (parameterResolver: ParameterResolver) => ConnectionDefinition
+    /** Factory function for a `CONNECTION` definition */
+    builder: (parameters: ParameterAccessor) => ConnectionDefinition
 }
 
+/** Configuration for the function {@link createVirtualSchemaBuilder()} */
 export interface Config {
-    /** Parameter definitions used as properties for the VIRTUAL SCHEMA */
+    /** Parameter definitions used as properties for the `VIRTUAL SCHEMA` */
     virtualSchemaParameters: Parameter[]
-    /** Name of the Virtual Schema's connection property, e.g. "CONNECTION_NAME" */
+    /** Name of the Virtual Schema's connection property, e.g. `CONNECTION_NAME` */
     connectionNameProperty: string
     /**
      * Connection definition. Create a connection definition with one of the functions
@@ -22,12 +27,17 @@ export interface Config {
     connectionDefinition: ConnectionParameterDefinition
 }
 
+/**
+ * Create a virtual schema builder.
+ * @param param0 configuration
+ * @returns a new virtual schema builder
+ */
 export function createVirtualSchemaBuilder({ virtualSchemaParameters, connectionNameProperty, connectionDefinition }: Config): VirtualSchemaBuilder {
-    function convertVirtualSchemaParameters(connectionName: string, parameterResolver: ParameterResolver) {
+    function convertVirtualSchemaParameters(connectionName: string, parameters: ParameterAccessor) {
         const result: VirtualSchemaProperty[] = []
         result.push({ property: connectionNameProperty, value: connectionName })
         for (const param of virtualSchemaParameters) {
-            const value = parameterResolver.resolveOptional(param)
+            const value = parameters.getOptional(param)
             if (value) {
                 result.push({ property: param.id, value })
             }
@@ -40,23 +50,24 @@ export function createVirtualSchemaBuilder({ virtualSchemaParameters, connection
             return [...virtualSchemaParameters, ...connectionDefinition.parameters]
         },
         buildConnection: connectionDefinition.builder,
-        buildVirtualSchema(parameterResolver: ParameterResolver, connectionName: string) {
-            return { properties: convertVirtualSchemaParameters(connectionName, parameterResolver) }
+        buildVirtualSchema(parameters: ParameterAccessor, connectionName: string) {
+            return { properties: convertVirtualSchemaParameters(connectionName, parameters) }
         },
     }
 }
 
 /**
- * Creates the definition for a connection that contains all configuration formatted as JSON in the IDENTIFIED BY clause.
- * @param parameters parameter definitions
+ * Creates the definition for a connection that contains all configuration formatted as JSON in the `IDENTIFIED BY` clause.
+ * This is usually used in document based virtual schemas.
+ * @param parameterDefinitions parameter definitions
  * @returns connection definition
  */
-export function createJsonConnectionDefinition(parameters: Parameter[]): ConnectionParameterDefinition {
-    function builder(parameterResolver: ParameterResolver): ConnectionDefinition {
+export function createJsonConnectionDefinition(parameterDefinitions: Parameter[]): ConnectionParameterDefinition {
+    function builder(parameters: ParameterAccessor): ConnectionDefinition {
         /* eslint-disable @typescript-eslint/no-explicit-any */
         const paramValues: any = {}
-        for (const param of parameters) {
-            const value = parameterResolver.resolveOptional(param)
+        for (const param of parameterDefinitions) {
+            const value = parameters.getOptional(param)
             if (value) {
                 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
                 paramValues[param.id] = value
@@ -65,22 +76,23 @@ export function createJsonConnectionDefinition(parameters: Parameter[]): Connect
 
         return { identifiedBy: JSON.stringify(paramValues) }
     }
-    return { parameters, builder }
+    return { parameters: parameterDefinitions, builder }
 }
 
 /**
- * Creates the definition for a connection that contains TO, USER and IDENTIFIED BY clauses.
- * @param addressParam parameter definition for the TO clause
- * @param userParam  parameter definition for the USER clause
- * @param passwordParam  parameter definition for the IDENTIFIED BY clause
+ * Creates the definition for a connection that contains `TO`, `USER` and `IDENTIFIED BY` clauses.
+ * This is usually used in JDBC based virtual schemas.
+ * @param addressParam parameter definition for the `TO` clause
+ * @param userParam  parameter definition for the `USER` clause
+ * @param passwordParam  parameter definition for the `IDENTIFIED BY` clause
  * @returns connection definition
  */
 export function createUserPasswordConnectionDefinition(addressParam: Parameter, userParam: Parameter, passwordParam: Parameter): ConnectionParameterDefinition {
-    function builder(parameterResolver: ParameterResolver): ConnectionDefinition {
+    function builder(parameters: ParameterAccessor): ConnectionDefinition {
         return {
-            connectionTo: addressParam ? parameterResolver.resolveOptional(addressParam) : undefined,
-            user: userParam ? parameterResolver.resolveOptional(userParam) : undefined,
-            identifiedBy: passwordParam ? parameterResolver.resolveOptional(passwordParam) : undefined
+            connectionTo: addressParam ? parameters.getOptional(addressParam) : undefined,
+            user: userParam ? parameters.getOptional(userParam) : undefined,
+            identifiedBy: passwordParam ? parameters.getOptional(passwordParam) : undefined
         }
     }
     return { parameters: [addressParam, userParam, passwordParam], builder }

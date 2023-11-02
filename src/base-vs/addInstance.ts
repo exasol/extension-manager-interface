@@ -2,14 +2,14 @@ import { JavaVirtualSchemaBaseExtension } from ".";
 import { Instance } from "../api";
 import { Context } from "../context";
 import { convertSchemaNameToInstanceId, escapeSingleQuotes, getConnectionName } from "./common";
-import { ParameterResolver } from "./parameterResolver";
+import { ParameterAccessor } from "./parameterAccessor";
 import { PARAM_VIRTUAL_SCHEMA_NAME } from "./parameters";
 
-export function addInstance(context: Context, baseExtension: JavaVirtualSchemaBaseExtension, parameterResolver: ParameterResolver): Instance {
-    const virtualSchemaName = parameterResolver.resolve(PARAM_VIRTUAL_SCHEMA_NAME)
+export function addInstance(context: Context, baseExtension: JavaVirtualSchemaBaseExtension, parameters: ParameterAccessor): Instance {
+    const virtualSchemaName = parameters.get(PARAM_VIRTUAL_SCHEMA_NAME)
     const connectionName = getConnectionName(virtualSchemaName)
-    context.sqlClient.execute(buildConnectionStatement(baseExtension, parameterResolver, connectionName))
-    context.sqlClient.execute(buildVirtualSchemaStatement(baseExtension, parameterResolver, connectionName, context, virtualSchemaName))
+    context.sqlClient.execute(buildConnectionStatement(baseExtension, parameters, connectionName))
+    context.sqlClient.execute(buildVirtualSchemaStatement(baseExtension, parameters, connectionName, context, virtualSchemaName))
 
     const comment = `Created by Extension Manager for ${baseExtension.name} v${baseExtension.version} ${escapeSingleQuotes(virtualSchemaName)}`;
     context.sqlClient.execute(`COMMENT ON CONNECTION "${connectionName}" IS '${comment}'`);
@@ -17,8 +17,8 @@ export function addInstance(context: Context, baseExtension: JavaVirtualSchemaBa
     return { id: convertSchemaNameToInstanceId(virtualSchemaName), name: virtualSchemaName }
 }
 
-function buildVirtualSchemaStatement(baseExtension: JavaVirtualSchemaBaseExtension, parameterResolver: ParameterResolver, connectionName: string, context: Context, virtualSchemaName: string) {
-    const def = baseExtension.builder.buildVirtualSchema(parameterResolver, connectionName);
+function buildVirtualSchemaStatement(baseExtension: JavaVirtualSchemaBaseExtension, parameters: ParameterAccessor, connectionName: string, context: Context, virtualSchemaName: string) {
+    const def = baseExtension.builder.buildVirtualSchema(parameters, connectionName);
     const adapter = `"${context.extensionSchemaName}"."${baseExtension.virtualSchemaAdapterScript}"`;
     let stmt = `CREATE VIRTUAL SCHEMA "${virtualSchemaName}" USING ${adapter}`;
     if (def.properties.length > 0) {
@@ -30,8 +30,8 @@ function buildVirtualSchemaStatement(baseExtension: JavaVirtualSchemaBaseExtensi
     return stmt;
 }
 
-function buildConnectionStatement(baseExtension: JavaVirtualSchemaBaseExtension, parameterResolver: ParameterResolver, connectionName: string) {
-    const connDef = baseExtension.builder.buildConnection(parameterResolver);
+function buildConnectionStatement(baseExtension: JavaVirtualSchemaBaseExtension, parameters: ParameterAccessor, connectionName: string) {
+    const connDef = baseExtension.builder.buildConnection(parameters);
     const to = connDef.connectionTo ?? '';
     let stmt = `CREATE OR REPLACE CONNECTION "${connectionName}" TO '${escapeSingleQuotes(to)}'`;
     if (connDef.user) {

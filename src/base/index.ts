@@ -26,6 +26,7 @@ export interface ScalarSetScriptDefinition {
 export interface AdapterScriptDefinition {
     /** Unqualified script name, e.g. "S3_FILES_ADAPTER" */
     name: string
+    /** Script type */
     type: "ADAPTER"
     /** Script Java class name, e.g. "com.exasol.adapter.document.UdfEntryPoint" */
     scriptClass: string
@@ -33,6 +34,7 @@ export interface AdapterScriptDefinition {
 
 /**
  * Simplified version of an {@link ExasolExtension} specifically for Java based extensions.
+ * Use function {@link convertBaseExtension} to convert this to a {@link ExasolExtension}.
  */
 export interface JavaBaseExtension {
     /** Readable extension name, e.g. "S3 Virtual Schema" */
