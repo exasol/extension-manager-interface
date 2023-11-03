@@ -31,6 +31,6 @@ export function upgrade(context: Context, extension: JavaBaseExtension): Upgrade
     if (previousVersion.result === newVersion) {
         throw new PreconditionFailedError(`Extension is already installed in latest version ${newVersion}`)
     }
-    installExtension(context, extension, newVersion)
+    installExtension(context, extension)
     return { previousVersion: previousVersion.result, newVersion };
 }

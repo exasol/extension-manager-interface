@@ -3,11 +3,11 @@ import { beforeEach, describe, expect, it } from '@jest/globals';
 import { PreconditionFailedError } from '../error';
 import { ExaScriptsRow } from '../exasolSchema';
 import { successResult } from './common';
-import { ScriptDefinition, VersionExtractor, convertBaseExtension } from './index';
+import { ScalarSetScriptDefinition, ScriptDefinition, VersionExtractor, convertBaseExtension } from './index';
 import { ContextMock, createMockContext, emptyBaseExtension } from './test-utils';
 
-function def({ name = "name", type = "SET", args = "args", scriptClass = "script class" }: Partial<ScriptDefinition>): ScriptDefinition {
-    return { name, type, args, scriptClass };
+function def({ name = "name", type = "SET", parameters = "param", emitParameters = "emitParam", scriptClass = "script class" }: Partial<ScalarSetScriptDefinition>): ScriptDefinition {
+    return { name, type, parameters, emitParameters, scriptClass };
 }
 
 function script({ schema = "schema", name = "name", inputType, resultType = "EMITS", type = "UDF", text = "", comment }: Partial<ExaScriptsRow>): ExaScriptsRow {
@@ -63,7 +63,7 @@ describe("upgrade", () => {
         const executeCalls = context.mocks.sqlExecute.mock.calls
         expect(executeCalls.length).toBe(2)
 
-        expect(executeCalls[0][0]).toBe(`CREATE OR REPLACE JAVA SET SCRIPT "ext-schema"."SCRIPT_1"(...) EMITS (args) AS
+        expect(executeCalls[0][0]).toBe(`CREATE OR REPLACE JAVA SET SCRIPT "ext-schema"."SCRIPT_1"(param) EMITS (emitParam) AS
     %scriptclass com.example.Script;
     %jar /bucketfs/test-ext.jar;`)
         expect(executeCalls[1][0]).toBe(`COMMENT ON SCRIPT "ext-schema"."SCRIPT_1" IS 'Created by Extension Manager for test-ext v1'`)

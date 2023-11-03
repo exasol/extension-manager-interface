@@ -1,6 +1,6 @@
 
 import { describe, expect, it } from '@jest/globals';
-import { ScriptDefinition, VersionExtractor, convertBaseExtension } from '.';
+import { ScalarSetScriptDefinition, ScriptDefinition, VersionExtractor, convertBaseExtension } from '.';
 import { Installation } from '../api';
 import { PreconditionFailedError } from '../error';
 import { ExaMetadata, ExaScriptsRow } from '../exasolSchema';
@@ -13,8 +13,8 @@ const failingVersionExtractor: (failureMessage: string) => VersionExtractor = (f
 function script({ schema = "schema", name = "name", inputType, resultType = "EMITS", type = "UDF", text = "", comment }: Partial<ExaScriptsRow>): ExaScriptsRow {
     return { schema, name, inputType, resultType, type, text, comment }
 }
-function def({ name = "name", type = "SET", args = "args", scriptClass = "script class" }: Partial<ScriptDefinition>): ScriptDefinition {
-    return { name, type, args, scriptClass };
+function def({ name = "name", type = "SET", parameters = "param", emitParameters = "emitParam", scriptClass = "script class" }: Partial<ScalarSetScriptDefinition>): ScriptDefinition {
+    return { name, type, parameters, emitParameters, scriptClass };
 }
 
 function findInstallations(allScripts: ExaScriptsRow[], scriptDefinitions: ScriptDefinition[], versionExtractor: VersionExtractor): Installation[] {
@@ -48,4 +48,3 @@ describe("findInstallations", () => {
             .toStrictEqual([{ name: "testing-extension", version: "v1" }])
     })
 })
-

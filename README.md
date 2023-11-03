@@ -11,5 +11,6 @@ the [Exasol extension-manager](https://github.com/exasol/extension-manager/).
 ## Additional Information
 
 * [Changelog](doc/changes/changelog.md)
+* [Guide for developing an extension for Extension Manager](https://github.com/exasol/extension-manager/blob/main/doc/extension_developer_guide.md)
 * [Developer Guide](doc/developer_guide/developer_guide.md)
 * [Dependencies](dependencies.md)
