@@ -9,10 +9,10 @@ export function emptyBaseVsExtension(): JavaVirtualSchemaBaseExtension {
         version: "v0",
         category: "test-category",
         description: "Testing base extension",
-        file: {
+        files: [{
             name: "test-ext.jar",
             size: 12345
-        },
+        }],
         scripts: [{ name: adapterName, type: "SCALAR", parameters: "...", emitParameters: "...", scriptClass: "com.exasol.TestingAdapter" }],
         scriptVersionExtractor: () => successResult("dummy version"),
         virtualSchemaAdapterScript: adapterName,

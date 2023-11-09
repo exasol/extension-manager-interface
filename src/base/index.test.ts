@@ -1,7 +1,7 @@
 
 import { describe, expect, it } from '@jest/globals';
-import { ExasolExtension, NotFoundError } from '../api';
-import { convertBaseExtension } from './index';
+import { BucketFSUpload, ExasolExtension, NotFoundError } from '../api';
+import { RequiredJar, convertBaseExtension } from './index';
 import { emptyBaseExtension } from './test-utils';
 
 
@@ -12,6 +12,24 @@ describe("index", () => {
         baseExtension.version = "v1"
         return convertBaseExtension(baseExtension)
     }
+
+    describe("bucketFsUploads", () => {
+        const tests: { name: string, files: RequiredJar[], expected: BucketFSUpload[] }[] = [
+            { name: "empty list", files: [], expected: [] },
+            { name: "single file", files: [{ name: "name", size: 123 }], expected: [{ bucketFsFilename: "name", name: "name", fileSize: 123 }] },
+            {
+                name: "multiple files", files: [{ name: "name1", size: 123 }, { name: "name2", size: 456 }],
+                expected: [{ bucketFsFilename: "name1", name: "name1", fileSize: 123 }, { bucketFsFilename: "name2", name: "name2", fileSize: 456 }]
+            },
+            { name: "uses negative size if undefined", files: [{ name: "name", size: undefined }], expected: [{ bucketFsFilename: "name", name: "name", fileSize: -1 }] },
+            { name: "uses negative size if missing", files: [{ name: "name" }], expected: [{ bucketFsFilename: "name", name: "name", fileSize: -1 }] },
+        ]
+        tests.forEach(test => it(test.name, () => {
+            const baseExtension = emptyBaseExtension()
+            baseExtension.files = test.files
+            expect(convertBaseExtension(baseExtension).bucketFsUploads).toStrictEqual(test.expected)
+        }))
+    })
 
     describe("findInstances()", () => {
         it("is not supported", () => {

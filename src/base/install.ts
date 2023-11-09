@@ -2,7 +2,6 @@ import { JavaBaseExtension, ScriptDefinition } from ".";
 import { Context } from "../context";
 
 export function installExtension(context: Context, extension: JavaBaseExtension): void {
-    const jarPath = context.bucketFs.resolvePath(extension.file.name);
     function qualifiedName(script: ScriptDefinition) {
         return `"${context.extensionSchemaName}"."${script.name}"`
     }
@@ -14,7 +13,9 @@ export function installExtension(context: Context, extension: JavaBaseExtension)
         }
         stmt += " AS\n"
         stmt += `    %scriptclass ${script.scriptClass};\n`
-        stmt += `    %jar ${jarPath};`
+        stmt += extension.files
+            .map(file => context.bucketFs.resolvePath(file.name))
+            .map(path => `    %jar ${path};`).join("\n")
         return stmt
     }
 

@@ -57,10 +57,10 @@ export function emptyBaseExtension(): JavaBaseExtension {
         version: "v0",
         category: "test-category",
         description: "Testing base extension",
-        file: {
+        files: [{
             name: "test-ext.jar",
             size: 12345
-        },
+        }],
         scripts: [],
         scriptVersionExtractor: () => successResult("dummy version"),
     }
