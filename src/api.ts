@@ -185,7 +185,7 @@ export interface BucketFSUpload {
     downloadUrl?: string
     licenseUrl?: string
     bucketFsFilename: string
-    /** File size in bytes. Use `-1` to let Extension Manager ignore the file size. */
+    /** File size in bytes. Use `-1` to make Extension Manager ignore the file size. */
     fileSize: number
 }
 

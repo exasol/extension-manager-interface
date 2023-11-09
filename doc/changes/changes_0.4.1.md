@@ -6,7 +6,7 @@ Code name: Support JDBC based extensions
 
 This release adds support for JDBC based virtual schema extensions that use two separate JARs: the adapter and the JDBC driver. The base extension allows specifying multiple files that are then all included in the `ADAPTER SCRIPT` definition as `%jar` directives.
 
-The release also allows omitting the file size. This will allow extensions to ignore the file size for JDBC driver JAR files.
+The release also allows extensions to ignore the file size for JDBC driver JAR files by omitting the file size.
 
 ## Features
 
