@@ -5,7 +5,7 @@ import { BadRequestError, NotFoundError, PreconditionFailedError } from "./error
 import { ExaMetadata } from "./exasolSchema";
 import { Parameter } from "./parameters";
 
-export const CURRENT_API_VERSION = "0.4.0";
+export const CURRENT_API_VERSION = "0.4.1";
 
 /**
  * This class represents an extension that can be installed and managed with the extension-manager.
@@ -182,12 +182,10 @@ export interface ParameterValue {
 export interface BucketFSUpload {
     /** Human-readable name or short description of the file */
     name: string
-    downloadUrl: string
-    licenseUrl: string
-    /** Default: false */
-    licenseAgreementRequired?: boolean
+    downloadUrl?: string
+    licenseUrl?: string
     bucketFsFilename: string
-    /** File size in bytes */
+    /** File size in bytes. Use `-1` to let Extension Manager ignore the file size. */
     fileSize: number
 }
 
