@@ -1,12 +1,14 @@
 import { JavaVirtualSchemaBaseExtension } from ".";
-import { Instance } from "../api";
+import { BadRequestError, Instance } from "../api";
 import { Context } from "../context";
 import { convertSchemaNameToInstanceId, escapeSingleQuotes, getConnectionName } from "./common";
+import { findInstances } from "./findInstances";
 import { ParameterAccessor } from "./parameterAccessor";
 import { PARAM_VIRTUAL_SCHEMA_NAME } from "./parameters";
 
 export function addInstance(context: Context, baseExtension: JavaVirtualSchemaBaseExtension, parameters: ParameterAccessor): Instance {
     const virtualSchemaName = parameters.get(PARAM_VIRTUAL_SCHEMA_NAME)
+    checkInstanceDoesNotExist(context, baseExtension, virtualSchemaName);
     const connectionName = getConnectionName(virtualSchemaName)
     context.sqlClient.execute(buildConnectionStatement(baseExtension, parameters, connectionName))
     context.sqlClient.execute(buildVirtualSchemaStatement(baseExtension, parameters, connectionName, context, virtualSchemaName))
@@ -15,6 +17,13 @@ export function addInstance(context: Context, baseExtension: JavaVirtualSchemaBa
     context.sqlClient.execute(`COMMENT ON CONNECTION "${connectionName}" IS '${comment}'`);
     context.sqlClient.execute(`COMMENT ON SCHEMA "${virtualSchemaName}" IS '${comment}'`);
     return { id: convertSchemaNameToInstanceId(virtualSchemaName), name: virtualSchemaName }
+}
+
+function checkInstanceDoesNotExist(context: Context, baseExtension: JavaVirtualSchemaBaseExtension, virtualSchemaName: string) {
+    const existingSchemas = findInstances(context, baseExtension.virtualSchemaAdapterScript).filter(i => i.name === virtualSchemaName);
+    if (existingSchemas.length > 0) {
+        throw new BadRequestError(`Virtual Schema '${virtualSchemaName}' already exists`);
+    }
 }
 
 function buildVirtualSchemaStatement(baseExtension: JavaVirtualSchemaBaseExtension, parameters: ParameterAccessor, connectionName: string, context: Context, virtualSchemaName: string) {
