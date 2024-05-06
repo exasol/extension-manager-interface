@@ -62,13 +62,18 @@ describe("addInstance()", () => {
             expect(() => addInstance([vsNameParam("new_vs")], "v0", [], []))
                 .toThrowError(new BadRequestError(`Virtual Schema 'new_vs' already exists`))
         })
+        it("fails for existing instance with different case", () => {
+            mockSqlQueryResult([["new_VS"]]);
+            expect(() => addInstance([vsNameParam("new_vs")], "v0", [], []))
+                .toThrowError(new BadRequestError(`Virtual Schema 'new_VS' already exists`))
+        })
+        it("fails for multiple existing instances with different case", () => {
+            mockSqlQueryResult([["new_VS", "NEW_vs"]]);
+            expect(() => addInstance([vsNameParam("new_vs")], "v0", [], []))
+                .toThrowError(new BadRequestError(`Virtual Schema 'new_VS' already exists`))
+        })
         it("succeeds for existing instance with other name", () => {
             mockSqlQueryResult([["other_vs"]]);
-            expect(() => addInstance([vsNameParam("new_vs")], "v0", [], []))
-                .not.toThrow()
-        })
-        it("succeeds for existing instance with different name case", () => {
-            mockSqlQueryResult([["NEW_vs"]]);
             expect(() => addInstance([vsNameParam("new_vs")], "v0", [], []))
                 .not.toThrow()
         })
@@ -84,9 +89,9 @@ describe("addInstance()", () => {
     })
     it("executes statements", () => {
         addInstance([vsNameParam("vs1")], "v0", [], [])
-        expect(getStatement(0)).toBe(`CREATE OR REPLACE CONNECTION "vs1_CONNECTION" TO '' IDENTIFIED BY '{}'`)
-        expect(getStatement(1)).toBe(`CREATE VIRTUAL SCHEMA "vs1" USING "ext-schema"."vs-adapter-script-name" WITH CONNECTION_NAME = 'vs1_CONNECTION'`)
-        expect(getStatement(2)).toBe(`COMMENT ON CONNECTION "vs1_CONNECTION" IS 'Created by Extension Manager for testing-extension vv0 vs1'`)
+        expect(getStatement(0)).toBe(`CREATE OR REPLACE CONNECTION "VS1_CONNECTION" TO '' IDENTIFIED BY '{}'`)
+        expect(getStatement(1)).toBe(`CREATE VIRTUAL SCHEMA "vs1" USING "ext-schema"."vs-adapter-script-name" WITH CONNECTION_NAME = 'VS1_CONNECTION'`)
+        expect(getStatement(2)).toBe(`COMMENT ON CONNECTION "VS1_CONNECTION" IS 'Created by Extension Manager for testing-extension vv0 vs1'`)
         expect(getStatement(3)).toBe(`COMMENT ON SCHEMA "vs1" IS 'Created by Extension Manager for testing-extension vv0 vs1'`)
     })
 
@@ -105,7 +110,7 @@ describe("addInstance()", () => {
         tests.forEach(test => it(test.name, () => {
             addInstance([vsNameParam("vs1"), ...test.params], "v0", test.vsParamDefs, [])
             expect(getCreateVirtualSchemaStatement()).toBe(`CREATE VIRTUAL SCHEMA "vs1" USING "ext-schema"."vs-adapter-script-name" `
-                + `WITH CONNECTION_NAME = 'vs1_CONNECTION'${test.expected}`)
+                + `WITH CONNECTION_NAME = 'VS1_CONNECTION'${test.expected}`)
         }))
     })
 
@@ -126,7 +131,7 @@ describe("addInstance()", () => {
             ]
             tests.forEach(test => it(test.name, () => {
                 addInstance([vsNameParam("vs1"), ...test.params], "v0", [], test.connParamDefs)
-                expect(getCreateConnectionStatement()).toBe(`CREATE OR REPLACE CONNECTION "vs1_CONNECTION" TO '' IDENTIFIED BY '${test.expected}'`)
+                expect(getCreateConnectionStatement()).toBe(`CREATE OR REPLACE CONNECTION "VS1_CONNECTION" TO '' IDENTIFIED BY '${test.expected}'`)
             }))
         })
 
@@ -185,7 +190,7 @@ describe("addInstance()", () => {
             ]
             tests.forEach(test => it(test.name, () => {
                 addInstanceWithUserPasswordConnection([vsNameParam("vs1"), ...test.params], "v0", [], test.connAddr, test.connUser, test.connPassword)
-                expect(getCreateConnectionStatement()).toBe(`CREATE OR REPLACE CONNECTION "vs1_CONNECTION" ${test.expected}`)
+                expect(getCreateConnectionStatement()).toBe(`CREATE OR REPLACE CONNECTION "VS1_CONNECTION" ${test.expected}`)
             }))
         })
     })

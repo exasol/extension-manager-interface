@@ -14,7 +14,10 @@ describe("common", () => {
     })
     describe("getConnectionName()", () => {
         it("appends _CONNECTION", () => {
-            expect(getConnectionName("My Value")).toBe("My Value_CONNECTION")
+            expect(getConnectionName("MY VALUE")).toBe("MY VALUE_CONNECTION")
+        })
+        it("converts name to upper case", () => {
+            expect(getConnectionName("My Value")).toBe("MY VALUE_CONNECTION")
         })
     })
     describe("escapeSingleQuotes()", () => {

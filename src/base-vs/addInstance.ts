@@ -19,10 +19,19 @@ export function addInstance(context: Context, baseExtension: JavaVirtualSchemaBa
     return { id: convertSchemaNameToInstanceId(virtualSchemaName), name: virtualSchemaName }
 }
 
+/**
+ * This function checks if a virtual schema with the given name already exists and throws an error if it does.
+ * This ignores the case of the virtual schema name because the connection name is case-insensitive, see
+ * [`CREATE CONNECTION` documentation](https://docs.exasol.com/db/latest/sql/create_connection.htm).
+ * @param context the extension manager context
+ * @param baseExtension the base extension
+ * @param virtualSchemaName the name of the virtual schema to check
+ */
 function checkInstanceDoesNotExist(context: Context, baseExtension: JavaVirtualSchemaBaseExtension, virtualSchemaName: string) {
-    const existingSchemas = findInstances(context, baseExtension.virtualSchemaAdapterScript).filter(i => i.name === virtualSchemaName);
+    const existingSchemas = findInstances(context, baseExtension.virtualSchemaAdapterScript)
+        .filter(i => i.name.toUpperCase() === virtualSchemaName.toUpperCase());
     if (existingSchemas.length > 0) {
-        throw new BadRequestError(`Virtual Schema '${virtualSchemaName}' already exists`);
+        throw new BadRequestError(`Virtual Schema '${existingSchemas[0].name}' already exists`);
     }
 }
 

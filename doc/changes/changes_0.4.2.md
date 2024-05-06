@@ -4,7 +4,9 @@ Code name: Improve error message for existing virtual schema
 
 ## Summary
 
-This release checks if a virtual schema already exists with the same name before creating a new one. This improves the error message for the user.
+This release checks if a virtual schema already exists with the same name (case-insensitive) before creating a new one. This improves the error message for the user.
+
+The test is case-insensitive because we create a new `CONNECTION` for virtual schemas based on the virtual schema name, and Exasol `CONNECTION` names are also case-insensitive.
 
 ## Bugfix
 
