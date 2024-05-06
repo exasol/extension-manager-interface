@@ -1,14 +1,18 @@
 {
-  "compilerOptions": {
-    "noImplicitAny": true,
-    "noEmitOnError": true,
-    "removeComments": false,
-    "sourceMap": true,
-    "target": "ES5",
-    "outDir": "dist/",
-    "declaration": true,
-    "strict": true,
-    "strictNullChecks": false
-  },
-  "include": ["src/**/*"]
+    "compilerOptions": {
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "target": "ES2015",
+        "noImplicitAny": true,
+        "noEmitOnError": true,
+        "removeComments": false,
+        "sourceMap": true,
+        "outDir": "dist/",
+        "declaration": true,
+        "strict": true,
+        "strictNullChecks": false
+    },
+    "include": [
+        "src/**/*"
+    ]
 }
