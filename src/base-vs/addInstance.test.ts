@@ -1,9 +1,11 @@
 
 import { describe, expect, it } from '@jest/globals';
-import { ConnectionParameterDefinition, convertVirtualSchemaBaseExtension, createJsonConnectionDefinition, createUserPasswordConnectionDefinition, createVirtualSchemaBuilder } from '.';
-import { Instance, Parameter, ParameterValue } from '../api';
-import { ContextMock, createMockContext } from '../base/test-utils';
-import { emptyBaseVsExtension, param, vsNameParam } from './test-vs-utils';
+import { Instance, ParameterValue } from '../api.js';
+import { ContextMock, createMockContext } from '../base/test-utils.js';
+import { Parameter } from '../parameters.js';
+import { ConnectionParameterDefinition, createJsonConnectionDefinition, createUserPasswordConnectionDefinition, createVirtualSchemaBuilder } from './builders.js';
+import { convertVirtualSchemaBaseExtension } from './index.js';
+import { emptyBaseVsExtension, param, vsNameParam } from './test-vs-utils.js';
 
 let context: ContextMock = undefined
 

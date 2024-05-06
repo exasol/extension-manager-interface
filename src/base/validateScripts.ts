@@ -1,8 +1,8 @@
-import { InternalServerError } from "../error";
-import { ExaScriptsRow } from "../exasolSchema";
-import { AdapterScript } from "./adapterScript";
-import { Result, failureResult, successResult } from "./common";
-import { ScriptDefinition, VersionExtractor } from "./index";
+import { InternalServerError } from "../error.js";
+import { ExaScriptsRow } from "../exasolSchema.js";
+import { AdapterScript } from "./adapterScript.js";
+import { Result, failureResult, successResult } from "./common.js";
+import { ScriptDefinition, VersionExtractor } from "./index.js";
 
 
 export type InstalledScripts = Map<string, AdapterScript>

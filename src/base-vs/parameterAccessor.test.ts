@@ -1,7 +1,8 @@
 
 import { describe, expect, it } from '@jest/globals';
-import { Parameter, ParameterValue } from '../api';
-import { createParameterAccessor } from './parameterAccessor';
+import { ParameterValue } from '../api.js';
+import { Parameter } from '../parameters.js';
+import { createParameterAccessor } from './parameterAccessor.js';
 
 describe("ParameterAccessor", () => {
     function param(name: string, value: string): ParameterValue {

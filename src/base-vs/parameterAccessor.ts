@@ -1,4 +1,5 @@
-import { Parameter, ParameterValues } from "../api";
+import { ParameterValues } from "../api.js";
+import { Parameter } from "../parameters.js";
 
 /** Gives access to parameter values provided by the user. */
 export interface ParameterAccessor {

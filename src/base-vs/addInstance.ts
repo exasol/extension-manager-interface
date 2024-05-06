@@ -1,9 +1,9 @@
-import { JavaVirtualSchemaBaseExtension } from ".";
-import { Instance } from "../api";
-import { Context } from "../context";
-import { convertSchemaNameToInstanceId, escapeSingleQuotes, getConnectionName } from "./common";
-import { ParameterAccessor } from "./parameterAccessor";
-import { PARAM_VIRTUAL_SCHEMA_NAME } from "./parameters";
+import { Instance } from "../api.js";
+import { Context } from "../context.js";
+import { convertSchemaNameToInstanceId, escapeSingleQuotes, getConnectionName } from "./common.js";
+import { JavaVirtualSchemaBaseExtension } from "./index.js";
+import { ParameterAccessor } from "./parameterAccessor.js";
+import { PARAM_VIRTUAL_SCHEMA_NAME } from "./parameters.js";
 
 export function addInstance(context: Context, baseExtension: JavaVirtualSchemaBaseExtension, parameters: ParameterAccessor): Instance {
     const virtualSchemaName = parameters.get(PARAM_VIRTUAL_SCHEMA_NAME)

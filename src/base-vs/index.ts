@@ -1,10 +1,13 @@
-import { Context, ExasolExtension, Instance, NotFoundError, Parameter, ParameterValues } from "../api";
-import { JavaBaseExtension, convertBaseExtension } from "../base";
-import { addInstance } from "./addInstance";
-import { deleteInstance } from "./deleteInstance";
-import { findInstances } from "./findInstances";
-import { getInstanceParameters } from "./getInstanceParameters";
-import { ParameterAccessor, createParameterAccessor } from "./parameterAccessor";
+import { ExasolExtension, Instance, ParameterValues } from "../api.js";
+import { JavaBaseExtension, convertBaseExtension } from "../base/index.js";
+import { Context } from "../context.js";
+import { NotFoundError } from "../error.js";
+import { Parameter } from "../parameters.js";
+import { addInstance } from "./addInstance.js";
+import { deleteInstance } from "./deleteInstance.js";
+import { findInstances } from "./findInstances.js";
+import { getInstanceParameters } from "./getInstanceParameters.js";
+import { ParameterAccessor, createParameterAccessor } from "./parameterAccessor.js";
 
 /**
  * Simplified version of an {@link ExasolExtension} specifically for Java based `VIRTUAL SCHEMA`s.
@@ -102,4 +105,4 @@ export function convertVirtualSchemaBaseExtension(baseExtension: JavaVirtualSche
     }
 }
 
-export * from './builders';
+export * from './builders.js';

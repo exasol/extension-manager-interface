@@ -1,9 +1,13 @@
-import { BucketFSUpload, Context, ExaMetadata, ExasolExtension, Instance, NotFoundError, Parameter, ParameterValues } from "../api";
-import { Result } from "./common";
-import { findInstallations } from "./findInstallations";
-import { installExtension } from "./install";
-import { uninstall } from "./uninstall";
-import { upgrade } from "./upgrade";
+import { BucketFSUpload, ExasolExtension, Instance, ParameterValues } from "../api.js";
+import { Context } from "../context.js";
+import { NotFoundError } from "../error.js";
+import { ExaMetadata } from "../exasolSchema.js";
+import { Parameter } from "../parameters.js";
+import { Result } from "./common.js";
+import { findInstallations } from "./findInstallations.js";
+import { installExtension } from "./install.js";
+import { uninstall } from "./uninstall.js";
+import { upgrade } from "./upgrade.js";
 
 /** Definition of a Java based Exasol `SCRIPT` with all information required for creating it in the database. */
 export type ScriptDefinition = ScalarSetScriptDefinition | AdapterScriptDefinition
@@ -79,7 +83,7 @@ export interface JavaBaseExtension {
  * The extension uses this to determine the actual version of an installed `SCRIPT`.
  */
 export type VersionExtractor = (adapterScriptText: string) => Result<string>
-export { jarFileVersionExtractor } from './jarFileVersionExtractor';
+export { jarFileVersionExtractor } from './jarFileVersionExtractor.js';
 
 /**
  * Converts a simplified Java `SCRIPT` based extension definition to a {@link ExasolExtension}.

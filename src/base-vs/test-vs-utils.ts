@@ -1,6 +1,7 @@
-import { JavaVirtualSchemaBaseExtension, createJsonConnectionDefinition, createVirtualSchemaBuilder } from ".";
-import { ParameterValue } from "../api";
-import { successResult } from "../base/common";
+import { ParameterValue } from "../api.js";
+import { successResult } from "../base/common.js";
+import { createJsonConnectionDefinition, createVirtualSchemaBuilder } from "./builders.js";
+import { JavaVirtualSchemaBaseExtension } from "./index.js";
 
 export function emptyBaseVsExtension(): JavaVirtualSchemaBaseExtension {
     const adapterName = "vs-adapter-script-name"
