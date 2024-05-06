@@ -1,4 +1,4 @@
-# Extension Manager Interface 0.4.2, released 2024-05-06
+# Extension Manager Interface 0.4.2, released 2024-05-07
 
 Code name: Improve error message for existing virtual schema
 
