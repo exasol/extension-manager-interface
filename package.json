@@ -1,6 +1,6 @@
 {
     "name": "@exasol/extension-manager-interface",
-    "version": "0.4.1",
+    "version": "0.4.2",
     "main": "dist/api.js",
     "types": "dist/api.d.ts",
     "description": "Interface for extensions for the Exasol extension manager.",
@@ -14,13 +14,13 @@
     },
     "devDependencies": {
         "@jest/globals": "^29.7.0",
-        "@typescript-eslint/eslint-plugin": "^6.10.0",
-        "@typescript-eslint/parser": "^6.10.0",
-        "eslint": "^8.53.0",
+        "@typescript-eslint/eslint-plugin": "^7.8.0",
+        "@typescript-eslint/parser": "^7.8.0",
+        "eslint": "^8.57.0",
         "jest": "^29.7.0",
-        "ts-jest": "^29.1.1",
-        "ts-node": "^10.9.1",
-        "typescript": "5.2.2"
+        "ts-jest": "^29.1.2",
+        "ts-node": "^10.9.2",
+        "typescript": "5.4.5"
     },
     "files": [
         "LICENSE",

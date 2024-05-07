@@ -34,6 +34,6 @@ describe("deleteInstance()", () => {
     it("executes DROP statements", () => {
         deleteInstance("v0", "instId")
         expect(getStatement(0)).toBe(`DROP VIRTUAL SCHEMA IF EXISTS "instId" CASCADE`)
-        expect(getStatement(1)).toBe(`DROP CONNECTION IF EXISTS "instId_CONNECTION"`)
+        expect(getStatement(1)).toBe(`DROP CONNECTION IF EXISTS "INSTID_CONNECTION"`)
     })
 })
