@@ -19,7 +19,7 @@ Example: [row-level-security-lua](https://github.com/exasol/row-level-security-l
 
 ### Java `SCRIPT` Base 
 
-The base extension interface for Java `SCRIPT` based extension is defined in [src/base/index.ts](src/base/index.ts). It is useful for extensions that only consist of one or more Java `SCRIPT` UDFs and don't use instances.
+The base extension interface for Java `SCRIPT` based extension is defined in [src/base/index.ts](src/base/index.ts). It is useful for extensions that only consist of one or multiple Java `SCRIPT` UDFs and don't use instances.
 
 Example: [cloud-storage-extension](https://github.com/exasol/cloud-storage-extension/blob/main/extension/src/extension.ts)
 
