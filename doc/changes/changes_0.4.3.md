@@ -9,3 +9,9 @@ This release improves name and regular expression for the virtual schema name pa
 ## Bugfixes
 
 * #56: Improved virtual schema name parameter
+
+## Dependency Updates
+
+### Development Dependency Updates
+
+* Added `typescript-eslint:^7.8.0`
