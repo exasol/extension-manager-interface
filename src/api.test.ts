@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { describe, expect, it } from "@jest/globals";
 import { readFile, readdir } from "fs/promises";
 import { BadRequestError, CURRENT_API_VERSION, ExasolExtension, InternalServerError, NotFoundError, PreconditionFailedError, registerExtension } from "./api";
@@ -9,13 +7,11 @@ import { BadRequestError, CURRENT_API_VERSION, ExasolExtension, InternalServerEr
 async function readPackageJson(): Promise<any> {
     const fileContentBuffer = await readFile("package.json")
     const fileContent = fileContentBuffer.toString("utf8")
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return JSON.parse(fileContent);
 }
 
 async function readPackageJsonVersion(): Promise<string> {
     const packageJson = await readPackageJson()
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return packageJson.version
 }
 
