@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, expect, it } from "@jest/globals";
 import { readFile, readdir } from "fs/promises";
-import { BadRequestError, CURRENT_API_VERSION, ExasolExtension, InternalServerError, NotFoundError, PreconditionFailedError, registerExtension } from "./api";
+import { BadRequestError, ExasolExtension, InternalServerError, NotFoundError, PreconditionFailedError, registerExtension } from "./api";
+import { CURRENT_API_VERSION } from "./version";
 
 
 async function readPackageJson(): Promise<any> {
