@@ -15,3 +15,9 @@ This release also reduces code duplication by generating `version.ts` containing
 ## Refactoring
 
 * #36: Generated API version from `package.json`
+
+## Dependency Updates
+
+### Development Dependency Updates
+
+* Added `typescript-eslint:^7.8.0`
