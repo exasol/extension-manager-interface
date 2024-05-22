@@ -25,9 +25,9 @@ describe("getInstanceParameters", () => {
                 {
                     description: "Name for the new virtual schema",
                     id: "baseVirtualSchemaName",
-                    name: "Virtual Schema name",
+                    name: "Virtual schema name",
                     placeholder: "MY_VIRTUAL_SCHEMA",
-                    regex: "[a-zA-Z_]+",
+                    regex: "[a-zA-Z][a-zA-Z0-9_]*",
                     required: true,
                     type: "string",
                 },

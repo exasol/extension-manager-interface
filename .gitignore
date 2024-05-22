@@ -39,3 +39,4 @@ dist/
 node_modules/
 coverage/
 .scannerwork/
+/src/version.ts
