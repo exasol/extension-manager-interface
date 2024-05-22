@@ -9,27 +9,50 @@ This is the interface definition for Exasol extensions that can be installed by 
 
 ## Creating New Extensions
 
+This section describes how to create a new extension.
+
+### Base Extension Types
+
 You have the following options for creating a new extensions:
 
-### Generic Interface
+#### Generic Interface
 
 The generic extension interface is defined in [src/api.ts](src/api.ts). It is the most flexible option but requires implementing all extension methods from scratch.
 
 Example: [row-level-security-lua](https://github.com/exasol/row-level-security-lua/blob/main/extension/src/extension.ts)
 
-### Java `SCRIPT` Base 
+#### Java `SCRIPT` Base 
 
 The base extension interface for Java `SCRIPT` based extension is defined in [src/base/index.ts](src/base/index.ts). It is useful for extensions that only consist of one or multiple Java `SCRIPT` UDFs and don't use instances.
 
 Example: [cloud-storage-extension](https://github.com/exasol/cloud-storage-extension/blob/main/extension/src/extension.ts)
 
-### Java `VIRTUAL SCHEMA` Base
+#### Java `VIRTUAL SCHEMA` Base
 
 The base extension interface for Java `VIRTUAL SCHEMA`s is defined in [src/base-vs/index.ts](src/base-vs/index.ts). It is useful for JDBC or document based Virtual Schemas that are based on Java UDFs.
 
 Examples:
 * JDBC based: [oracle-virtual-schema](https://github.com/exasol/oracle-virtual-schema/blob/main/extension/src/extension.ts)
 * Document based: [s3-document-files-virtual-schema](https://github.com/exasol/s3-document-files-virtual-schema/blob/main/extension/src/extension.ts)
+
+## Testing Extensions
+
+Create unit tests for new extensions with Jest. In your test call the function `testJavaVirtualSchemaBaseExtension()` to also run shared unit tests:
+
+```ts
+import { testJavaVirtualSchemaBaseExtension } from '@exasol/extension-manager-interface/dist/base-vs-test/vsTestBase';
+import { createExtension } from "./extension";
+
+// ...
+
+testJavaVirtualSchemaBaseExtension(createExtension);
+```
+
+These shared tests verify the following criteria:
+
+* Parameter IDs don't contain a dot `.`
+* Parameter IDs are unique
+* The extension contains at least one version
 
 ## Additional Information
 
