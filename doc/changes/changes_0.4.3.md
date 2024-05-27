@@ -1,4 +1,4 @@
-# Extension Manager Interface 0.4.3, released 2024-05-10
+# Extension Manager Interface 0.4.3, released 2024-05-27
 
 Code name: Improve virtual schema name parameter
 
