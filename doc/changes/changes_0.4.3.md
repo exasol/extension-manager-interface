@@ -8,7 +8,7 @@ This release improves name and regular expression for the virtual schema name pa
 
 ## Bugfixes
 
-* #56: Improved virtual schema name parameter
+* #56: Restricted pattern for parameter  `virtual schema name`
 
 ## Dependency Updates
 
