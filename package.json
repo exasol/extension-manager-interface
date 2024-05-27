@@ -6,10 +6,11 @@
     "description": "Interface for extensions for the Exasol extension manager.",
     "license": "MIT",
     "scripts": {
-        "build": "tsc --build",
-        "clean": "tsc --build --clean",
-        "test": "jest --silent",
-        "test-watch": "jest --watch --silent",
+        "build": "npm run generate && tsc --build",
+        "generate": "node generate-version.mjs",
+        "clean": "tsc --build --clean && rm -f src/version.ts",
+        "test": "npm run generate && jest --silent",
+        "test-watch": "npm run generate && jest --watch --silent",
         "lint": "eslint --report-unused-disable-directives --exit-on-fatal-error ./src/"
     },
     "devDependencies": {
