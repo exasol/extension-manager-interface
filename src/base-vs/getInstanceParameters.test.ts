@@ -24,7 +24,7 @@ describe("getInstanceParameters", () => {
             .toStrictEqual([
                 {
                     description: "Name for the new virtual schema",
-                    id: "base-vs.virtual-schema-name",
+                    id: "baseVirtualSchemaName",
                     name: "Virtual schema name",
                     placeholder: "MY_VIRTUAL_SCHEMA",
                     regex: "[a-zA-Z][a-zA-Z0-9_]*",

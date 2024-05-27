@@ -33,5 +33,5 @@ export function param(name: string, value: string): ParameterValue {
 }
 
 export function vsNameParam(vsName: string): ParameterValue {
-    return param("base-vs.virtual-schema-name", vsName)
+    return param("baseVirtualSchemaName", vsName)
 }

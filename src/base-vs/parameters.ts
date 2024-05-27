@@ -1,7 +1,7 @@
 import { Parameter } from "../parameters";
 
 export const PARAM_VIRTUAL_SCHEMA_NAME: Parameter = {
-    id: "base-vs.virtual-schema-name",
+    id: "baseVirtualSchemaName",
     name: "Virtual schema name",
     description: "Name for the new virtual schema",
     type: "string",
