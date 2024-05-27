@@ -23,7 +23,7 @@ See the [readme](../../README.md#testing-extensions) for details.
 
 ## Bugfixes
 
-* #56: Improved virtual schema name parameter
+* #56: Restricted pattern for parameter  `virtual schema name`
 
 ## Refactoring
 
