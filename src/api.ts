@@ -5,7 +5,7 @@ import { BadRequestError, NotFoundError, PreconditionFailedError } from "./error
 import { ExaMetadata } from "./exasolSchema";
 import { Parameter } from "./parameters";
 
-export const CURRENT_API_VERSION = "0.4.2";
+export const CURRENT_API_VERSION = "0.4.3";
 
 /**
  * This class represents an extension that can be installed and managed with the extension-manager.

@@ -69,7 +69,6 @@ export function createJsonConnectionDefinition(parameterDefinitions: Parameter[]
         for (const param of parameterDefinitions) {
             const value = parameters.getOptional(param)
             if (value) {
-                /* eslint-disable @typescript-eslint/no-unsafe-member-access */
                 paramValues[param.id] = value
             }
         }
