@@ -6,7 +6,9 @@ import { createMockContext } from '../base/test-utils';
  * This function runs shared tests for a virtual schema extension.
  * 
  * Call this function in your test file to test your virtual schema extension.
- * It will assert that the parameters conform to the naming conventions.
+ * It will assert basic properties of your extension, e.g. having an ID, names
+ * of parameters satisfy conform to the naming conventions, etc.  See the
+ * descriptions of the contained test cases for details.
  * @param extensionProvider factory for the extension to test
  */
 export function testJavaVirtualSchemaBaseExtension(extensionProvider: () => ExasolExtension) {
