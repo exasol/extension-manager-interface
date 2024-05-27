@@ -5,6 +5,7 @@ import { BadRequestError, NotFoundError, PreconditionFailedError } from "./error
 import { ExaMetadata } from "./exasolSchema";
 import { Parameter } from "./parameters";
 import { CURRENT_API_VERSION } from "./version";
+
 /**
  * This class represents an extension that can be installed and managed with the extension-manager.
  */

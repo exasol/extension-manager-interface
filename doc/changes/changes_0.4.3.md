@@ -10,7 +10,7 @@ This release also reduces code duplication by generating `version.ts` containing
 
 ## Bugfixes
 
-* #56: Improved virtual schema name parameter
+* #56: Restricted pattern for parameter  `virtual schema name`
 
 ## Refactoring
 
