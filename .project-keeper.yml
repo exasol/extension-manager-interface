@@ -1,3 +1,6 @@
 sources:
   - type: npm
     path: package.json
+excludes:
+  # Release process uses release droid
+  - "E-PK-CORE-26: 'release_config.yml' exists but must not exist. Reason: Release-droid configuration is replaced by release.yml"
