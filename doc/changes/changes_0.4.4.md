@@ -1,12 +1,14 @@
-# Extension Manager Interface 0.4.4, released 2025-??-??
+# Extension Manager Interface 0.4.4, released 2025-02-10
 
-Code name:
+Code name: Fix CVE-2024-4068 in dev dependency braces
 
 ## Summary
 
-## Features
+This release fixes vulnerability CVE-2024-4068 in dev dependency `braces`.
 
-* ISSUE_NUMBER: description
+## Security
+
+* #61: Fixed CVE-2024-4068 in `braces`
 
 ## Dependency Updates
 
