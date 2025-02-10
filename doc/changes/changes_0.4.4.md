@@ -8,3 +8,13 @@ Code name:
 
 * ISSUE_NUMBER: description
 
+## Dependency Updates
+
+### Development Dependency Updates
+
+* Updated `eslint:^8.57.0` to `^9.20.0`
+* Updated `ts-jest:^29.1.2` to `^29.2.5`
+* Updated `typescript-eslint:^7.8.0` to `^8.23.0`
+* Updated `typescript:5.4.5` to `5.7.3`
+* Removed `@typescript-eslint/parser:^7.8.0`
+* Removed `@typescript-eslint/eslint-plugin:^7.8.0`
