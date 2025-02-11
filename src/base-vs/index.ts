@@ -1,4 +1,4 @@
-import { Context, ExasolExtension, Instance, NotFoundError, Parameter, ParameterValues } from "../api";
+import { Context, ExasolExtension, Instance, NotFoundError, Parameter, ParameterValues, ParamValueType } from "../api";
 import { JavaBaseExtension, convertBaseExtension } from "../base";
 import { addInstance } from "./addInstance";
 import { deleteInstance } from "./deleteInstance";
@@ -34,7 +34,7 @@ export interface VirtualSchemaProperty {
     /** Property name, e.g. `CONNECTION_NAME` or `MAPPING` */
     property: string
     /** Value of the property, e.g. `MY_S3_VS_CONNECTION` or `{...}` */
-    value: string
+    value: ParamValueType
 }
 
 /** Definition of a `VIRTUAL SCHEMA` */
