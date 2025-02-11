@@ -1,6 +1,6 @@
 {
     "name": "@exasol/extension-manager-interface",
-    "version": "0.4.4",
+    "version": "0.4.5",
     "main": "dist/api.js",
     "types": "dist/api.d.ts",
     "type": "module",
