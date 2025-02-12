@@ -42,7 +42,7 @@ function buildVirtualSchemaStatement(baseExtension: JavaVirtualSchemaBaseExtensi
     if (def.properties.length > 0) {
         stmt += " WITH"
         for (const property of def.properties) {
-            const escapedValue: ParamValueType = typeof property.value === "boolean" ? property.value : escapeSingleQuotes(property.value);
+            const escapedValue: ParamValueType = typeof property.value === "string" ? escapeSingleQuotes(property.value) : property.value;
             stmt += ` ${property.property} = '${escapedValue}'`;
         }
     }

@@ -106,6 +106,7 @@ describe("addInstance()", () => {
             },
             { name: "single quotes escaped", vsParamDefs: [{ id: "p1", name: "P1", type: "string" }], params: [param("p1", "va'lue")], expected: " p1 = 'va''lue'" },
             { name: "double quotes escaped", vsParamDefs: [{ id: "p1", name: "P1", type: "string" }], params: [param("p1", "va\"lue")], expected: " p1 = 'va\"lue'" },
+            { name: "boolean param", vsParamDefs: [{ id: "p1", name: "P1", type: "boolean" }], params: [param("p1", "true")], expected: " p1 = 'true'" },
         ]
         tests.forEach(test => it(test.name, () => {
             addInstance([vsNameParam("vs1"), ...test.params], "v0", test.vsParamDefs, [])
