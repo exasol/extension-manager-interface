@@ -1,5 +1,5 @@
 import { JavaVirtualSchemaBaseExtension } from ".";
-import { BadRequestError, Instance } from "../api";
+import { BadRequestError, Instance, ParamValueType } from "../api";
 import { Context } from "../context";
 import { convertSchemaNameToInstanceId, escapeSingleQuotes, getConnectionName } from "./common";
 import { findInstances } from "./findInstances";
@@ -7,7 +7,7 @@ import { ParameterAccessor } from "./parameterAccessor";
 import { PARAM_VIRTUAL_SCHEMA_NAME } from "./parameters";
 
 export function addInstance(context: Context, baseExtension: JavaVirtualSchemaBaseExtension, parameters: ParameterAccessor): Instance {
-    const virtualSchemaName = parameters.get(PARAM_VIRTUAL_SCHEMA_NAME)
+    const virtualSchemaName = parameters.get(PARAM_VIRTUAL_SCHEMA_NAME) as string
     checkInstanceDoesNotExist(context, baseExtension, virtualSchemaName);
     const connectionName = getConnectionName(virtualSchemaName)
     context.sqlClient.execute(buildConnectionStatement(baseExtension, parameters, connectionName))
@@ -42,7 +42,8 @@ function buildVirtualSchemaStatement(baseExtension: JavaVirtualSchemaBaseExtensi
     if (def.properties.length > 0) {
         stmt += " WITH"
         for (const property of def.properties) {
-            stmt += ` ${property.property} = '${escapeSingleQuotes(property.value)}'`;
+            const escapedValue: ParamValueType = typeof property.value === "string" ? escapeSingleQuotes(property.value) : property.value;
+            stmt += ` ${property.property} = '${escapedValue}'`;
         }
     }
     return stmt;

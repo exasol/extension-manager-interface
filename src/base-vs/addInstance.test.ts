@@ -106,6 +106,7 @@ describe("addInstance()", () => {
             },
             { name: "single quotes escaped", vsParamDefs: [{ id: "p1", name: "P1", type: "string" }], params: [param("p1", "va'lue")], expected: " p1 = 'va''lue'" },
             { name: "double quotes escaped", vsParamDefs: [{ id: "p1", name: "P1", type: "string" }], params: [param("p1", "va\"lue")], expected: " p1 = 'va\"lue'" },
+            { name: "boolean param", vsParamDefs: [{ id: "p1", name: "P1", type: "boolean" }], params: [param("p1", "true")], expected: " p1 = 'true'" },
         ]
         tests.forEach(test => it(test.name, () => {
             addInstance([vsNameParam("vs1"), ...test.params], "v0", test.vsParamDefs, [])
@@ -124,7 +125,8 @@ describe("addInstance()", () => {
                 { name: "required string param", connParamDefs: [{ id: "p1", name: "P1", type: "string", required: true }], params: [param("p1", "v1")], expected: `{"p1":"v1"}` },
                 { name: "escapes single quotes", connParamDefs: [{ id: "p1", name: "P1", type: "string" }], params: [param("p1", "v'1")], expected: `{"p1":"v''1"}` },
                 { name: "escapes double quotes", connParamDefs: [{ id: "p1", name: "P1", type: "string" }], params: [param("p1", "v\"1")], expected: `{"p1":"v\\"1"}` },
-                { name: "outputs boolean as string", connParamDefs: [{ id: "p1", name: "P1", type: "boolean" }], params: [param("p1", "true")], expected: `{"p1":"true"}` },
+                { name: "outputs true boolean", connParamDefs: [{ id: "p1", name: "P1", type: "boolean" }], params: [param("p1", "true")], expected: `{"p1":true}` },
+                { name: "outputs false boolean", connParamDefs: [{ id: "p1", name: "P1", type: "boolean" }], params: [param("p1", "false")], expected: `{"p1":false}` },
                 { name: "outputs select as string", connParamDefs: [{ id: "p1", name: "P1", type: "select", options: [] }], params: [param("p1", "v1")], expected: `{"p1":"v1"}` },
                 { name: "multiple parameter definitions, value missing", connParamDefs: [{ id: "p1", name: "P1", type: "string" }, { id: "p2", name: "P2", type: "string" }], params: [param("p1", "v1")], expected: `{"p1":"v1"}` },
                 { name: "multiple parameter definitions", connParamDefs: [{ id: "p1", name: "P1", type: "string" }, { id: "p2", name: "P2", type: "string" }], params: [param("p1", "v1"), param("p2", "v2")], expected: `{"p1":"v1","p2":"v2"}` },

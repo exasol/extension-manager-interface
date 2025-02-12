@@ -1,5 +1,5 @@
 import { ConnectionDefinition, VirtualSchemaBuilder, VirtualSchemaProperty } from ".";
-import { Parameter } from "../parameters";
+import { Parameter, ParamValueType } from "../parameters";
 import { ParameterAccessor } from "./parameterAccessor";
 
 /**
@@ -64,11 +64,10 @@ export function createVirtualSchemaBuilder({ virtualSchemaParameters, connection
  */
 export function createJsonConnectionDefinition(parameterDefinitions: Parameter[]): ConnectionParameterDefinition {
     function builder(parameters: ParameterAccessor): ConnectionDefinition {
-        /* eslint-disable @typescript-eslint/no-explicit-any */
-        const paramValues: any = {}
+        const paramValues: Record<string, ParamValueType> = {}
         for (const param of parameterDefinitions) {
             const value = parameters.getOptional(param)
-            if (value) {
+            if (value !== undefined) {
                 paramValues[param.id] = value
             }
         }
@@ -89,9 +88,9 @@ export function createJsonConnectionDefinition(parameterDefinitions: Parameter[]
 export function createUserPasswordConnectionDefinition(addressParam: Parameter, userParam: Parameter, passwordParam: Parameter): ConnectionParameterDefinition {
     function builder(parameters: ParameterAccessor): ConnectionDefinition {
         return {
-            connectionTo: addressParam ? parameters.getOptional(addressParam) : undefined,
-            user: userParam ? parameters.getOptional(userParam) : undefined,
-            identifiedBy: passwordParam ? parameters.getOptional(passwordParam) : undefined
+            connectionTo: addressParam ? parameters.getOptional(addressParam) as string : undefined,
+            user: userParam ? parameters.getOptional(userParam) as string : undefined,
+            identifiedBy: passwordParam ? parameters.getOptional(passwordParam) as string : undefined
         }
     }
     return { parameters: [addressParam, userParam, passwordParam], builder }

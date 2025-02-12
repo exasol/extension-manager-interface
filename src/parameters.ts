@@ -4,6 +4,8 @@
  */
 export type Parameter = StringParameter | SelectParameter | BooleanParameter;
 
+export type ParamValueType = string | boolean
+
 /**
  * Abstract base interface with common fields for parameter definitions.
  */

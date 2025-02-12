@@ -1,4 +1,4 @@
-import { Parameter, ParameterValues } from "../api";
+import { Parameter, ParameterValues, ParamValueType } from "../api";
 
 /** Gives access to parameter values provided by the user. */
 export interface ParameterAccessor {
@@ -8,13 +8,13 @@ export interface ParameterAccessor {
      * @returns parameter value
      * @throws an Error if the user did not provide a value for the parameter
      */
-    get: (parameterDefinition: Parameter) => string;
+    get: (parameterDefinition: Parameter) => ParamValueType;
     /**
      * Get the value of an optional parameter.
      * @param parameterDefinition parameter definition for which to get the parameter value
      * @returns parameter value or `undefined` if no value is available
      */
-    getOptional: (parameterDefinition: Parameter) => string | undefined;
+    getOptional: (parameterDefinition: Parameter) => ParamValueType | undefined;
 }
 
 function buildValuesMap(values: ParameterValues): Map<string, string> {
@@ -28,13 +28,33 @@ function buildValuesMap(values: ParameterValues): Map<string, string> {
     return valuesMap
 }
 
-export function createParameterAccessor(paramValues: ParameterValues): ParameterAccessor {
-    const values = buildValuesMap(paramValues)
-    function getOptional(paramDef: Parameter): string | undefined {
-        return values.get(paramDef.id);
+function valueTyped(value: string, paramDef: Parameter): ParamValueType {
+    if (paramDef.type === "boolean") {
+        switch (value) {
+            case "true":
+                return true
+            case "false":
+                return false;
+            default:
+                throw new Error(`Invalid value '${value}' found for boolean parameter ${paramDef.id}.`)
+        }
     }
 
-    function get(paramDef: Parameter): string {
+    return value;
+}
+
+export function createParameterAccessor(paramValues: ParameterValues): ParameterAccessor {
+    const values = buildValuesMap(paramValues)
+    function getOptional(paramDef: Parameter): ParamValueType | undefined {
+        const value = values.get(paramDef.id);
+        if (value === undefined) {
+            return undefined;
+        }
+
+        return valueTyped(value, paramDef);
+    }
+
+    function get(paramDef: Parameter): ParamValueType {
         if (!paramDef.required) {
             throw new Error(`Parameter ${paramDef.id} is optional. Use method 'resolveOptional()' to resolve it.`)
         }
@@ -42,7 +62,7 @@ export function createParameterAccessor(paramValues: ParameterValues): Parameter
         if (!value) {
             throw new Error(`No value found for required parameter ${paramDef.id}`)
         }
-        return value
+        return valueTyped(value, paramDef);
     }
     return { getOptional, get }
 }
