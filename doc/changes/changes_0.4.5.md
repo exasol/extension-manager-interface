@@ -4,8 +4,8 @@ Code name: Fix boolean parameter serialization
 
 ## Summary
 
-This release fixes and issue with the serialization of boolean parameters, that were serialized as in JSON as a 
-string value `"true"`/`"false"` instead of using the literal values `true`/`false`
+This release fixes an issue with the serialization of boolean parameters, that were serialized to JSON as a 
+string value `"true"` / `"false"` instead of using the literal values `true` / `false`
 
 ## Bugfixes
 
