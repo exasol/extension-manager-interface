@@ -1,6 +1,5 @@
 
 import { beforeEach, describe, expect, it } from '@jest/globals';
-import { PreconditionFailedError } from '../error';
 import { AdapterScriptDefinition, ScalarSetScriptDefinition, ScriptDefinition, convertBaseExtension } from './index';
 import { ContextMock, createMockContext, emptyBaseExtension } from './test-utils';
 
@@ -84,6 +83,6 @@ describe("uninstall", () => {
 
     it("fails for wrong version", () => {
         expect(() => { uninstall("wrongVersion") })
-            .toThrowError(new PreconditionFailedError(`Version 'wrongVersion' not supported, can only use 'v1'.`))
+            .toThrow(`Version 'wrongVersion' not supported, can only use 'v1'.`)
     })
 })

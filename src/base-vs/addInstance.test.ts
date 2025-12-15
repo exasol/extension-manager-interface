@@ -60,17 +60,17 @@ describe("addInstance()", () => {
         it("fails for existing instance", () => {
             mockSqlQueryResult([["new_vs"]]);
             expect(() => addInstance([vsNameParam("new_vs")], "v0", [], []))
-                .toThrowError(new BadRequestError(`Virtual Schema 'new_vs' already exists`))
+                .toThrow(new BadRequestError(`Virtual Schema 'new_vs' already exists`))
         })
         it("fails for existing instance with different case", () => {
             mockSqlQueryResult([["new_VS"]]);
             expect(() => addInstance([vsNameParam("new_vs")], "v0", [], []))
-                .toThrowError(new BadRequestError(`Virtual Schema 'new_VS' already exists`))
+                .toThrow(new BadRequestError(`Virtual Schema 'new_VS' already exists`))
         })
         it("fails for multiple existing instances with different case", () => {
             mockSqlQueryResult([["new_VS", "NEW_vs"]]);
             expect(() => addInstance([vsNameParam("new_vs")], "v0", [], []))
-                .toThrowError(new BadRequestError(`Virtual Schema 'new_VS' already exists`))
+                .toThrow(new BadRequestError(`Virtual Schema 'new_VS' already exists`))
         })
         it("succeeds for existing instance with other name", () => {
             mockSqlQueryResult([["other_vs"]]);

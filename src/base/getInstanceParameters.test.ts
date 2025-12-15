@@ -2,7 +2,6 @@
 import { describe, expect, it } from '@jest/globals';
 import { convertBaseExtension } from '.';
 import { Parameter } from '../api';
-import { PreconditionFailedError } from '../error';
 import { createMockContext, emptyBaseExtension } from './test-utils';
 
 function getInstanceParameters(): Parameter[] {
@@ -16,6 +15,6 @@ function getInstanceParameters(): Parameter[] {
 describe("getInstanceParameters", () => {
     it("not supported", () => {
         expect(() => getInstanceParameters())
-            .toThrowError(new PreconditionFailedError("Creating instances not supported"))
+            .toThrow("Creating instances not supported")
     })
 })

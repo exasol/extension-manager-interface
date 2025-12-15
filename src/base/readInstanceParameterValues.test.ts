@@ -2,7 +2,6 @@
 import { describe, expect, it } from '@jest/globals';
 import { convertBaseExtension } from '.';
 import { ParameterValues } from '../api';
-import { PreconditionFailedError } from '../error';
 import { createMockContext, emptyBaseExtension } from './test-utils';
 
 function readInstanceParameterValues(): ParameterValues {
@@ -16,6 +15,6 @@ function readInstanceParameterValues(): ParameterValues {
 describe("readInstanceParameterValues", () => {
     it("not supported", () => {
         expect(() => readInstanceParameterValues())
-            .toThrowError(new PreconditionFailedError("Reading instance parameter values not supported"))
+            .toThrow("Reading instance parameter values not supported")
     })
 })
