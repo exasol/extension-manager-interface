@@ -8,20 +8,19 @@ jobs:
     name: Build and release
     runs-on: ubuntu-latest
     permissions:
+      id-token: write # Required for OIDC
       contents: read
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: 22
+          node-version: "24"
           cache: "npm"
           registry-url: "https://registry.npmjs.org"
       - run: npm ci
+      - run: npm run build
       - run: npm run test
       - run: npm run lint
-      - run: npm run build
       - run: npm pack
       - name: Publish package on NPM 📦
         run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
