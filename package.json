@@ -6,6 +6,10 @@
     "type": "module",
     "description": "Interface for extensions for the Exasol extension manager.",
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/exasol/extension-manager-interface"
+    },
     "scripts": {
         "build": "npm run generate && tsc --build",
         "generate": "node generate-version.mjs",

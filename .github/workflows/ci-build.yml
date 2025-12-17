@@ -38,3 +38,5 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v7
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Publishing dry-run
+        run: npm publish --access public --dry-run
