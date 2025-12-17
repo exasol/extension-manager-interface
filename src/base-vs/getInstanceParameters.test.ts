@@ -3,6 +3,7 @@ import { describe, expect, it } from '@jest/globals';
 import { convertVirtualSchemaBaseExtension } from '.';
 import { Parameter } from '../api';
 import { createMockContext } from '../base/test-utils';
+import { NotFoundError } from '../error';
 import { emptyBaseVsExtension } from './test-vs-utils';
 
 function getInstanceParameters(version: string): Parameter[] {
@@ -16,7 +17,7 @@ function getInstanceParameters(version: string): Parameter[] {
 describe("getInstanceParameters", () => {
     it("fails for unsupported version", () => {
         expect(() => getInstanceParameters("wrong version"))
-            .toThrow("Version 'wrong version' not supported, can only use 'v0'.")
+            .toThrow(new NotFoundError("Version 'wrong version' not supported, can only use 'v0'."))
     })
     it("succeeds for supported version", () => {
         expect(getInstanceParameters("v0"))

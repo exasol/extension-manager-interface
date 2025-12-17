@@ -1,5 +1,6 @@
 
 import { describe, expect, it } from '@jest/globals';
+import { NotFoundError } from '../error';
 import { RequiredJar, ScriptDefinition, convertBaseExtension } from './index';
 import { ContextMock, createMockContext, emptyBaseExtension } from './test-utils';
 
@@ -110,6 +111,6 @@ describe("install", () => {
 
     it("fails for wrong version", () => {
         expect(() => { install("wrongVersion") })
-            .toThrow(`Version 'wrongVersion' not supported, can only use 'v1'.`)
+            .toThrow(new NotFoundError(`Version 'wrongVersion' not supported, can only use 'v1'.`))
     })
 })

@@ -1,5 +1,6 @@
 
 import { beforeEach, describe, expect, it } from '@jest/globals';
+import { PreconditionFailedError } from '../error';
 import { ExaScriptsRow } from '../exasolSchema';
 import { successResult } from './common';
 import { ScalarSetScriptDefinition, ScriptDefinition, VersionExtractor, convertBaseExtension } from './index';
@@ -34,25 +35,25 @@ describe("upgrade", () => {
     }
 
     it("no script", () => {
-        expect(() => upgrade([])).toThrow("Failed to validate script versions: No script given")
+        expect(() => upgrade([])).toThrow(new PreconditionFailedError("Failed to validate script versions: No script given"))
     })
 
     it("missing installed scripts", () => {
         context.mocks.simulateScripts([])
         expect(() => upgrade([def({ name: "SCRIPT_1", scriptClass: "com.example.Script" })]))
-            .toThrow("Not all required scripts are installed: Validation failed: Script 'SCRIPT_1' is missing")
+            .toThrow(new PreconditionFailedError("Not all required scripts are installed: Validation failed: Script 'SCRIPT_1' is missing"))
     })
 
     it("inconsistent versions", () => {
         context.mocks.simulateScripts([script({ name: "SCRIPT_1", text: "v0.2" }), script({ name: "SCRIPT_2", text: "v0.1" })])
         expect(() => upgrade([def({ name: "SCRIPT_1" }), def({ name: "SCRIPT_2" })]))
-            .toThrow("Failed to validate script versions: Not all scripts use the same version. Found 2 different versions: 'v0.2, v0.1'")
+            .toThrow(new PreconditionFailedError("Failed to validate script versions: Not all scripts use the same version. Found 2 different versions: 'v0.2, v0.1'"))
     })
 
     it("already installed", () => {
         context.mocks.simulateScripts([script({ name: "SCRIPT_1", text: "v1" })])
         expect(() => upgrade([def({ name: "SCRIPT_1" })]))
-            .toThrow("Extension is already installed in latest version v1")
+            .toThrow(new PreconditionFailedError("Extension is already installed in latest version v1"))
     })
 
     it("success", () => {
