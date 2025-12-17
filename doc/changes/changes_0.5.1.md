@@ -1,4 +1,4 @@
-# Extension Manager Interface 0.5.1, released 2025-12-17
+# Extension Manager Interface 0.5.1, released 2025-12-18
 
 Code name: Upgrade Dependencies on top of 0.5.0
 
