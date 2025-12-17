@@ -19,6 +19,12 @@ npm run test-watch
 npm run lint
 ```
 
+## Upgrade Dependencies
+
+```sh
+npx npm-check-updates -u && npm i
+```
+
 ## Releasing
 
 Use [release-droid](https://github.com/exasol/release-droid) for creating releases and publishing to [NPM Registry](https://www.npmjs.com/package/@exasol/extension-manager-interface).
