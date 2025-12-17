@@ -41,7 +41,7 @@ describe("findInstallations", () => {
     })
     it("invalid version", () => {
         expect(() => findInstallations([script({ name: "s1" })], [def({ name: "s1" })], failingVersionExtractor("mock error")))
-            .toThrowError(new PreconditionFailedError("Failed to get versions: Script 's1': mock error"))
+            .toThrow(new PreconditionFailedError("Failed to get versions: Script 's1': mock error"))
     })
     it("script found", () => {
         expect(findInstallations([script({ name: "s1", text: "v1" })], [def({ name: "s1" })], mockVersionExtractor))
