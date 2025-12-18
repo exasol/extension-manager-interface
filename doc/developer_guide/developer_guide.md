@@ -19,6 +19,14 @@ npm run test-watch
 npm run lint
 ```
 
+## Upgrade Dependencies
+
+```sh
+npx npm-check-updates -u && npm i
+```
+
 ## Releasing
 
 Use [release-droid](https://github.com/exasol/release-droid) for creating releases and publishing to [NPM Registry](https://www.npmjs.com/package/@exasol/extension-manager-interface).
+
+The release build [`release.yml`](../../.github/workflows/release.yml) for publishing to `npmjs.org` will be triggered when the GitHub release is published.

@@ -6,6 +6,10 @@
     "type": "module",
     "description": "Interface for extensions for the Exasol extension manager.",
     "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/exasol/extension-manager-interface"
+    },
     "scripts": {
         "build": "npm run generate && tsc --build",
         "generate": "node generate-version.mjs",
@@ -17,7 +21,7 @@
     "devDependencies": {
         "@jest/globals": "^30.2.0",
         "eslint": "^9.39.2",
-        "typescript-eslint": "^8.49.0",
+        "typescript-eslint": "^8.50.0",
         "jest": "^30.2.0",
         "ts-jest": "^29.4.6",
         "ts-node": "^10.9.2",
