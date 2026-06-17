@@ -1,5 +1,9 @@
 # Extension Manager Interface
 
+# ⚠ Deprecation Warning ⚠
+
+This project is deprecated and not maintained any more.
+
 [![Build Status](https://github.com/exasol/extension-manager-interface/actions/workflows/ci-build.yml/badge.svg)](https://github.com/exasol/extension-manager-interface/actions/workflows/ci-build.yml)
 [![npm version](https://badge.fury.io/js/@exasol%2Fextension-manager-interface.svg)](https://badge.fury.io/js/@exasol%2Fextension-manager-interface)
 
